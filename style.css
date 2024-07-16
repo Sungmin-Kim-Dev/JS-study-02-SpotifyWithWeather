@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+:root {
+  --main-font-color: #b3b3b3;
+  --background-base: #121212;
+  --main-accent-color: #1ed760;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,12 +14,19 @@
 ol,
 ul {
   list-style: none;
+  padding: 0;
 }
 a {
   text-decoration: none;
-  color: #000;
+  color: var(--main-font-color);
   display: block;
 }
+button {
+  background: none;
+  border: none;
+  color: var(--main-font-color);
+}
+
 table {
   border-collapse: collapse;
   width: 100%;
@@ -34,21 +49,51 @@ address {
   font-style: normal;
 }
 body {
-  color: #fff;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--main-font-color);
 }
 
 #wrap {
   padding: 0.5rem;
 }
-#menu {
+
+.logo-box {
+  padding: 0.5rem 0.75rem;
+}
+.main-logo {
+  width: 78px;
+}
+
+.left-section {
   @media screen and (min-width: 768px) {
-    background-color: orange;
+    /* background-color: orange; */
     width: 238px;
     height: calc(100vh - 1rem);
     margin-right: 0.5rem;
   }
   /* position: fixed; */
 }
+
+#nav {
+  /* background-color: cadetblue; */
+  background-color: var(--background-base);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.menu .menu-btn {
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  text-align: left;
+  transition: all 0.3s;
+  &:hover {
+    color: #fff;
+  }
+}
+.menu .menu-btn .fa-solid {
+  margin-right: 0.25rem;
+}
+
 #main {
   border: 1px solid #fff;
 }
@@ -58,4 +103,63 @@ body {
 }
 #section {
   padding-inline: 1rem;
+}
+
+/*weather playlist */
+#menu > p {
+  font-family: var(--content-font);
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.weather-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.playlist-link {
+  color: var(--main-font-color);
+}
+
+.weather-card {
+  height: 100%;
+  max-height: 480px;
+  background-color: transparent;
+  color: var(--main-font-color);
+}
+
+.weather-playlist-more {
+  border: 1px solid #fafafa;
+  color: var(--main-font-color);
+  padding: 0.5rem;
+  text-align: center;
+}
+
+/* 로딩 스피너 스타일 */
+
+#weather-spinner {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border: 5px solid #222;
+  border-top: 5px solid var(--main-accent-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50vh;
+  right: 50vw;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
