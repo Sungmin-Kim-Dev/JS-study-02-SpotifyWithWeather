@@ -4,6 +4,8 @@
   --main-font-color: #b3b3b3;
   --background-base: #121212;
   --main-accent-color: #1ed760;
+  --white: #fafafa;
+  --black: #242424;
 }
 
 * {
@@ -95,15 +97,66 @@ body {
 }
 
 #main {
-  border: 1px solid #fff;
+  border: 1px solid transparent;
 }
 #header {
   height: 4rem;
-  background-color: #e5e5e5;
+  /* background-color: #e5e5e5; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
 }
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.nav-button {
+  margin: 0 1rem;
+  font-size: 1.4rem;
+}
+.search {
+  display: flex;
+  align-items: center;
+  background-color: var(--black);
+  width: 400px;
+  height: 50px;
+  border-radius: 500px;
+}
+.search-submit {
+  display: flex;
+  align-items: center;
+}
+.search input {
+  border: none;
+  background-color: transparent;
+  width: 400px;
+  height: 50px;
+  border-radius: 500px;
+  color: var(--white);
+  &:focus {
+    outline: none;
+    border: 1px solid var(--white);
+    padding-left: 2.5rem;
+  }
+  &::placeholder {
+    padding-left: 2.5rem;
+  }
+}
+
+.search-span {
+  display: flex;
+  position: relative;
+  right: 24rem;
+  align-items: center;
+  pointer-events: none;
+}
+
 #section {
   padding-inline: 1rem;
 }
+
+/* header */
 
 /*weather playlist */
 #menu > p {
@@ -112,24 +165,23 @@ body {
   font-weight: 600;
   cursor: pointer;
 }
-
 .weather-display {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 .playlist-link {
   color: var(--main-font-color);
 }
-
+.weather-row {
+  margin-top: 1rem;
+}
 .weather-card {
   height: 100%;
   max-height: 480px;
   background-color: transparent;
   color: var(--main-font-color);
 }
-
 .weather-playlist-more {
   border: 1px solid #fafafa;
   color: var(--main-font-color);
@@ -138,7 +190,6 @@ body {
 }
 
 /* 로딩 스피너 스타일 */
-
 #weather-spinner {
   display: none;
   justify-content: center;
@@ -154,7 +205,6 @@ body {
   top: 50vh;
   right: 50vw;
 }
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);

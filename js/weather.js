@@ -56,7 +56,7 @@ const renderHTML = (data) => {
 
 const renderPlaylists = (playlists) => {
   const section = document.querySelector('section#section');
-  section.innerHTML = '<div class="row"></div>';
+  section.innerHTML = '<div class="row weather-row"></div>';
   const row = section.querySelector('.row');
   playlists.forEach((playlist) => {
     const col = document.createElement('div');
@@ -133,7 +133,7 @@ const callSpotifyAPI = async (weatherDescription) => {
   }
 
   const spotifyData = await response.json();
-  console.log('Playlists:', spotifyData.playlists.items);
+  // console.log('Playlists:', spotifyData.playlists.items);
 
   if (spotifyData.playlists.items.length === 0) {
     throw new Error('No playlists found');

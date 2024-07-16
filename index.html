@@ -11,6 +11,13 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/f12998d844.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="main.js" defer></script>
+    <script src="js/weather.js" defer></script>
+    <script src="js/search.js" defer></script>
   </head>
 
   <body>
@@ -34,7 +41,7 @@
               </button>
             </li>
             <li>
-              <button class="menu-btn">
+              <button class="menu-btn weather-search-btn">
                 <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
                 검색
               </button>
@@ -43,8 +50,34 @@
         </nav>
       </div>
       <main id="main" class="col">
-        <header id="header">Sign up Log in</header>
-        <section id="section">
+        <header id="header">
+          <div class="nav-buttons">
+            <button class="nav-button">
+              <i class="fa-solid fa-angle-left"></i>
+            </button>
+            <button class="nav-button">
+              <i class="fa-solid fa-angle-right"></i>
+            </button>
+            <div class="search">
+              <form class="search-submit">
+                <input
+                  class="search-input"
+                  type="text"
+                  placeholder="검색어를 입력하세요"
+                />
+                <span class="search-span"
+                  ><i class="fa-solid fa-magnifying-glass"></i
+                ></span>
+              </form>
+            </div>
+          </div>
+
+          <div class="auth-buttons">
+            <button>가입하기</button>
+            <button>로그인하기</button>
+          </div>
+        </header>
+        <section id="section" class="내용들어가는 곳">
           <div id="weather-spinner">
             <div class="weather-spinner"></div>
           </div>
@@ -57,7 +90,5 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script src="main.js"></script>
-    <script src="js/weather.js" defer></script>
   </body>
 </html>
