@@ -136,12 +136,32 @@ body {
   background: linear-gradient(180deg, rgba(32, 32, 32, 1) 0%, rgba(18, 18, 18, 1) 15%, rgba(18, 18, 18, 1) 100%);
 }
 
+.contents-header {
+  padding: 0.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.contents-header-show-more {
+  font-size: 14px;
+}
+.contents-header-title:hover,
+.contents-header-show-more:hover {
+  text-decoration: underline;
+}
+
 .card-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   grid-template-rows: repeat(1, minmax(0, 1fr));
   grid-auto-rows: 0;
   overflow: hidden;
+  @media screen and (min-width: 1526px) {
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  }
+}
+.card-two-lines {
+  grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
 }
 
 .contents-card {
@@ -150,7 +170,7 @@ body {
   transition: all 0.3s;
   border-radius: 0.5rem;
   cursor: pointer;
-  &:hover{
+  &:hover {
     background: #1a1a1a;
     .card-play-btn {
       display: block;
@@ -169,12 +189,14 @@ body {
   top: 48%;
   opacity: 0.9;
   display: none;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   &:hover {
     transform: scale(1.05);
     opacity: 1;
   }
 }
-
 
 .card-img {
   border-radius: 8px;
@@ -187,11 +209,12 @@ body {
   border-radius: 50%;
 }
 
-
 .card-text {
   margin-top: 0.5rem;
 }
 .card-title {
   color: var(--white);
-  font-weight: 700;
+}
+.card-subtitle {
+  font-size: 14px;
 }
