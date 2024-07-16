@@ -134,12 +134,10 @@ body {
   height: 50px;
   border-radius: 500px;
   color: var(--white);
+  padding-left: 2.5rem;
   &:focus {
     outline: none;
     border: 1px solid var(--white);
-    padding-left: 2.5rem;
-  }
-  &::placeholder {
     padding-left: 2.5rem;
   }
 }

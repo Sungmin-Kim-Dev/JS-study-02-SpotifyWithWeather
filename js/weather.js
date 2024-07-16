@@ -1,9 +1,13 @@
+// weather.js
+
 let url;
 
-const getWeatherInfo = async () => {
+export const getWeatherInfo = async () => {
   const spinner = document.querySelector('#weather-spinner');
-  try {
+  if (spinner) {
     spinner.style.display = 'block';
+  }
+  try {
     const WEATHER_API_KEY = `d4b800defbe4f3b28364a3642039beed`;
 
     const position = await new Promise((resolve, reject) => {
@@ -33,12 +37,20 @@ const getWeatherInfo = async () => {
   } catch (error) {
     console.log('Error Message >> ', error);
   } finally {
-    spinner.style.display = 'none'; // 로딩 스피너 숨김
+    if (spinner) {
+      spinner.style.display = 'none'; // 로딩 스피너 숨김
+    }
   }
 };
 
 const renderHTML = (data) => {
   const nav = document.querySelector('#nav');
+  // 기존 섹션을 지웁니다.
+  const existingSection = nav.querySelector('.weather-display');
+  if (existingSection) {
+    nav.removeChild(existingSection);
+  }
+
   const section = document.createElement('section');
   section.classList.add('weather-display');
   section.innerHTML = `
@@ -282,6 +294,9 @@ const matchWeatherWithSong = (eachInfo) => {
   return eachInfo;
 };
 
-document
-  .querySelector('.weather-menu-btn')
-  .addEventListener('click', getWeatherInfo);
+document.addEventListener('DOMContentLoaded', () => {
+  const weatherMenuBtn = document.querySelector('.weather-menu-btn');
+  if (weatherMenuBtn) {
+    weatherMenuBtn.addEventListener('click', getWeatherInfo);
+  }
+});
