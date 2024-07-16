@@ -116,7 +116,7 @@ body {
   font-size: 1.4rem;
 }
 .search {
-  display: flex;
+  display: none;
   align-items: center;
   background-color: var(--black);
   width: 400px;
@@ -210,4 +210,64 @@ body {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* search result */
+/* search result */
+.carousel-container {
+  position: relative;
+  width: 800px;
+  margin: auto;
+  overflow: hidden;
+}
+.carousel {
+  width: 100%;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.search-track,
+.search-album,
+.search-artist,
+.search-playlist {
+  display: flex;
+}
+
+.search-track-list,
+.search-album-list,
+.search-artist-list,
+.search-playlist-list {
+  flex: 0 0 20%;
+  box-sizing: border-box;
+  padding: 0.5rem;
+}
+
+.search-track-list > img,
+.search-album-list > img,
+.search-artist-list > img,
+.search-playlist-list > img {
+  width: 100%;
+  height: auto;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--black);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.prev-button {
+  left: 10px;
+}
+
+.next-button {
+  right: 10px;
 }
