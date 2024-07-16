@@ -59,3 +59,5 @@ body {
 #section {
   padding-inline: 1rem;
 }
+
+#map {width:230px; height:184px; margin-left: 4px;}
