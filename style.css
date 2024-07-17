@@ -343,6 +343,7 @@ body {
   color: white;
 }
 .right-footer-item:hover {
+  color: white;
   text-decoration: underline;
 }
 
