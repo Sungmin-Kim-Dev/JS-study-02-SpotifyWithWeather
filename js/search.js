@@ -131,18 +131,19 @@ document.addEventListener('DOMContentLoaded', () => {
       trackHTML = `
       <div class="carousel">
       <h1>Track</h1><div class="search-track">${trackHTML}</div><button class="carousel-button prev-button">Prev</button>
-                <button class="carousel-button next-button">Next</button></div>`;
+      <button class="carousel-button next-button">Next</button></div>`;
     }
-    if (playlistHTML) {
-      playlistHTML = `<div class="carousel"><h1>Playlist</h1><div class="search-playlist">${playlistHTML}</div><button class="carousel-button prev-button">Prev</button>
-                <button class="carousel-button next-button">Next</button></div>`;
-    }
+
     if (albumHTML) {
       albumHTML = `<div class="carousel"><h1>Album</h1><div class="search-album">${albumHTML}</div><button class="carousel-button prev-button">Prev</button>
                 <button class="carousel-button next-button">Next</button></div>`;
     }
     if (artistHTML) {
       artistHTML = `<div class="carousel"><h1>Artist</h1><div class="search-artist">${artistHTML}</div><button class="carousel-button prev-button">Prev</button>
+                <button class="carousel-button next-button">Next</button></div>`;
+    }
+    if (playlistHTML) {
+      playlistHTML = `<div class="carousel"><h1>Playlist</h1><div class="search-playlist">${playlistHTML}</div><button class="carousel-button prev-button">Prev</button>
                 <button class="carousel-button next-button">Next</button></div>`;
     }
 

@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('weather.js');
+  // console.log('weather.js');
   let url;
 
   let weatherMenuIcon = document.querySelector('.weather-menu-btn');
-  console.log(weatherMenuIcon);
+  // console.log(weatherMenuIcon);
 
   const showWeatherIcon = (weather) => {
     switch (weather) {

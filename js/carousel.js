@@ -1,48 +1,44 @@
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('carousel.js');
-  document.querySelectorAll('.carousel').forEach((carousel) => {
-    const trackList = [
-      '.search-track',
-      '.search-album',
-      '.search-artist',
-      '.search-playlist',
-    ];
+console.log('carousel.js');
 
-    trackList.forEach((trackSelector) => {
-      const track = carousel.querySelector(trackSelector);
-      if (!track) return;
+document.addEventListener('DOMContentLoaded', (event) => {
+  const nextButtons = document.querySelectorAll('.next-button');
+  const prevButtons = document.querySelectorAll('.prev-button');
 
-      const slides = track.querySelectorAll(`${trackSelector}-list`);
-      const nextButton = carousel.querySelector('.next-button');
-      const prevButton = carousel.querySelector('.prev-button');
-
-      if (slides.length === 0) return;
-
-      let currentIndex = 0;
-
-      const updateSlidePosition = () => {
-        track.style.transform = `translateX(-${currentIndex * 100}%)`;
-      };
-
-      nextButton.addEventListener('click', () => {
-        console.log('next button');
-        if (currentIndex < slides.length - 5) {
-          currentIndex++;
-        } else {
-          currentIndex = 0;
-        }
-        updateSlidePosition();
-      });
-
-      prevButton.addEventListener('click', () => {
-        console.log('prev button');
-        if (currentIndex > 0) {
-          currentIndex--;
-        } else {
-          currentIndex = slides.length - 5;
-        }
-        updateSlidePosition();
-      });
+  nextButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      console.log('next');
+      const carousel = e.target.closest('.carousel');
+      const track = carousel.querySelector('.carousel-track');
+      if (track) {
+        const trackWidth = track.getBoundingClientRect().width;
+        const currentTranslateX = getTranslateXValue(track);
+        const newTranslateX = currentTranslateX - trackWidth / 5; // 항목이 5개씩 보이도록 설정
+        track.style.transform = `translateX(${newTranslateX}px)`;
+      } else {
+        console.error('carousel-track not found');
+      }
     });
   });
+
+  prevButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      console.log('prev');
+      const carousel = e.target.closest('.carousel');
+      const track = carousel.querySelector('.carousel-track');
+      if (track) {
+        const trackWidth = track.getBoundingClientRect().width;
+        const currentTranslateX = getTranslateXValue(track);
+        const newTranslateX = currentTranslateX + trackWidth / 5; // 항목이 5개씩 보이도록 설정
+        track.style.transform = `translateX(${newTranslateX}px)`;
+      } else {
+        console.error('carousel-track not found');
+      }
+    });
+  });
+
+  function getTranslateXValue(element) {
+    const style = window.getComputedStyle(element);
+    const matrix = new WebKitCSSMatrix(style.transform);
+    return matrix.m41;
+  }
 });
