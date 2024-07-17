@@ -13,12 +13,12 @@
 
 <body>
   <div id="wrap" class="bg-black d-flex flex-md-row flex-column">
-    <div class="left-section">
-      <nav id="nav">
+    <div class="left-section d-flex flex-column justify-content-between">
+      <nav id="nav" class="d-flex flex-md-column flex-row">
         <a href="#" class="logo-box">
           <img src="img/logo.png" alt="Spotify Logo" class="main-logo">
         </a>
-        <ul class="menu">
+        <ul class="menu d-flex flex-md-column flex-row">
           <li>
             <button class="menu-btn">
               <i class="fa-solid fa-house"></i>
@@ -40,9 +40,25 @@
         </ul>
         날씨 보여주는 창?
       </nav>
+      <footer class="left-footer d-md-block d-none">
+        <div class="left-footer-link-box">
+          <ul class="left-footer-links">
+            <li><a href="#">법률 정보</a></li>
+            <li><a href="#">안전 및 개인정보 보호 센터</a></li>
+            <li><a href="#">개인정보 처리방침</a></li>
+            <li><a href="#">접근성</a></li>
+          </ul>
+          <a href="#" class="footer-link-cookie">쿠키</a>
+        </div>
+        <button class="left-footer-language">
+          <i class="fa-solid fa-globe"></i>
+          한국어
+        </button>
+      </footer>
     </div>
     <main id="main" class="col">
       <header id="header" class="d-flex justify-content-between align-items-center">
+        <div class="right-header-bg"></div>
         <div class="header-left d-flex gap-1">
           <button class="header-prev-btn">
             <i class="fa-solid fa-chevron-left"></i>
@@ -77,19 +93,7 @@
               </div>
             </div> <!-- .contents-card -->
             <div class="contents-card">
-              <div class="card-img-box position-relative">
-                <div class="card-play-btn"></div>
-                <div class="card-img card-artist-img">
-                  <img src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9" alt="">
-                </div>
-              </div>
-              <div class="card-text">
-                <p class="card-title">NewJeans</p>
-                <p class="card-subtitle">아티스트</p>
-              </div>
-            </div> <!-- .contents-card -->
-            <div class="contents-card">
-              <div class="card-img-box position-relative">
+              <div class="card-img-box">
                 <div class="card-play-btn"></div>
                 <div class="card-img card-artist-img">
                   <img src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9" alt="">
@@ -186,6 +190,46 @@
             </div> <!-- .contents-card -->
           </div> <!-- .card-container -->
         </div> <!-- .contents-line -->
+        <footer class="right-footer">
+          <div class="right-footer-menu">
+            <ul class="right-footer-links d-flex">
+              <li>
+                <ul class="f-sub_menu">
+                  <li class="right-footer-title">COMPANY</li>
+                  <li><a href="#" class="right-footer-item">About</a></li>
+                  <li><a href="#" class="right-footer-item">Jobs</a></li>
+                  <li><a href="#" class="right-footer-item">For the Record</a></li>
+                </ul>
+              </li>
+              <li>
+                <ul class="f-sub_menu">
+                  <li class="right-footer-title">COMMUNITIES</li>
+                  <li><a href="#" class="right-footer-item">For Artists</a></li>
+                  <li><a href="#" class="right-footer-item">Developers</a></li>
+                  <li><a href="#" class="right-footer-item">Advertising</a></li>
+                  <li><a href="#" class="right-footer-item">Investors</a></li>
+                  <li><a href="#" class="right-footer-item">Vendors</a></li>
+                </ul>
+              </li>
+              <li>
+                <ul class="f-sub_menu">
+                  <li class="right-footer-title">USEFUL LINKS</li>
+                  <li><a href="#" class="right-footer-item">Support</a></li>
+                  <li><a href="#" class="right-footer-item">Web Player</a></li>
+                  <li><a href="#" class="right-footer-item">Free Mobile App</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="f-social">
+              <li><a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a></li>
+              <li><a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a></li>
+              <li><a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a></li>
+            </ul>
+          </div><!-- .right-footer-menu -->
+          <div class="right-footer-bottom">
+            <span class="copyright">&copy; 2024 Spotify Noona</span>
+          </div>
+        </footer>
       </section>
     </main>
   </div> <!-- #wrap -->
