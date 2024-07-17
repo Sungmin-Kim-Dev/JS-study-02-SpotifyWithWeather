@@ -57,7 +57,7 @@ body {
 }
 
 #wrap {
-  height: calc(100vh - 1rem);
+  height: 100vh;
   padding: 0.5rem;
 }
 
@@ -142,12 +142,21 @@ body {
   }
 }
 
-
 #main {
   /* border: 1px solid #fff; */
   position: relative;
   overflow-y: scroll;
   overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: #5a5a5a;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #8d8d8d;
+  }
 }
 
 #header {
@@ -224,20 +233,25 @@ body {
 .card-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  /* 줄 개수 바꾸기 (줄 개수, ...) */
   grid-template-rows: repeat(1, minmax(0, 1fr));
+
+  /* 1줄 표시하는 부분 */
+  /* 이 줄을 주석처리하면 모든 아이템 표시 */
   grid-auto-rows: 0;
+
   overflow: hidden;
   @media screen and (min-width: 1526px) {
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   }
 }
+/* 2줄만 표시하고 싶다면 이 클래스 이름 추가 */
 .card-two-lines {
   grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
 }
 
 .contents-card {
   padding: 0.75rem;
-  /* position: relative; */
   transition: all 0.2s ease-out;
   border-radius: 0.5rem;
   cursor: pointer;
@@ -260,6 +274,8 @@ body {
     width: 100%;
   }
 }
+
+/* 아티스트 원형 이미지일때만 이 클래스 이름 추가 */
 .card-artist-img {
   border-radius: 50%;
 }
@@ -272,6 +288,9 @@ body {
 }
 .card-subtitle {
   font-size: 14px;
+}
+.card-subtitle-artist:hover {
+  text-decoration: underline;
 }
 
 .card-play-btn {
@@ -293,7 +312,61 @@ body {
   }
 }
 
-
 .right-footer {
-  padding: 3rem 2rem 2.5rem;
+  padding: 3rem 0 2.5rem;
+  @media screen and (min-width: 992px) {
+    padding: 3rem 1rem 2.5rem;
+  }
+}
+
+.right-footer-top {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 2.5rem;
+  margin-bottom: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+.right-footer-links {
+  display: flex;
+  flex-grow: 1;
+  column-gap: 1.5rem;
+}
+.right-footer-links > li {
+  width: 30%;
+  min-width: fit-content;
+}
+
+.right-footer-title {
+  font-weight: 700;
+  color: white;
+}
+.right-footer-item:hover {
+  text-decoration: underline;
+}
+
+.f-social {
+  display: flex;
+  gap: 1rem;
+}
+.social-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  text-align: center;
+  color: #fff;
+  line-height: 2.5rem;
+  background-color: #292929;
+  &:hover {
+    background-color: #727272;
+  }
+}
+
+/* 소셜 40*40
+#292929 
+호버 #727272 */
+
+.copyright {
+  font-size: 14px;
 }
