@@ -1,35 +1,30 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // console.log('weather.js');
   let url;
+  let weatherName;
+  const spinner = document.getElementById('spinner');
 
   let weatherMenuIcon = document.querySelector('.weather-menu-btn');
-  // console.log(weatherMenuIcon);
 
   const showWeatherIcon = (weather) => {
     switch (weather) {
       case 'Clear':
-        weatherMenuIcon.innerHTML = `<i class="fa-solid fa-sun"></i> 날씨 추천곡`;
-        return weatherMenuIcon;
+        return `<i class="fa-solid fa-sun sun"></i>`;
       case 'Rain':
-        weatherMenuIcon.innerHTML = `<i class="fa-solid fa-umbrella"></i> 날씨 추천곡`;
-        return weatherMenuIcon;
+        return `<i class="fa-solid fa-umbrella rain"></i>`;
       case 'Snow':
-        weatherMenuIcon.innerHTML = `<i class="fa-solid fa-snowflake"></i> 날씨 추천곡`;
-        return weatherMenuIcon;
+        return `<i class="fa-solid fa-snowflake snow"></i>`;
       case 'Clouds':
-        weatherMenuIcon.innerHTML = `<i class="fa-solid fa-cloud"></i> 날씨 추천곡`;
-        return weatherMenuIcon;
+        return `<i class="fa-solid fa-cloud cloud"></i>`;
       case 'Thunderstorm':
-        weatherMenuIcon.innerHTML = `<i class="fa-solid fa-bolt"></i> 날씨 추천곡`;
-        return weatherMenuIcon;
+        return `<i class="fa-solid fa-bolt thunder"></i>`;
       default:
-        weatherMenuIcon.innerHTML = `<i class="fa-solid fa-sun"></i> 날씨 추천곡`;
-        return weatherMenuIcon;
+        return `<i class="fa-solid fa-sun sun"></i>`;
     }
   };
 
   const getWeatherIcon = async () => {
     try {
+      spinner.style.display = 'block'; // 로딩 스피너 표시
       const WEATHER_API_KEY = `d4b800defbe4f3b28364a3642039beed`;
 
       const position = await new Promise((resolve, reject) => {
@@ -40,9 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
       let lon = position.coords.longitude;
 
       url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
-      // // url = `https://api.openweathermap.org/data/2.5/weather?q=california&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
-
-      // url = './data/current.weather.json';
 
       const response = await fetch(url);
       if (!response.ok) {
@@ -50,26 +42,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const data = await response.json();
-      // console.log(data);
-
-      const weatherName = data.weather[0].main;
-      // const weatherName = 'Clear';
-      showWeatherIcon(weatherName);
-      console.log(weatherName);
+      // weatherName = data.weather[0].main;
+      weatherName = 'Clear';
+      weatherMenuIcon.innerHTML = showWeatherIcon(weatherName) + ' 날씨 추천곡';
       await callSpotifyAPI(weatherName);
     } catch (error) {
       console.log('Error Message >> ', error);
+    } finally {
+      spinner.style.display = 'none'; // 로딩 스피너 숨김
     }
   };
 
   getWeatherIcon();
 
   const getWeatherInfo = async () => {
-    const spinner = document.querySelector('#weather-spinner');
-    if (spinner) {
-      spinner.style.display = 'block';
-    }
     try {
+      spinner.style.display = 'block';
       const WEATHER_API_KEY = `d4b800defbe4f3b28364a3642039beed`;
 
       const position = await new Promise((resolve, reject) => {
@@ -80,9 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
       let lon = position.coords.longitude;
 
       url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
-      // url = `https://api.openweathermap.org/data/2.5/weather?q=california&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
-
-      // url = './data/current.weather.json';
 
       const response = await fetch(url);
       if (!response.ok) {
@@ -90,15 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const data = await response.json();
-      // console.log(data);
-
       renderHTML(data);
       const weatherDescription = matchWeather(data.weather[0].main);
-
-      console.log(data.weather[0].main);
-
       await callSpotifyAPI(weatherDescription);
-      // console.log('Weather Description:', weatherDescription);
     } catch (error) {
       console.log('Error Message >> ', error);
     } finally {
@@ -133,26 +112,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const renderPlaylists = (playlists) => {
     const section = document.querySelector('section#section');
-    section.innerHTML = '<div class="row weather-row"></div>';
-    const row = section.querySelector('.row');
+    section.innerHTML = `<h1>${showWeatherIcon(
+      weatherName
+    )} 오늘 날씨와 어울리는 플레이리스트</h1> <div class="weather-row"></div>`;
+
+    const row = document.querySelector('.weather-row');
     playlists.forEach((playlist) => {
       const col = document.createElement('div');
-      col.classList.add(
-        'col-lg-3',
-        'col-md-4',
-        'col-sm-6',
-        'col-12',
-        'playlist-item'
-      );
+      col.classList.add('playlist-item');
       col.innerHTML = `
-        <div class="card weather-card mb-4">
-          <img src="${playlist.images[0].url}" class="card-img-top" alt="${playlist.name}" />
-          <div class="card-body">
-            <h5 class="card-title">${playlist.name}</h5>
-            <p class="card-text">${playlist.description}</p>
-            <a href="${playlist.external_urls.spotify}" class="weather-playlist-more" target="_blank">플레이리스트 보기</a>
-          </div>
-        </div>
+          <img src="${playlist.images[0].url}" alt="${playlist.name}" />
+            <a href="${
+              playlist.external_urls.spotify
+            }" class="weather-playlist-more" target="_blank">${
+        playlist.name.trim(' ').length < 20
+          ? playlist.name
+          : playlist.name + '...'
+      }</a>
       `;
       row.appendChild(col);
     });
@@ -210,15 +186,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const spotifyData = await response.json();
-    // console.log('Playlists:', spotifyData.playlists.items);
-
     if (spotifyData.playlists.items.length === 0) {
       throw new Error('No playlists found');
     }
 
     renderPlaylists(spotifyData.playlists.items);
-
-    // console.log('Spotify query:', weatherDescription);
   };
 
   const loadMusic = async (tracks, token, weatherDescription) => {
@@ -363,6 +335,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const weatherMenuBtn = document.querySelector('.weather-menu-btn');
   if (weatherMenuBtn) {
-    weatherMenuBtn.addEventListener('click', getWeatherInfo);
+    weatherMenuBtn.addEventListener('click', () => {
+      const section = document.querySelector('#section');
+      section.innerHTML = '';
+      getWeatherInfo();
+    });
   }
 });
