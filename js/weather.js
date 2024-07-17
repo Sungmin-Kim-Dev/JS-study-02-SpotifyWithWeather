@@ -2,6 +2,68 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('weather.js');
   let url;
 
+  let weatherMenuIcon = document.querySelector('.weather-menu-btn');
+  console.log(weatherMenuIcon);
+
+  const showWeatherIcon = (weather) => {
+    switch (weather) {
+      case 'Clear':
+        weatherMenuIcon.innerHTML = `<i class="fa-solid fa-sun"></i> 날씨 추천곡`;
+        return weatherMenuIcon;
+      case 'Rain':
+        weatherMenuIcon.innerHTML = `<i class="fa-solid fa-umbrella"></i> 날씨 추천곡`;
+        return weatherMenuIcon;
+      case 'Snow':
+        weatherMenuIcon.innerHTML = `<i class="fa-solid fa-snowflake"></i> 날씨 추천곡`;
+        return weatherMenuIcon;
+      case 'Clouds':
+        weatherMenuIcon.innerHTML = `<i class="fa-solid fa-cloud"></i> 날씨 추천곡`;
+        return weatherMenuIcon;
+      case 'Thunderstorm':
+        weatherMenuIcon.innerHTML = `<i class="fa-solid fa-bolt"></i> 날씨 추천곡`;
+        return weatherMenuIcon;
+      default:
+        weatherMenuIcon.innerHTML = `<i class="fa-solid fa-sun"></i> 날씨 추천곡`;
+        return weatherMenuIcon;
+    }
+  };
+
+  const getWeatherIcon = async () => {
+    try {
+      const WEATHER_API_KEY = `d4b800defbe4f3b28364a3642039beed`;
+
+      const position = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+
+      let lat = position.coords.latitude;
+      let lon = position.coords.longitude;
+
+      url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
+      // // url = `https://api.openweathermap.org/data/2.5/weather?q=california&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
+
+      // url = './data/current.weather.json';
+
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      // console.log(data);
+
+      const weatherName = data.weather[0].main;
+      // const weatherName = 'Clear';
+      showWeatherIcon(weatherName);
+      console.log(weatherName);
+      await callSpotifyAPI(weatherName);
+    } catch (error) {
+      console.log('Error Message >> ', error);
+    }
+  };
+
+  getWeatherIcon();
+
   const getWeatherInfo = async () => {
     const spinner = document.querySelector('#weather-spinner');
     if (spinner) {
@@ -32,6 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       renderHTML(data);
       const weatherDescription = matchWeather(data.weather[0].main);
+
+      console.log(data.weather[0].main);
+
       await callSpotifyAPI(weatherDescription);
       // console.log('Weather Description:', weatherDescription);
     } catch (error) {
