@@ -232,15 +232,18 @@ body {
 
 .card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   /* 줄 개수 바꾸기 (줄 개수, ...) */
   grid-template-rows: repeat(1, minmax(0, 1fr));
 
   /* 1줄 표시하는 부분 */
-  /* 이 줄을 주석처리하면 모든 아이템 표시 */
+  /* 이 줄을 1로 바꾸면 모든 아이템 표시 */
   grid-auto-rows: 0;
 
   overflow: hidden;
+  @media screen and (min-width: 576px) {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
   @media screen and (min-width: 1526px) {
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   }
@@ -313,6 +316,7 @@ body {
 }
 
 .right-footer {
+  margin-top: 2rem;
   padding: 3rem 0 2.5rem;
   @media screen and (min-width: 992px) {
     padding: 3rem 1rem 2.5rem;
@@ -336,6 +340,10 @@ body {
 .right-footer-links > li {
   width: 30%;
   min-width: fit-content;
+}
+
+.f-sub_menu > li {
+  margin-bottom: 0.5rem;
 }
 
 .right-footer-title {
