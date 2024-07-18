@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-  let url;
-  let weatherName;
   const spinner = document.getElementById('spinner');
-
   let weatherMenuIcon = document.querySelector('.weather-menu-btn');
+  let weatherName;
+  let url;
 
   const showWeatherIcon = (weather) => {
     switch (weather) {
@@ -24,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const getWeatherIcon = async () => {
     try {
-      spinner.style.display = 'block'; // 로딩 스피너 표시
+      spinner.style.display = 'flex'; // 로딩 스피너 표시
       const WEATHER_API_KEY = `d4b800defbe4f3b28364a3642039beed`;
 
       const position = await new Promise((resolve, reject) => {
@@ -34,7 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
       let lat = position.coords.latitude;
       let lon = position.coords.longitude;
 
-      url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
+      url = './data/weather2.json';
+
+      // url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
 
       const response = await fetch(url);
       if (!response.ok) {
@@ -42,9 +43,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const data = await response.json();
-      // weatherName = data.weather[0].main;
-      weatherName = 'Clear';
+      console.log(data);
+
+      if (!data.current || !data.current.weather || !data.current.weather[0]) {
+        throw new Error('Invalid weather data');
+      }
+
+      weatherName = data.current.weather[0].main;
+      console.log(weatherName);
       weatherMenuIcon.innerHTML = showWeatherIcon(weatherName) + ' 날씨 추천곡';
+
       await callSpotifyAPI(weatherName);
     } catch (error) {
       console.log('Error Message >> ', error);
@@ -53,11 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  getWeatherIcon();
-
   const getWeatherInfo = async () => {
     try {
-      spinner.style.display = 'block';
+      spinner.style.display = 'flex';
       const WEATHER_API_KEY = `d4b800defbe4f3b28364a3642039beed`;
 
       const position = await new Promise((resolve, reject) => {
@@ -67,7 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
       let lat = position.coords.latitude;
       let lon = position.coords.longitude;
 
-      url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
+      url = './data/weather2.json';
+
+      // url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
 
       const response = await fetch(url);
       if (!response.ok) {
@@ -75,8 +83,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const data = await response.json();
+      console.log('88', data);
+
+      if (!data.current || !data.current.weather || !data.current.weather[0]) {
+        throw new Error('Invalid weather data');
+      }
+
       renderHTML(data);
-      const weatherDescription = matchWeather(data.weather[0].main);
+      const weatherDescription = matchWeather(data.current.weather[0].main);
+      console.log('weatherDescription', weatherDescription);
+
       await callSpotifyAPI(weatherDescription);
     } catch (error) {
       console.log('Error Message >> ', error);
@@ -100,27 +116,68 @@ document.addEventListener('DOMContentLoaded', () => {
     section.innerHTML = `
     <div class='weather-display'>
       <img src="https://openweathermap.org/img/wn/${
-        data.weather[0].icon
+        data.current.weather[0].icon
       }@2x.png" alt="weather_Icon" />
-      <div class='weather-current'>${data.weather[0].main}</div>
-      <p class='weather-temp'>${data.main.temp.toFixed(1)}°</p>
-      <p class='weather-location'>${data.name}</p>
+      <div class='weather-current'>${data.current.weather[0].main}</div>
+      <p class='weather-temp'>${data.current.temp.toFixed(1)}°</p>
     </div>
     `;
     nav.appendChild(section);
   };
 
-  const renderPlaylists = (playlists) => {
-    const section = document.querySelector('section#section');
-    section.innerHTML = `<h1>${showWeatherIcon(
-      weatherName
-    )} 오늘 날씨와 어울리는 플레이리스트</h1> <div class="weather-row"></div>`;
+  const createWeatherPlaylistSection = () => {
+    const section = document.querySelector('#section');
 
-    const row = document.querySelector('.weather-row');
+    section.innerHTML = '';
+
+    const mainWeatherPlaylist = document.createElement('div');
+    mainWeatherPlaylist.classList.add('main_weather_playlist');
+
+    const weatherPlaylistHeader = document.createElement('div');
+    weatherPlaylistHeader.classList.add('weather_playlist_header');
+
+    const weatherPlaylistRow = document.createElement('div');
+    weatherPlaylistRow.classList.add('weather-playlist-row');
+
+    mainWeatherPlaylist.appendChild(weatherPlaylistHeader);
+    mainWeatherPlaylist.appendChild(weatherPlaylistRow);
+    section.appendChild(mainWeatherPlaylist);
+  };
+
+  const renderPlaylists = (playlists) => {
+    createWeatherPlaylistSection();
+    const mainWeatherPlaylist = document.querySelector(
+      '.main_weather_playlist'
+    );
+    let weatherListHeader = document.querySelector('.weather_playlist_header');
+
+    if (!mainWeatherPlaylist) {
+      console.error('main_weather_playlist element not found');
+      return;
+    }
+
+    if (!weatherListHeader) {
+      weatherListHeader = document.createElement('div');
+      weatherListHeader.classList.add('weather_playlist_header');
+      mainWeatherPlaylist.prepend(weatherListHeader);
+    }
+
+    weatherListHeader.innerHTML = `<h1>${showWeatherIcon(
+      weatherName
+    )} 오늘 날씨와 어울리는 플레이리스트</h1><span>더보기<span>`;
+
+    const row = document.querySelector('.weather-playlist-row');
+    if (!row) {
+      console.error('weather-playlist-row element not found');
+      return;
+    }
+
+    row.innerHTML = '';
+
     playlists.forEach((playlist) => {
-      const col = document.createElement('div');
-      col.classList.add('playlist-item');
-      col.innerHTML = `
+      const plItem = document.createElement('div');
+      plItem.classList.add('playlist-item');
+      plItem.innerHTML = `
           <img src="${playlist.images[0].url}" alt="${playlist.name}" />
             <a href="${
               playlist.external_urls.spotify
@@ -130,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
           : playlist.name + '...'
       }</a>
       `;
-      row.appendChild(col);
+      row.appendChild(plItem);
     });
   };
 
@@ -151,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const fetchTrackFeatures = async (trackId, token) => {
-    const url = `https://api.spotify.com/v1/audio-features/${trackId}`;
+    url = `https://api.spotify.com/v1/audio-features/${trackId}`;
 
     const response = await fetch(url, {
       headers: {
@@ -171,8 +228,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const CLIENT_SECRET = `45da2b52af2d4752bbb7e828cb71cd18`;
 
     const token = await getAccessToken(CLIENT_ID, CLIENT_SECRET);
+    let query = weatherDescription;
+
+    // 날씨가 'Clear'인 경우 query를 'sunny'로 설정
+    if (weatherDescription === 'Clear') {
+      query = 'sunny';
+    }
+
     const response = await fetch(
-      `https://api.spotify.com/v1/search?q=${weatherDescription}&type=playlist`,
+      `https://api.spotify.com/v1/search?q=${query}&type=playlist`,
       {
         method: 'GET',
         headers: {
@@ -333,12 +397,34 @@ document.addEventListener('DOMContentLoaded', () => {
     return eachInfo;
   };
 
-  const weatherMenuBtn = document.querySelector('.weather-menu-btn');
-  if (weatherMenuBtn) {
-    weatherMenuBtn.addEventListener('click', () => {
+  document.addEventListener('click', (event) => {
+    if (event.target && event.target.classList.contains('weather-menu-btn')) {
       const section = document.querySelector('#section');
       section.innerHTML = '';
       getWeatherInfo();
-    });
-  }
+      getWeatherIcon();
+
+      // .weather-playlist-row의 overflow 속성을 visible로 설정
+      const weatherPlaylistRow = document.querySelector(
+        '.weather-playlist-row'
+      );
+      if (weatherPlaylistRow) {
+        weatherPlaylistRow.style.overflow = 'visible';
+      }
+    }
+  });
+
+  // 이벤트 위임을 사용하여 더보기 버튼의 클릭 이벤트를 처리합니다.
+  document.addEventListener('click', (event) => {
+    if (
+      event.target &&
+      event.target.matches('.weather_playlist_header > span:nth-child(2)')
+    ) {
+      const playlistRow = document.querySelector('.weather-playlist-row');
+      playlistRow.classList.toggle('expanded');
+      event.target.textContent = playlistRow.classList.contains('expanded')
+        ? '간단히 보기'
+        : '더보기';
+    }
+  });
 });

@@ -130,21 +130,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (trackHTML) {
       trackHTML = `
       <div class="carousel">
-      <h1>Track</h1><div class="search-track">${trackHTML}</div><button class="carousel-button prev-button">Prev</button>
-      <button class="carousel-button next-button">Next</button></div>`;
+        <h1>Track</h1>
+        <div class="search-track">${trackHTML}</div>
+      </div>`;
     }
 
     if (albumHTML) {
-      albumHTML = `<div class="carousel"><h1>Album</h1><div class="search-album">${albumHTML}</div><button class="carousel-button prev-button">Prev</button>
-                <button class="carousel-button next-button">Next</button></div>`;
+      albumHTML = `
+      <div class="carousel">
+        <h1>Album</h1>
+        <div class="search-album">${albumHTML}</div>
+      </div>`;
     }
     if (artistHTML) {
-      artistHTML = `<div class="carousel"><h1>Artist</h1><div class="search-artist">${artistHTML}</div><button class="carousel-button prev-button">Prev</button>
-                <button class="carousel-button next-button">Next</button></div>`;
+      artistHTML = `
+      <div class="carousel">
+        <h1>Artist</h1>
+        <div class="search-artist">${artistHTML}</div>
+      </div>`;
     }
     if (playlistHTML) {
-      playlistHTML = `<div class="carousel"><h1>Playlist</h1><div class="search-playlist">${playlistHTML}</div><button class="carousel-button prev-button">Prev</button>
-                <button class="carousel-button next-button">Next</button></div>`;
+      playlistHTML = `
+      <div class="carousel">
+        <h1>Playlist</h1>
+        <div class="search-playlist">${playlistHTML}</div>
+      </div>`;
     }
 
     div.innerHTML = `${trackHTML}${albumHTML}${artistHTML}${playlistHTML}`;
@@ -168,8 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchElement = document.querySelector('.search');
     const currentDisplay = window.getComputedStyle(searchElement).display;
 
-    if (currentDisplay === 'none') {
-      searchElement.style.display = 'flex';
+    if (currentDisplay === 'none' || currentDisplay === 'flex') {
+      searchElement.style.opacity = '100%';
     }
   });
 });
