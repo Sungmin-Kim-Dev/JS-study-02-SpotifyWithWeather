@@ -392,6 +392,9 @@ body {
   align-items: center;
   pointer-events: none;
 }
+.search-glass {
+  cursor: pointer;
+}
 
 /* search result */
 .carousel-container {

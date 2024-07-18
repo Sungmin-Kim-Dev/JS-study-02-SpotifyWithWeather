@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const section = document.getElementById('section');
     section.innerHTML = '';
     const div = document.createElement('div');
-    div.classList.add('search-result', 'carousels');
+    div.classList.add('search-result');
 
     let trackHTML = '';
     let playlistHTML = '';
@@ -102,8 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         playlistHTML += `
         <div class="search-playlist-list">
           <img src="${item.images[0].url}" alt="playlist_image" />
-          <h4>${item.name}</h4>
-          <p>${item.owner.display_name}</p>
+          <p>${item.name}</p>
         </div>
       `;
       } else if (item.type === 'album') {
@@ -129,30 +128,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (trackHTML) {
       trackHTML = `
-      <div class="carousel">
-        <h1>Track</h1>
+      <div class="search-resul-row search-resul-row-track">
+        <h1>곡</h1>
         <div class="search-track">${trackHTML}</div>
       </div>`;
     }
 
     if (albumHTML) {
       albumHTML = `
-      <div class="carousel">
-        <h1>Album</h1>
+      <div class="search-resul-row search-resul-row-album">
+        <h1>앨범</h1>
         <div class="search-album">${albumHTML}</div>
       </div>`;
     }
     if (artistHTML) {
       artistHTML = `
-      <div class="carousel">
-        <h1>Artist</h1>
+      <div class="search-resul-row search-resul-row-artist">
+        <h1>아티스트</h1>
         <div class="search-artist">${artistHTML}</div>
       </div>`;
     }
     if (playlistHTML) {
       playlistHTML = `
-      <div class="carousel">
-        <h1>Playlist</h1>
+      <div class="search-resul-row search-resul-row-playlist">
+        <h1>플레이리스트</h1>
         <div class="search-playlist">${playlistHTML}</div>
       </div>`;
     }
