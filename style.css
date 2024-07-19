@@ -204,16 +204,17 @@ body {
     transform: scale(1.1);
   }
 }
-
-#section {
-  padding: 0.5rem 1rem;
+.section-footer-container{
+  padding: 1rem;
   border-radius: 0.5rem;
   /* 202020 - 121212 gradation */
   background: rgb(32, 32, 32);
   background: linear-gradient(180deg, rgba(32, 32, 32, 1) 0%, rgba(18, 18, 18, 1) 15%, rgba(18, 18, 18, 1) 100%);
   @media screen and (min-width: 1526px) {
-    padding: 0.5rem 1.5rem;
+    padding: 1rem 1.5rem;
   }
+}
+#section {
 }
 
 .contents-header {

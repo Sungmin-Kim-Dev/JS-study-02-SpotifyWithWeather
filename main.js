@@ -1,3 +1,5 @@
-const showTwoLines = () => {
-  document.querySelector('.card-container').classList.toggle('card-two-lines');
+const showTwoLines = (button) => {
+  const contentsLine = button.closest('.contents-line');
+  const cardContainer = contentsLine.querySelector('.card-container');
+  cardContainer.classList.toggle('card-two-lines');
 };
