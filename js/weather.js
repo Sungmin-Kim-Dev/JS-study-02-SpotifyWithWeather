@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const getWeatherIcon = async () => {
     try {
       spinner.style.display = 'flex'; // 로딩 스피너 표시
-      const WEATHER_API_KEY = `d4b800defbe4f3b28364a3642039beed`;
 
       const position = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -64,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const getWeatherInfo = async () => {
     try {
       spinner.style.display = 'flex';
-      const WEATHER_API_KEY = `d4b800defbe4f3b28364a3642039beed`;
 
       const position = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -131,16 +129,45 @@ document.addEventListener('DOMContentLoaded', () => {
     section.innerHTML = '';
 
     const mainWeatherPlaylist = document.createElement('div');
-    mainWeatherPlaylist.classList.add('main_weather_playlist');
+    mainWeatherPlaylist.classList.add(
+      'contents-container',
+      'd-flex',
+      'flex-column',
+      'gap-4',
+      'main_weather_playlist'
+    );
+
+    const contentsLine = document.createElement('div');
+    contentsLine.classList.add('contents-line');
 
     const weatherPlaylistHeader = document.createElement('div');
-    weatherPlaylistHeader.classList.add('weather_playlist_header');
+    weatherPlaylistHeader.classList.add(
+      'contents-header',
+      'weather_playlist_header'
+    );
+
+    const headerTitle = document.createElement('h1');
+    headerTitle.classList.add('contents-header-title', 'h4', 'text-white');
+    headerTitle.innerHTML =
+      '<i class="fa-solid fa-sun sun" aria-hidden="true"></i> 오늘 날씨와 어울리는 플레이리스트';
+
+    const showMoreButton = document.createElement('button');
+    showMoreButton.classList.add(
+      'contents-header-show-more',
+      'weather-row-more'
+    );
+    showMoreButton.textContent = '더보기';
+
+    weatherPlaylistHeader.appendChild(headerTitle);
+    weatherPlaylistHeader.appendChild(showMoreButton);
 
     const weatherPlaylistRow = document.createElement('div');
-    weatherPlaylistRow.classList.add('weather-playlist-row');
+    weatherPlaylistRow.classList.add('card-container', 'weather-playlist-row');
 
-    mainWeatherPlaylist.appendChild(weatherPlaylistHeader);
-    mainWeatherPlaylist.appendChild(weatherPlaylistRow);
+    contentsLine.appendChild(weatherPlaylistHeader);
+    contentsLine.appendChild(weatherPlaylistRow);
+
+    mainWeatherPlaylist.appendChild(contentsLine);
     section.appendChild(mainWeatherPlaylist);
   };
 
@@ -176,17 +203,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     playlists.forEach((playlist) => {
       const plItem = document.createElement('div');
-      plItem.classList.add('playlist-item');
+      plItem.classList.add('contents-card', 'playlist-item');
+
       plItem.innerHTML = `
+      <div class="card-img-box position-relative">
+        <div class="card-img">
           <img src="${playlist.images[0].url}" alt="${playlist.name}" />
-            <a href="${
-              playlist.external_urls.spotify
-            }" class="weather-playlist-more" target="_blank">${
-        playlist.name.trim(' ').length < 20
-          ? playlist.name
-          : playlist.name + '...'
-      }</a>
-      `;
+        </div>
+      </div>
+      <div class="card-text">
+        <a href="${
+          playlist.external_urls.spotify
+        }" class="weather-playlist-more" target="_blank">
+          ${
+            playlist.name.trim().length < 20
+              ? playlist.name
+              : playlist.name + '...'
+          }
+        </a>
+      </div>
+    `;
       row.appendChild(plItem);
     });
   };
@@ -224,8 +260,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const callSpotifyAPI = async (weatherDescription) => {
-    const CLIENT_ID = `904504b7562048308f3b78333a4cacd4`;
-    const CLIENT_SECRET = `45da2b52af2d4752bbb7e828cb71cd18`;
+    const CLIENT_ID = config.clientID;
+    const CLIENT_SECRET = config.clientSecret;
 
     const token = await getAccessToken(CLIENT_ID, CLIENT_SECRET);
     let query = weatherDescription;

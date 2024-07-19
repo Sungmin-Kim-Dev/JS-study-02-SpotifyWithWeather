@@ -5,6 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchBtn = document.querySelector('.weather-search-btn');
   const searchInput = document.querySelector('.search-input');
 
+  searchBtn.addEventListener('click', () => {
+    const searchElement = document.querySelector('.search');
+    searchElement.classList.toggle('search-active');
+  });
+
   const getAccessToken = async (CLIENT_ID, CLIENT_SECRET) => {
     const encodedCredentials = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
 
@@ -70,8 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const callSpotifyAPI = async (query) => {
-    const CLIENT_ID = `904504b7562048308f3b78333a4cacd4`;
-    const CLIENT_SECRET = `45da2b52af2d4752bbb7e828cb71cd18`;
+    const CLIENT_ID = config.clientID;
+    const CLIENT_SECRET = config.clientSecret;
 
     const token = await getAccessToken(CLIENT_ID, CLIENT_SECRET);
     const urls = getSpotifyURLs(query);
@@ -170,15 +175,5 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Search query is empty');
     }
     searchInput.value = '';
-  });
-  searchBtn.addEventListener('click', () => {
-    console.log('clicked!!');
-
-    const searchElement = document.querySelector('.search');
-    const currentDisplay = window.getComputedStyle(searchElement).display;
-
-    if (currentDisplay === 'none' || currentDisplay === 'flex') {
-      searchElement.style.opacity = '100%';
-    }
   });
 });
