@@ -48,7 +48,47 @@ document.addEventListener('DOMContentLoaded', () => {
     return response.json();
   };
 
+  const createSearchPlaylistSection = () => {
+    const section = document.querySelector('#section');
+
+    section.innerHTML = '';
+
+    const mainWeatherPlaylist = document.createElement('div');
+    mainWeatherPlaylist.classList.add(
+      'contents-container',
+      'd-flex',
+      'flex-column',
+      'gap-4',
+      'search-result'
+    );
+
+    const contentsLine = document.createElement('div');
+    contentsLine.classList.add('contents-line');
+
+    const weatherPlaylistHeader = document.createElement('div');
+    weatherPlaylistHeader.classList.add(
+      'contents-header',
+      'search_playlist_header'
+    );
+
+    const headerTitle = document.createElement('h4');
+    headerTitle.classList.add('contents-header-title', 'h4', 'text-white');
+    headerTitle.innerHTML = `<h1>곡</h1>`;
+
+    weatherPlaylistHeader.appendChild(headerTitle);
+
+    const weatherPlaylistRow = document.createElement('div');
+    weatherPlaylistRow.classList.add('card-container', 'search-track');
+
+    contentsLine.appendChild(weatherPlaylistHeader);
+    contentsLine.appendChild(weatherPlaylistRow);
+
+    mainWeatherPlaylist.appendChild(contentsLine);
+    section.appendChild(mainWeatherPlaylist);
+  };
+
   const fetchAllSpotifyData = async (urls, token) => {
+    createSearchPlaylistSection();
     const [trackData, playlistData, albumData, artistData] = await Promise.all([
       fetchSpotifyData(urls.trackURL, token),
       fetchSpotifyData(urls.playlistURL, token),
@@ -86,8 +126,44 @@ document.addEventListener('DOMContentLoaded', () => {
   const renderSearchResult = () => {
     const section = document.getElementById('section');
     section.innerHTML = '';
-    const div = document.createElement('div');
-    div.classList.add('search-result');
+
+    const createCategorySection = (title, htmlContent) => {
+      const categoryContainer = document.createElement('div');
+      categoryContainer.classList.add(
+        'contents-container',
+        'd-flex',
+        'flex-column',
+        'gap-4',
+        'search-result'
+      );
+
+      const contentsLine = document.createElement('div');
+      contentsLine.classList.add('contents-line');
+
+      const playlistHeader = document.createElement('div');
+      playlistHeader.classList.add('contents-header', 'search_playlist_header');
+
+      const headerTitle = document.createElement('div');
+      headerTitle.classList.add(
+        'contents-header-title',
+        'h4',
+        'text-white',
+        'search-result-header-text'
+      );
+      headerTitle.innerHTML = `<h1>${title}</h1><button class="contents-header-show-more search-row-more" onclick="showTwoLines(this)">더보기</button>`;
+
+      playlistHeader.appendChild(headerTitle);
+
+      const playlistRow = document.createElement('div');
+      playlistRow.classList.add('card-container', 'search-track');
+      playlistRow.innerHTML = htmlContent;
+
+      contentsLine.appendChild(playlistHeader);
+      contentsLine.appendChild(playlistRow);
+
+      categoryContainer.appendChild(contentsLine);
+      section.appendChild(categoryContainer);
+    };
 
     let trackHTML = '';
     let playlistHTML = '';
@@ -97,72 +173,68 @@ document.addEventListener('DOMContentLoaded', () => {
     searchList.forEach((item) => {
       if (item.type === 'track') {
         trackHTML += `
-        <div class="search-track-list">
-          <img src="${item.album.images[1].url}" alt="album_image" />
-          <p>${item.name}</p>
-          <p>${item.artists[0].name}</p>
+        <div class="contents-card search-playlist-item">
+          <div class="card-img-box position-relative">
+            <div class="card-img search-img">
+              <img src="${item.album.images[1].url}" alt="album_image" />
+            </div>
+          </div>
+          <div class="card-text search-track-list">
+            <p>${item.name}</p>
+            <p>${item.artists[0].name}</p>
+          </div>
         </div>
       `;
       } else if (item.type === 'playlist') {
         playlistHTML += `
-        <div class="search-playlist-list">
-          <img src="${item.images[0].url}" alt="playlist_image" />
-          <p>${item.name}</p>
+        <div class="contents-card search-playlist-item">
+          <div class="card-img-box position-relative">
+            <div class="card-img search-img">
+              <img src="${item.images[0].url}" alt="playlist_image" />
+            </div>
+          </div>
+          <div class="card-text search-track-list">
+            <p>${item.name}</p>
+          </div>
         </div>
       `;
       } else if (item.type === 'album') {
         albumHTML += `
-        <div class="search-album-list">
-          <img src="${item.images[1].url}" alt="album-img" />
-          <p>${item.name}</p>
-          <p>${item.album_type}</p>
-          <p>${item.release_date}</p>
+        <div class="contents-card search-playlist-item">
+          <div class="card-img-box position-relative">
+            <div class="card-img search-img">
+              <img src="${item.images[1].url}" alt="album-img" />
+            </div>
+          </div>
+          <div class="card-text search-track-list">
+            <p>${item.name}</p>
+            <p>${item.album_type}</p>
+            <p>${item.release_date}</p>
+          </div>
         </div>
       `;
       } else if (item.type === 'artist') {
         artistHTML += `
-        <div class="search-artist-list">
-          <img src="${item.images[1].url}" alt="artist_image" />
-          <p>${item.name}</p>
-          <p>${item.popularity}</p>
-          <p>${item.genres[0]}</p>
+        <div class="contents-card search-playlist-item">
+          <div class="card-img-box position-relative">
+            <div class="card-img card-artist-img search-img">
+              <img src="${item.images[1].url}" alt="artist_image" />
+            </div>
+          </div>
+          <div class="card-text search-track-list">
+            <p>${item.name}</p>
+            <p>${item.popularity}</p>
+            <p>${item.genres[0]}</p>
+          </div>
         </div>
       `;
       }
     });
 
-    if (trackHTML) {
-      trackHTML = `
-      <div class="search-resul-row search-resul-row-track">
-        <h1>곡</h1>
-        <div class="search-track">${trackHTML}</div>
-      </div>`;
-    }
-
-    if (albumHTML) {
-      albumHTML = `
-      <div class="search-resul-row search-resul-row-album">
-        <h1>앨범</h1>
-        <div class="search-album">${albumHTML}</div>
-      </div>`;
-    }
-    if (artistHTML) {
-      artistHTML = `
-      <div class="search-resul-row search-resul-row-artist">
-        <h1>아티스트</h1>
-        <div class="search-artist">${artistHTML}</div>
-      </div>`;
-    }
-    if (playlistHTML) {
-      playlistHTML = `
-      <div class="search-resul-row search-resul-row-playlist">
-        <h1>플레이리스트</h1>
-        <div class="search-playlist">${playlistHTML}</div>
-      </div>`;
-    }
-
-    div.innerHTML = `${trackHTML}${albumHTML}${artistHTML}${playlistHTML}`;
-    section.appendChild(div);
+    if (trackHTML) createCategorySection('곡', trackHTML);
+    if (albumHTML) createCategorySection('앨범', albumHTML);
+    if (artistHTML) createCategorySection('아티스트', artistHTML);
+    if (playlistHTML) createCategorySection('플레이리스트', playlistHTML);
   };
 
   document.querySelector('form').addEventListener('submit', async (e) => {

@@ -146,23 +146,19 @@ document.addEventListener('DOMContentLoaded', () => {
       'weather_playlist_header'
     );
 
-    const headerTitle = document.createElement('h1');
+    const headerTitle = document.createElement('h4');
     headerTitle.classList.add('contents-header-title', 'h4', 'text-white');
     headerTitle.innerHTML =
       '<i class="fa-solid fa-sun sun" aria-hidden="true"></i> 오늘 날씨와 어울리는 플레이리스트';
 
-    const showMoreButton = document.createElement('button');
-    showMoreButton.classList.add(
-      'contents-header-show-more',
-      'weather-row-more'
-    );
-    showMoreButton.textContent = '더보기';
-
     weatherPlaylistHeader.appendChild(headerTitle);
-    weatherPlaylistHeader.appendChild(showMoreButton);
 
     const weatherPlaylistRow = document.createElement('div');
-    weatherPlaylistRow.classList.add('card-container', 'weather-playlist-row');
+    weatherPlaylistRow.classList.add(
+      'card-container',
+      'weather-playlist-row',
+      'weather-playlist-row2'
+    );
 
     contentsLine.appendChild(weatherPlaylistHeader);
     contentsLine.appendChild(weatherPlaylistRow);
@@ -170,7 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
     mainWeatherPlaylist.appendChild(contentsLine);
     section.appendChild(mainWeatherPlaylist);
   };
-
   const renderPlaylists = (playlists) => {
     createWeatherPlaylistSection();
     const mainWeatherPlaylist = document.querySelector(
@@ -189,37 +184,37 @@ document.addEventListener('DOMContentLoaded', () => {
       mainWeatherPlaylist.prepend(weatherListHeader);
     }
 
-    weatherListHeader.innerHTML = `<h1>${showWeatherIcon(
+    weatherListHeader.innerHTML = `<h4 class="weather-playlist-h1">${showWeatherIcon(
       weatherName
-    )} 오늘 날씨와 어울리는 플레이리스트</h1><span>더보기<span>`;
+    )} 오늘 날씨와 어울리는 플레이리스트</h4>`;
 
-    const row = document.querySelector('.weather-playlist-row');
+    let row = document.querySelector('.weather-playlist-row2');
     if (!row) {
-      console.error('weather-playlist-row element not found');
-      return;
+      console.error(
+        'weather-playlist-row element not found, creating new element'
+      );
+      row = document.createElement('div');
+      row.classList.add('card-container', 'weather-playlist-row2');
+      mainWeatherPlaylist.appendChild(row);
+    } else {
+      row.innerHTML = '';
     }
-
-    row.innerHTML = '';
 
     playlists.forEach((playlist) => {
       const plItem = document.createElement('div');
       plItem.classList.add('contents-card', 'playlist-item');
 
+      const playlistName = playlist.name.trim();
+
       plItem.innerHTML = `
       <div class="card-img-box position-relative">
-        <div class="card-img">
-          <img src="${playlist.images[0].url}" alt="${playlist.name}" />
-        </div>
-      </div>
-      <div class="card-text">
-        <a href="${
-          playlist.external_urls.spotify
-        }" class="weather-playlist-more" target="_blank">
-          ${
-            playlist.name.trim().length < 20
-              ? playlist.name
-              : playlist.name + '...'
-          }
+        <a href="${playlist.external_urls.spotify}" class="weather-playlist-more" target="_blank">  
+           <div class="card-img">
+            <img src="${playlist.images[0].url}" alt="${playlist.name}" />
+          </div>      
+          <div class="card-text single-line-text">
+            <span>${playlistName}</span>
+          </div>
         </a>
       </div>
     `;
@@ -447,20 +442,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (weatherPlaylistRow) {
         weatherPlaylistRow.style.overflow = 'visible';
       }
-    }
-  });
-
-  // 이벤트 위임을 사용하여 더보기 버튼의 클릭 이벤트를 처리합니다.
-  document.addEventListener('click', (event) => {
-    if (
-      event.target &&
-      event.target.matches('.weather_playlist_header > span:nth-child(2)')
-    ) {
-      const playlistRow = document.querySelector('.weather-playlist-row');
-      playlistRow.classList.toggle('expanded');
-      event.target.textContent = playlistRow.classList.contains('expanded')
-        ? '간단히 보기'
-        : '더보기';
     }
   });
 });
