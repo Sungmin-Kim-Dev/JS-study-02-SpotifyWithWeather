@@ -1,6 +1,8 @@
 const CLIENT_ID = 'ace01b2284a04c6c9e4f4f33ba2c1753';
 const CLIENT_SECRET = '02a7ba93648946e199c408d64181eb4c';
-let clickedName = "정국"; // 검색할 아티스트 이름
+let url; // artist api url
+let artistNames = []; // 메인페이지에 보여지는 아티스트 이름 저장
+let clickedName; // artistNames 배열 요소 중 클릭된 아티스트 이름 저장
 
 // 토큰 설정
 const getAccessToken = async (CLIENT_ID, CLIENT_SECRET) => {
@@ -42,7 +44,7 @@ const getAlbumInfo = async (albumId, accessToken) => {
 // DOM 업데이트 함수
 const updateAlbumsInDOM = (albums) => {
     const container = document.querySelector('.card-container');
-    const artistName = albums[0].artists[0].name; // 첫 번째 앨범 - 첫 번째 아티스트 이름 사용
+    const artistName = albums[0].artists[0].name; // 첫 번째 앨범, 첫 번째 아티스트 이름 사용
     document.getElementById('AlbumMoreSongArtist').textContent = `${artistName}의 곡 더 보기`;
     container.innerHTML = '';
 
@@ -61,7 +63,7 @@ const updateAlbumsInDOM = (albums) => {
                 <p class="card-subtitle">${new Date(album.release_date).getFullYear()} - Album</p>
             </div>
         `;
-        container.appendChild(albumHTML); // 새 앨범 카드추가
+        container.appendChild(albumHTML); // 새 앨범 카드 추가
     });
 };
 
@@ -128,8 +130,8 @@ const updateAlbumInfo = (album) => {
     });
 };
 
-// 메인 함수
-const main = async () => {
+// Spotify API 호출
+const callSpotifyAPI = async () => {
     try {
         const accessToken = await getAccessToken(CLIENT_ID, CLIENT_SECRET);
         const albums = await searchAlbums(clickedName, accessToken);
@@ -147,5 +149,17 @@ const main = async () => {
     }
 };
 
-// 메인 함수 실행
-document.addEventListener('DOMContentLoaded', main);
+// 아티스트 이름 가져오기 / 클릭 이벤트 설정
+document.addEventListener('DOMContentLoaded', () => {
+    const artistText = document.querySelectorAll('.artist-container h4');
+    artistText.forEach((name) => {
+        artistNames.push(name.innerText.toLocaleLowerCase());
+
+        // 클릭 이벤트 리스너 추가
+        name.addEventListener('click', (event) => {
+            clickedName = event.target.innerText.toLocaleLowerCase();
+            console.log('클릭된 아티스트 이름:', clickedName); // 클릭된 아티스트 이름 보기
+            callSpotifyAPI();
+        });
+    });
+});

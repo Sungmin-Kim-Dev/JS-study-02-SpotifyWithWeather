@@ -182,7 +182,7 @@
     align-items: flex-start;
 }
 
-/* 수정된 부분 */
+/* 트랙아티스트네임 1 이상일때 */
 .album_track_artists {
     display: flex;
     flex-wrap: wrap;
