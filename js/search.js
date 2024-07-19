@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <img src="${item.images[0].url}" alt="playlist_image" />
             </div>
           </div>
-          <div class="card-text search-track-list">
+          <div class="card-text search-playlist-list">
             <p>${item.name}</p>
           </div>
         </div>
@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <img src="${item.images[1].url}" alt="album-img" />
             </div>
           </div>
-          <div class="card-text search-track-list">
+          <div class="card-text search-album-list">
             <p>${item.name}</p>
             <p>${item.album_type}</p>
             <p>${item.release_date}</p>
@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <img src="${item.images[1].url}" alt="artist_image" />
             </div>
           </div>
-          <div class="card-text search-track-list">
+          <div class="card-text search-artist-list">
             <p>${item.name}</p>
             <p>${item.popularity}</p>
             <p>${item.genres[0]}</p>
