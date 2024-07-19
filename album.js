@@ -1,6 +1,6 @@
 const CLIENT_ID = 'ace01b2284a04c6c9e4f4f33ba2c1753';
 const CLIENT_SECRET = '02a7ba93648946e199c408d64181eb4c';
-let clickedName = "에스파"; // 검색할 아티스트 이름
+let clickedName = "정국"; // 검색할 아티스트 이름
 
 // 토큰 설정
 const getAccessToken = async (CLIENT_ID, CLIENT_SECRET) => {
@@ -42,6 +42,8 @@ const getAlbumInfo = async (albumId, accessToken) => {
 // DOM 업데이트 함수
 const updateAlbumsInDOM = (albums) => {
     const container = document.querySelector('.card-container');
+    const artistName = albums[0].artists[0].name; // 첫 번째 앨범 - 첫 번째 아티스트 이름 사용
+    document.getElementById('AlbumMoreSongArtist').textContent = `${artistName}의 곡 더 보기`;
     container.innerHTML = '';
 
     albums.forEach((album, index) => {
@@ -59,7 +61,7 @@ const updateAlbumsInDOM = (albums) => {
                 <p class="card-subtitle">${new Date(album.release_date).getFullYear()} - Album</p>
             </div>
         `;
-        container.appendChild(albumHTML); // 새 앨범 카드 추가
+        container.appendChild(albumHTML); // 새 앨범 카드추가
     });
 };
 
@@ -87,35 +89,40 @@ const updateAlbumInfo = (album) => {
     album.tracks.items.forEach((track, index) => {
         const trackElement = document.createElement('div');
         trackElement.classList.add('album_track');
-        
+
+        // 아티스트 리스트 생성
+        const artistList = track.artists.map(artist => 
+            `<a href="${artist.external_urls.spotify}">${artist.name}</a>`
+        ).join(' ');
+
         trackElement.innerHTML = `
-          <div class="album_track_num">
-            <span class="album_track_num_txt">${index + 1}</span>
-            <button class="album_track_num_icon">
-              <i class="fa-solid fa-play album_track_fa-play"></i>
-            </button>
-          </div>
-          <div class="album_track_empty"></div>
-          <div class="album_track_info">
-            <span class="album_track_title">
-              <a href="${track.external_urls.spotify}">${track.name}</a>
-            </span>
-            <span class="album_track_artist">
-              <a href="${track.artists[0].external_urls.spotify}">${track.artists[0].name}</a>
-            </span>
-          </div>
-          <div class="album_track_empty"></div>
-          <div class="album_track_time_box">
-            <button class="album_track_heart_icon">
-              <i class="fa-regular fa-heart album_track_fa-heart"></i>
-            </button>
-            <div class="album_track_time">
-              ${Math.floor(track.duration_ms / 60000)}:${Math.floor((track.duration_ms % 60000) / 1000).toFixed(0).padStart(2, '0')}
+            <div class="album_track_num">
+                <span class="album_track_num_txt">${index + 1}</span>
+                <button class="album_track_num_icon">
+                    <i class="fa-solid fa-play album_track_fa-play"></i>
+                </button>
             </div>
-            <button class="album_track_option_icon">
-              <i class="fa-solid fa-ellipsis album_track_fa-ellipsis"></i>
-            </button>
-          </div>
+            <div class="album_track_empty"></div>
+            <div class="album_track_info">
+                <span class="album_track_title">
+                    <a href="${track.external_urls.spotify}">${track.name}</a>
+                </span>
+                <span class="album_track_artists">
+                    ${artistList}
+                </span>
+            </div>
+            <div class="album_track_empty"></div>
+            <div class="album_track_time_box">
+                <button class="album_track_heart_icon">
+                    <i class="fa-regular fa-heart album_track_fa-heart"></i>
+                </button>
+                <div class="album_track_time">
+                    ${Math.floor(track.duration_ms / 60000)}:${Math.floor((track.duration_ms % 60000) / 1000).toFixed(0).padStart(2, '0')}
+                </div>
+                <button class="album_track_option_icon">
+                    <i class="fa-solid fa-ellipsis album_track_fa-ellipsis"></i>
+                </button>
+            </div>
         `;
         trackList.appendChild(trackElement);
     });
@@ -127,7 +134,7 @@ const main = async () => {
         const accessToken = await getAccessToken(CLIENT_ID, CLIENT_SECRET);
         const albums = await searchAlbums(clickedName, accessToken);
         if (albums.length > 0) {
-            updateAlbumsInDOM(albums); // 앨범 목록을 업데이트
+            updateAlbumsInDOM(albums); // 검색된 앨범 목록 업데이트
             const firstAlbumId = albums[0].id;
             const albumInfo = await getAlbumInfo(firstAlbumId, accessToken);
             console.log('Album Info:', albumInfo);
@@ -142,5 +149,3 @@ const main = async () => {
 
 // 메인 함수 실행
 document.addEventListener('DOMContentLoaded', main);
-
-

@@ -1,16 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-
-:root {
-    --main-font-color: #b3b3b3;
-    --background-base: #121212;
-  }
-
-button {
-    background: none;
-    border: none;
-    color: var(--main-font-color);
-  }
-
 /* 앨범정보 */
 .album_info {
     display: flex;
@@ -47,12 +34,10 @@ button {
 .album_artist_name,
 .album_release_year,
 .album_total_play_info {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+    display: flex;
+    align-items: center;
 }
 
-/* 플레이버튼, 하트버튼, 목록버튼 */
 .album_active_button_box {
     display: flex;
     align-items: center;
@@ -61,9 +46,9 @@ button {
     width: 100%;
     height: 80px;
     padding: 16px;
-  }
+}
 
-  .album_left_button_box {
+.album_left_button_box {
     width: 100%;
     height: 100%;
     display: flex;
@@ -114,13 +99,6 @@ button {
     color: #ffffffb2;
 }
 
-.album_list_button:hover span,
-.album_list_button:hover i {
-    color: #fff;
-}
-
-/* 트랙리스트 */
-/* 목록 */
 .album_track_title_box {
     display: grid;
     grid-template-columns: 12px 12px 8fr 12px 2fr;
@@ -148,9 +126,8 @@ button {
 
 .album_track_list_box {
     margin-top: 10px;
-  }
+}
 
-/* 트랙 */
 .album_track {
     display: grid;
     grid-template-columns: 12px 12px 8fr 12px 2fr;
@@ -164,7 +141,6 @@ button {
 
 .album_track_num {
     position: relative;
-    /* .album_track_num_txt, .album_track_num_icon 기준*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -179,7 +155,6 @@ button {
 .album_track_num:hover button {
     display: block;
 }
-
 
 .album_track_num_txt {
     position: absolute;
@@ -205,14 +180,25 @@ button {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    
 }
 
-.album_track_info span {
-    display: inline;
+/* 수정된 부분 */
+.album_track_artists {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
-.album_track_info a {
+.album_track_artists a {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.album_track_artists a:not(:last-child)::after {
+    content: ', ';
+}
+
+.album_track_title a {
     display: inline;
     color: #fff;
 }
@@ -245,9 +231,6 @@ button {
     color: #fff;
 }
 
-
-
-  /* 곡 더보기 */
-  .album_more_song {
+.album_more_song {
     margin-top: 50px;
-  }
+}
