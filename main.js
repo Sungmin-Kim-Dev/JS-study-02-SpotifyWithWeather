@@ -3,6 +3,8 @@ let longitude = 126.9779692;
 
 // 선택된 위치 저장 변수
 let selectedLatLng = null;
+// 저장된 마커 삭제 가능할지 여부
+let deleteMode = false;
 
 let mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
@@ -59,6 +61,8 @@ siteButton.addEventListener("click", getCurrentLocation)
 
 // 마커를 표시할 위치와 내용을 저장할 배열
 let positions = [];
+let markers = [];
+let infoWindows = [];
 
 // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
 function makeOverListener(map, marker, infowindow) {
@@ -106,12 +110,39 @@ addMarkerButton.addEventListener("click", () => {
 
         // 마커 클릭 이벤트 등록
         kakao.maps.event.addListener(newMarker, 'click', () => {
-            console.log('Marker clicked:', newMarker.getPosition().getLat(), newMarker.getPosition().getLng());
+            if (deleteMode) {
+                const confirmDelete = confirm("Do you want to delete this marker?");
+                if (confirmDelete) {
+                    infowindow.close();
+                    newMarker.setMap(null); // Remove marker from the map
+                    // Remove marker from positions array
+                    markers = markers.filter(marker => marker !== newMarker);
+                    infoWindows = infoWindows.filter(infoWin => infoWin !== infowindow);
+                    positions = positions.filter(position => position.latlng !== newMarker.getPosition());
+                    console.log("Marker deleted:", positions);
+                }
+            } else {
+                console.log('Marker clicked:', newMarker.getPosition().getLat(), newMarker.getPosition().getLng());
+            }
         });
 
+        markers.push(newMarker);
+        infoWindows.push(infowindow);
+        
         // 입력창 초기화
         document.getElementById("locationContent").value = '';
     } else {
         alert("Please click on the map to select a location and enter content.");
+    }
+});
+
+const deleteMarkerButton = document.getElementById("deleteMarkerButton");
+deleteMarkerButton.addEventListener("click", () => {
+    deleteMode = !deleteMode; // Toggle delete mode
+    if (deleteMode) {
+        deleteMarkerButton.textContent = "Exit Delete Mode";
+        alert("Click on a marker to delete it.");
+    } else {
+        deleteMarkerButton.textContent = "Delete Marker";
     }
 });
