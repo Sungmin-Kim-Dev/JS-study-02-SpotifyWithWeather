@@ -204,8 +204,7 @@ body {
     transform: scale(1.1);
   }
 }
-
-#section {
+.section-footer-container{
   padding: 1rem;
   border-radius: 0.5rem;
   /* 202020 - 121212 gradation */
@@ -214,6 +213,8 @@ body {
   @media screen and (min-width: 1526px) {
     padding: 1rem 1.5rem;
   }
+}
+#section {
 }
 
 .contents-header {
