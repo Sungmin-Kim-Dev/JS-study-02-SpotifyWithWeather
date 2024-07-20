@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let weatherMenuIcon = document.querySelector('.weather-menu-btn');
   let weatherName;
   let url;
+  let WEATHER_API_KEY = config.weatherAPI;
 
   const showWeatherIcon = (weather) => {
     switch (weather) {
@@ -32,9 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
       let lat = position.coords.latitude;
       let lon = position.coords.longitude;
 
-      url = './data/weather2.json';
+      // url = './data/weather2.json';
 
       // url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
+
+      // url = `https://api.openweathermap.org/data/3.0/onecall?lat=34.8127&lon=126.3793&appid=d4b800defbe4f3b28364a3642039beed`
+
+      url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}`;
 
       const response = await fetch(url);
       if (!response.ok) {
@@ -72,6 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
       let lon = position.coords.longitude;
 
       url = './data/weather2.json';
+
+      url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}`;
 
       // url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
 
@@ -204,16 +211,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const plItem = document.createElement('div');
       plItem.classList.add('contents-card', 'playlist-item');
 
-      const playlistName = playlist.name.trim();
-
       plItem.innerHTML = `
       <div class="card-img-box position-relative">
-        <a href="${playlist.external_urls.spotify}" class="weather-playlist-more" target="_blank">  
+        <a href="${
+          playlist.external_urls.spotify
+        }" class="weather-playlist-more" target="_blank">  
            <div class="card-img">
             <img src="${playlist.images[0].url}" alt="${playlist.name}" />
           </div>      
           <div class="card-text single-line-text">
-            <span>${playlistName}</span>
+            <span>${
+              playlist.name.length < 15
+                ? playlist.name
+                : playlist.name.substring(0, 15) + '...'
+            }</span>
           </div>
         </a>
       </div>

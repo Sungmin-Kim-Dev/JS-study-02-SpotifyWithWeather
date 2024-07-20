@@ -223,7 +223,12 @@ body {
   border-radius: 0.5rem;
   /* 202020 - 121212 gradation */
   background: rgb(32, 32, 32);
-  background: linear-gradient(180deg, rgba(32, 32, 32, 1) 0%, rgba(18, 18, 18, 1) 15%, rgba(18, 18, 18, 1) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(32, 32, 32, 1) 0%,
+    rgba(18, 18, 18, 1) 15%,
+    rgba(18, 18, 18, 1) 100%
+  );
   @media screen and (min-width: 1526px) {
     padding: 0.5rem 1.5rem;
   }
@@ -681,9 +686,87 @@ body {
   position: absolute;
   right: 2rem;
 }
-.search > img {
-  width: 200px !important;
-  height: 200px !important;
+/* 검색 결과 곡 UI */
+#section
+  > div:nth-child(1)
+  > div
+  > div.card-container.search-track
+  > div
+  > div.card-img-box.position-relative
+  > div.search-img
+  > img {
+  width: 50px;
+  height: 50px;
+}
+
+div:nth-child(1) > div > div.card-container.search-track {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#section
+  > div:nth-child(1)
+  > div
+  > div.card-container.search-track
+  > .search-playlist-item {
+  display: grid;
+  grid-template-columns: 50px 1fr 1fr 100px;
+  align-items: center;
+  height: 80px;
+  gap: 10px;
+}
+
+#section
+  > div:nth-child(1)
+  > div
+  > div.card-container.search-track
+  > .search-playlist-item
+  > div.card-text.search-track-list {
+  display: contents;
+}
+
+#section
+  > div:nth-child(1)
+  > div
+  > div.card-container.search-track
+  > .search-playlist-item
+  > div.card-text.search-track-list
+  > p {
+  margin: 0;
+  text-align: left;
+}
+#section
+  > div:nth-child(1)
+  > div
+  > div.card-container.search-track
+  > .search-playlist-item
+  > div.card-text.search-track-list
+  > p:nth-child(1) {
+  margin-left: 1rem;
+}
+
+#section
+  > div:nth-child(1)
+  > div
+  > div.card-container.search-track
+  > .search-playlist-item
+  > div.card-text.search-track-list
+  > p:last-child {
+  text-align: right;
+}
+#section
+  > div:nth-child(1)
+  > div
+  > div.contents-header.search_playlist_header
+  > div
+  > button {
+  display: none;
+}
+
+.search-album-tag,
+.search-genres-tag {
+  text-transform: capitalize;
 }
 
 /* 메인화면 날씨 아이콘 색상*/

@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('search.js');
   let searchList = [];
+  let trackCount = 0;
 
   const searchBtn = document.querySelector('.weather-search-btn');
   const searchInput = document.querySelector('.search-input');
@@ -180,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     searchList.forEach((item) => {
       if (item.type === 'track') {
+        if (trackCount >= 5) return;
         const duration = formatDuration(item.duration_ms);
         trackHTML += `
         <div class="contents-card search-playlist-item">
@@ -189,12 +191,21 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="card-text search-track-list">
-            <p>${item.name}</p>
-            <p>${item.artists[0].name}</p>
+            <p>${
+              item.name.length < 20
+                ? item.name
+                : item.name.substring(0, 20) + '...'
+            }</p>
+            <p>${
+              item.artists[0].name.length < 10
+                ? item.artists[0].name
+                : item.artists[0].name.substring(0, 10) + '...'
+            }</p>
             <p>${duration}</p>
           </div>
         </div>
       `;
+        trackCount++;
       } else if (item.type === 'playlist') {
         playlistHTML += `
         <div class="contents-card search-playlist-item">
@@ -204,7 +215,11 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="card-text search-playlist-list">
-            <p>${item.name}</p>
+            <p>${
+              item.name.length < 15
+                ? item.name
+                : item.name.substring(0, 15) + '...'
+            }</p>
           </div>
         </div>
       `;
@@ -217,13 +232,23 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="card-text search-album-list">
-            <p>${item.name}</p>
-            <p>${item.album_type}</p>
+            <p>${
+              item.name.length < 12
+                ? item.name
+                : item.name.substring(0, 12) + '...'
+            }</p>
+            <p class='search-album-tag'>${item.album_type}</p>
             <p>${item.release_date}</p>
           </div>
         </div>
       `;
       } else if (item.type === 'artist') {
+        if (item.genres && item.genres[0]) {
+          // 공백이 있는지 확인하고 'k-pop' 뒤의 부분을 제거하는 코드
+          if (item.genres[0].includes(' ')) {
+            item.genres[0] = item.genres[0].split(' ')[0];
+          }
+        }
         artistHTML += `
         <div class="contents-card search-playlist-item">
           <div class="card-img-box position-relative">
@@ -232,9 +257,15 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="card-text search-artist-list">
-            <p>${item.name}</p>
-            <p>${item.popularity}</p>
-            <p>${item.genres[0]}</p>
+            <p>
+              <span class="search-artist-rate">${item.name}<span>
+              <span class="search-artist-rating">${item.popularity}</span>
+            </p>
+            <p class='search-genres-tag'>${
+              item.genres[0] !== undefined || item.genres[0 !== null]
+                ? item.genres[0]
+                : '장르 분류 없음'
+            }</p>
           </div>
         </div>
       `;
