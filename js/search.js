@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('search.js');
-  let searchList = [];
-  let trackCount = 0;
+  let searchListSearchJS = [];
+  let trackCountSearchJS = 0;
 
-  const searchBtn = document.querySelector('.weather-search-btn');
-  const searchInput = document.querySelector('.search-input');
+  const searchBtnSearchJS = document.querySelector('.weather-search-btn');
+  const searchInputSearchJS = document.querySelector('.search-input');
 
-  searchBtn.addEventListener('click', () => {
+  searchBtnSearchJS.addEventListener('click', () => {
     const searchElement = document.querySelector('.search');
     searchElement.classList.toggle('search-active');
   });
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const albumItems = albumData.albums.items;
     const artistItems = artistData.artists.items;
 
-    searchList = [
+    searchListSearchJS = [
       ...trackItems,
       ...playlistItems,
       ...albumItems,
@@ -179,9 +179,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let albumHTML = '';
     let artistHTML = '';
 
-    searchList.forEach((item) => {
+    searchListSearchJS.forEach((item) => {
       if (item.type === 'track') {
-        if (trackCount >= 5) return;
+        if (trackCountSearchJS >= 5) return;
         const duration = formatDurationOnSearch(item.duration_ms);
         trackHTML += `
         <div class="contents-card search-playlist-item">
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       `;
-        trackCount++;
+        trackCountSearchJS++;
       } else if (item.type === 'playlist') {
         playlistHTML += `
         <div class="contents-card search-playlist-item">
@@ -264,13 +264,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelector('form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const query = searchInput.value;
+    const query = searchInputSearchJS.value;
     console.log(query);
     if (query) {
       await callSpotifySearchAPI(query);
     } else {
       console.error('Search query is empty');
     }
-    searchInput.value = '';
+    searchInputSearchJS.value = '';
   });
 });

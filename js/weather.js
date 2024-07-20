@@ -2,9 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const spinner = document.getElementById('spinner');
   let weatherMenuIcon = document.querySelector('.weather-menu-btn');
   let weatherName;
-  let url;
+  let weatherurl;
   let WEATHER_API_KEY = config.weatherAPI;
-  let cityName;
 
   const showWeatherIcon = (weather) => {
     switch (weather) {
@@ -34,13 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
       let lat = position.coords.latitude;
       let lon = position.coords.longitude;
 
-      // url = './data/weather2.json';
+      // weatherurl = './data/weather2.json';
 
-      // url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
+      // weatherurl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
 
-      url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_API_KEY}`;
+      weatherurl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_API_KEY}`;
 
-      const response = await fetch(url);
+      const response = await fetch(weatherurl);
       if (!response.ok) {
         throw new Error(`Error: ${response.status} ${response.statusText}`);
       }
@@ -75,13 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
       let lat = position.coords.latitude;
       let lon = position.coords.longitude;
 
-      // url = './data/weather2.json';
+      // weatherurl = './data/weather2.json';
 
-      url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_API_KEY}`;
+      weatherurl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_API_KEY}`;
 
-      // url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
+      // weatherurl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
 
-      const response = await fetch(url);
+      const response = await fetch(weatherurl);
       if (!response.ok) {
         throw new Error(`Error: ${response.status} ${response.statusText}`);
       }
@@ -215,10 +214,12 @@ document.addEventListener('DOMContentLoaded', () => {
       plItem.innerHTML = `
       <div class="card-img-box position-relative">
         <a href="${
-          playlist.external_urls.spotify
+          playlist.external_weatherurls.spotify
         }" class="weather-playlist-more" target="_blank">  
            <div class="card-img">
-            <img src="${playlist.images[0].url}" alt="${playlist.name}" />
+            <img src="${playlist.images[0].weatherurl}" alt="${
+        playlist.name
+      }" />
           </div>      
           <div class="card-text single-line-text">
             <span>${
@@ -240,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const response = await fetch(`https://accounts.spotify.com/api/token`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/x-www-form-weatherurlencoded',
         Authorization: `Basic ${encodedCredentials}`,
       },
       body: 'grant_type=client_credentials',
@@ -250,10 +251,10 @@ document.addEventListener('DOMContentLoaded', () => {
     return data.access_token;
   };
 
-  const fetchTrackFeatures = async (trackId, token) => {
-    url = `https://api.spotify.com/v1/audio-features/${trackId}`;
+  const fetchTrackFeaturesWeather = async (trackId, token) => {
+    weatherurl = `https://api.spotify.com/v1/audio-features/${trackId}`;
 
-    const response = await fetch(url, {
+    const response = await fetch(weatherurl, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -304,15 +305,15 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const musicInfo = await Promise.all(
         tracks.map(async (track) => {
-          const features = await fetchTrackFeatures(track.id, token);
+          const features = await fetchTrackFeaturesWeather(track.id, token);
           let musicDescription = {
             id: track.id,
             releaseDate: track.album.release_date,
             songName: track.name,
             artist: track.artists[0].name,
             album: track.album.name,
-            albumCover: track.album.images[2].url,
-            playMusic: track.preview_url,
+            albumCover: track.album.images[2].weatherurl,
+            playMusic: track.preview_weatherurl,
             danceability: features.danceability,
             energy: features.energy,
             tempo: features.tempo,
