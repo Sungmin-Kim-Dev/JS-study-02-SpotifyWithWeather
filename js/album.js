@@ -92,20 +92,20 @@ const updateAlbumsInDom = (albumInfo, albums) => {
                     </button>
                 </div>
                 <div class="album_heart_button">
-                    <button class="album_heart_icon">
+                    <button class="album_heart_icon album_left_button_color">
                         <i class="fa-regular fa-heart album_fa-heart"></i>
                     </button>
                 </div>
                 <div class="album_option_button">
-                    <button class="album_option_icon">
+                    <button class="album_option_icon album_left_button_color">
                         <i class="fa-solid fa-ellipsis album_fa-ellipsis"></i>
                     </button>
                 </div>
             </div>
             <div class="album_list_view_box">
                 <button class="album_list_button">
-                    <span>목록</span>
-                    <i class="fa-solid fa-list album_fa-list"></i>
+                    <span class="album_list_color">목록</span>
+                    <i class="fa-solid fa-list album_fa-list album_list_color"></i>
                 </button>
             </div>
         </div>
@@ -145,13 +145,13 @@ const updateAlbumsInDom = (albumInfo, albums) => {
                     <div class="album_track_empty"></div>
                     <div class="album_track_time_box">
                         <button class="album_track_heart_icon">
-                            <i class="fa-regular fa-heart album_track_fa-heart"></i>
+                            <i class="fa-regular fa-heart album_track_fa-heart album_track_icon_color"></i>
                         </button>
                         <div class="album_track_time">
                             ${Math.floor(track.duration_ms / 60000)}:${Math.floor((track.duration_ms % 60000) / 1000).toFixed(0).padStart(2, '0')}
                         </div>
                         <button class="album_track_option_icon">
-                            <i class="fa-solid fa-ellipsis album_track_fa-ellipsis"></i>
+                            <i class="fa-solid fa-ellipsis album_track_fa-ellipsis album_track_icon_color"></i>
                         </button>
                     </div>
                 </div>

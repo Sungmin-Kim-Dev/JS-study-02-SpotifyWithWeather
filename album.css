@@ -57,19 +57,32 @@
 }
 
 .album_play_button {
-    width: 48px;
-    height: 100%;
-    background-color: #fff;
+    width: 3.5rem;
+    height: 3.5rem;
+    z-index: 2;
+    background: url(img/play-button.png) no-repeat center;
+    background-size: contain;
+    opacity: 0.9;
+    border-radius: 50%;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
 }
 
 .album_fa-heart {
     font-size: 28px;
-    color: #ffffffb2;
+    color: var(--main-font-color);
 }
 
 .album_fa-ellipsis {
     font-size: 24px;
-    color: #ffffffb2;
+    color: var(--main-font-color);
+}
+
+.album_left_button_color:hover .album_fa-heart {
+    color: #fff;
+}
+
+.album_left_button_color:hover .album_fa-ellipsis {
+    color: #fff;
 }
 
 .album_list_view_box {
@@ -91,12 +104,16 @@
 
 .album_list_button > span {
     width: auto;
-    color: #ffffffb2;
+    color: var(--main-font-color);
 }
 
 .album_fa-list {
     font-size: 16px;
-    color: #ffffffb2;
+    color: var(--main-font-color);
+}
+
+.album_list_button:hover .album_list_color {
+    color: #fff;
 }
 
 .album_track_title_box {
@@ -137,6 +154,10 @@
 
 .album_track:hover {
     background-color: #fff2;
+}
+
+.album_track:hover .album_track_icon_color {
+    color: var(--main-font-color);
 }
 
 .album_track_num {
@@ -216,7 +237,7 @@
 }
 
 .album_track_fa-heart {
-    color: #000;
+    color: transparent;
 }
 
 .album_track_heart_icon:hover i {
@@ -224,7 +245,7 @@
 }
 
 .album_track_fa-ellipsis {
-    color: #000;
+    color: transparent;
 }
 
 .album_track_option_icon:hover i {
