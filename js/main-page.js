@@ -1,5 +1,7 @@
-const ClientIDSKim = config.clientID;
-const ClientSecretSKim = config.clientSecret;
+// const ClientIDSKim = config.clientID;
+// const ClientSecretSKim = config.clientSecret;
+const ClientIDSKim = '411944574c3745f49a0ae819f629170b';
+const ClientSecretSKim = '20eb343e234c4ec7ac730215cab938cc';
 const artistAPI = `https://api.spotify.com/v1/artists/`;
 
 const getTokenSKim = async () => {
@@ -85,11 +87,11 @@ const renderCardFull = async (clickedTitle) => {
   let prevHTML = `
     <div class="contents-line mt-5">
       <div class="contents-header">
-        <a href="#" class="contents-header-title h4 text-white hover-none-underline">${contentsTitle}</a>
+        <a href="#" class="contents-header-title h2 text-white hover-none-underline">${contentsTitle}</a>
       </div>
       <div class="card-container">`;
   let renderHTML = renderCardLine(albumList);
-  let closingHTML = `</div></div>`
+  let closingHTML = `</div></div>`;
   document.getElementById('section').innerHTML = prevHTML + renderHTML + closingHTML;
 
   // 화면 전환 후 스타일 조정

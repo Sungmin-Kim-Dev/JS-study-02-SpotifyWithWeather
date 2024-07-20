@@ -67,10 +67,6 @@ body {
   padding: 0.5rem;
 }
 
-.hover-none-underline:hover {
-  text-decoration: none;
-}
-
 .logo-box {
   padding: 0.5rem 0.75rem;
 }
@@ -362,8 +358,6 @@ body {
 .contents-header-show-more:hover {
   text-decoration: underline;
 }
-
-
 
 .card-container {
   display: grid;
@@ -731,4 +725,8 @@ h4 > .thunder {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.hover-none-underline:hover {
+  text-decoration: none;
 }
