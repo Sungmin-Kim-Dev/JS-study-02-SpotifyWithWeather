@@ -123,6 +123,14 @@ document.addEventListener('DOMContentLoaded', () => {
     await fetchAllSpotifyData(urls, token);
   };
 
+  // 밀리초를 분과 초로 변환하는 함수
+  const formatDuration = (durationMs) => {
+    const minutes = Math.floor(durationMs / 60000);
+    const seconds = Math.floor((durationMs % 60000) / 1000);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  // 검색 결과 렌더링
   const renderSearchResult = () => {
     const section = document.getElementById('section');
     section.innerHTML = '';
@@ -172,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     searchList.forEach((item) => {
       if (item.type === 'track') {
+        const duration = formatDuration(item.duration_ms);
         trackHTML += `
         <div class="contents-card search-playlist-item">
           <div class="card-img-box position-relative">
@@ -182,6 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="card-text search-track-list">
             <p>${item.name}</p>
             <p>${item.artists[0].name}</p>
+            <p>${duration}</p>
           </div>
         </div>
       `;
