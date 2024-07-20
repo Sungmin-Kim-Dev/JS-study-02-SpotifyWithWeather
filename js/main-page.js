@@ -1,7 +1,6 @@
-// const ClientIDSKim = config.clientID;
-// const ClientSecretSKim = config.clientSecret;
-const ClientIDSKim = '411944574c3745f49a0ae819f629170b';
-const ClientSecretSKim = '20eb343e234c4ec7ac730215cab938cc';
+const ClientIDSKim = config.clientID;
+const ClientSecretSKim = config.clientSecret;
+
 const artistAPI = `https://api.spotify.com/v1/artists/`;
 
 const getTokenSKim = async () => {
