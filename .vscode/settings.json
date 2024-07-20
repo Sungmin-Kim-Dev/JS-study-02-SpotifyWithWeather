@@ -1,3 +1,6 @@
 {
-  "cSpell.ignoreWords": ["Noonatify"]
+  "cSpell.ignoreWords": [
+    "Noonatify"
+  ],
+  "liveServer.settings.port": 5502
 }
