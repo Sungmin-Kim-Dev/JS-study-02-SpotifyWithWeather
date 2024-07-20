@@ -135,6 +135,7 @@ body {
 .footer-link-cookie {
   font-size: 11px;
   line-height: 1.5rem;
+  display: inline-block;
   &:hover {
     text-decoration: underline;
   }
@@ -469,6 +470,7 @@ body {
 }
 .right-footer-links > li {
   width: 30%;
+  max-width: 12.5rem;
   min-width: fit-content;
 }
 
