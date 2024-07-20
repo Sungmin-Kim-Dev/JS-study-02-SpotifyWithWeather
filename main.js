@@ -15,6 +15,44 @@ const showTwoLines = (button) => {
   cardContainer.classList.toggle('card-two-lines');
 };
 
+// 창크기 400px 미만 경고화면 표시
+const checkWindowSize = () => {
+  if (window.innerWidth <= 400) {
+    console.log('resize');
+
+    // 경고 메시지가 이미 존재하지 않는 경우에만 생성
+    if (!document.querySelector('.browser-alert')) {
+      const div = document.createElement('div');
+      const wrap = document.getElementById('wrap');
+      const spinner = document.getElementById('spinner');
+
+      if (wrap && spinner) {
+        document.body.appendChild(div);
+        div.classList.add('browser-alert');
+        console.log('Hiding wrap and spinner');
+
+        wrap.style.setProperty('display', 'none', 'important');
+        spinner.style.setProperty('display', 'none', 'important');
+        div.innerHTML = `
+          <p class='alert-message'>브라우저 창이 너무 작습니다</p>
+          <p class='alert-message'>화면을 넓혀 사용해주세요</p>
+        `;
+      }
+    }
+  } else {
+    const existingAlert = document.querySelector('.browser-alert');
+    if (existingAlert) {
+      existingAlert.remove();
+      console.log('Showing wrap and spinner');
+      document.getElementById('wrap').style.display = '';
+      document.getElementById('spinner').style.display = '';
+    }
+  }
+};
+
+window.addEventListener('resize', checkWindowSize);
+document.addEventListener('DOMContentLoaded', checkWindowSize);
+
 // 지도 관련
 let latitude = 37.566535;
 let longitude = 126.9779692;
@@ -120,8 +158,16 @@ addMarkerButton.addEventListener('click', () => {
     });
 
     // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-    kakao.maps.event.addListener(newMarker, 'mouseover', makeOverListener(map, newMarker, infowindow));
-    kakao.maps.event.addListener(newMarker, 'mouseout', makeOutListener(infowindow));
+    kakao.maps.event.addListener(
+      newMarker,
+      'mouseover',
+      makeOverListener(map, newMarker, infowindow)
+    );
+    kakao.maps.event.addListener(
+      newMarker,
+      'mouseout',
+      makeOutListener(infowindow)
+    );
 
     // 마커 클릭 이벤트 등록
     kakao.maps.event.addListener(newMarker, 'click', () => {
@@ -133,11 +179,17 @@ addMarkerButton.addEventListener('click', () => {
           // Remove marker from positions array
           markers = markers.filter((marker) => marker !== newMarker);
           infoWindows = infoWindows.filter((infoWin) => infoWin !== infowindow);
-          positions = positions.filter((position) => position.latlng !== newMarker.getPosition());
+          positions = positions.filter(
+            (position) => position.latlng !== newMarker.getPosition()
+          );
           console.log('Marker deleted:', positions);
         }
       } else {
-        console.log('Marker clicked:', newMarker.getPosition().getLat(), newMarker.getPosition().getLng());
+        console.log(
+          'Marker clicked:',
+          newMarker.getPosition().getLat(),
+          newMarker.getPosition().getLng()
+        );
       }
     });
 
@@ -161,4 +213,3 @@ deleteMarkerButton.addEventListener('click', () => {
     deleteMarkerButton.textContent = 'Delete Marker';
   }
 });
-

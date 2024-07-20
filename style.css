@@ -810,3 +810,17 @@ h4 > .thunder {
     color: var(--cloud);
   }
 }
+
+/* 400px 미만 경고메시지 표시 */
+.browser-alert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  color: var(--main-accent-color);
+  background-color: var(--black);
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+}
