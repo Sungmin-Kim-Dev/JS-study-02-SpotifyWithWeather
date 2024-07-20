@@ -21,9 +21,10 @@ const getTokenSKim = async () => {
 };
 
 // https://open.spotify.com/section/0JQ5DAnM3wGh0gz1MXnu3C
-let popularArtistsURL = `https://api.spotify.com/v1/top/artists`;
+let spotifyBasicAPI = `https://api.spotify.com/v1/`;
+let popularArtistsURL = `top/artists`;
 // https://api.spotify.com/v1/browse/new-releases
-let newReleaseURL = `https://api.spotify.com/v1/browse/new-releases`;
+let newReleaseURL = `browse/new-releases`;
 
 const fetchNewReleases = async (url, token) => {
   const response = await fetch(url, {
@@ -41,17 +42,20 @@ const fetchNewReleases = async (url, token) => {
   return data;
 };
 
-const callAlbumLine = async (url, HTML_ID) => {
-  url = url + `?limit=9`
+const callContentsLine = async (url, HTML_ID) => {
+  const contentsLine = document.getElementById(HTML_ID).closest('.contents-line');
+  contentsLine.id = url;
+  url = spotifyBasicAPI + url + `?limit=9`;
   const token = await getTokenSKim();
   let itemList = await fetchNewReleases(url, token);
   let albumList = itemList.albums.items;
-  renderCardLine(albumList, HTML_ID);
+  let renderHTML = renderCardLine(albumList);
+  document.getElementById(HTML_ID).innerHTML = renderHTML;
 };
 
-callAlbumLine(newReleaseURL, 'new-release-line');
+callContentsLine(newReleaseURL, 'new-release-line');
 
-const renderCardLine = (list, HTML_ID) => {
+const renderCardLine = (list) => {
   let cardItemHTML = list.map((album) => {
     return `<div class="contents-card">
       <div class="card-img-box position-relative">
@@ -66,7 +70,30 @@ const renderCardLine = (list, HTML_ID) => {
       </div>
     </div>`;
   });
-  document.getElementById(HTML_ID).innerHTML = cardItemHTML.join('');
+  return cardItemHTML.join('');
 };
 
+const renderCardFull = async (clickedTitle) => {
+  const contentsTitle = clickedTitle.closest('.contents-header-title').innerText;
+  console.log(contentsTitle);
+  const contentsLine = clickedTitle.closest('.contents-line');
+  const apiURL = contentsLine.id;
+  let url = spotifyBasicAPI + apiURL + `?limit=20`;
+  const token = await getTokenSKim();
+  let itemList = await fetchNewReleases(url, token);
+  let albumList = itemList.albums.items;
+  let prevHTML = `
+    <div class="contents-line mt-5">
+      <div class="contents-header">
+        <a href="#" class="contents-header-title h4 text-white hover-none-underline">${contentsTitle}</a>
+      </div>
+      <div class="card-container">`;
+  let renderHTML = renderCardLine(albumList);
+  let closingHTML = `</div></div>`
+  document.getElementById('section').innerHTML = prevHTML + renderHTML + closingHTML;
 
+  // 화면 전환 후 스타일 조정
+  document.querySelector('.card-container').style.gridAutoRows = 'auto';
+  let title = document.querySelector('.contents-header-title');
+  title.style.cursor = 'text';
+};

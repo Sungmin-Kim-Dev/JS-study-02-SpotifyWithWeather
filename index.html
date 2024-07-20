@@ -391,6 +391,33 @@
           </div>
           <!-- 날씨 플레이리스트 끝 -->
           <div class="contents-container d-flex flex-column gap-4">
+            <div class="contents-line">
+              <div class="contents-header">
+                <a href="#" class="contents-header-title h4 text-white" onclick="renderCardFull(this)">새로 나온 앨범</a>
+                <button class="contents-header-show-more" onclick="showTwoLines(this)">더 보기</button>
+              </div>
+              <!-- 카드 그리드 시작 -->
+              <!-- 다음 줄에 id 추가해 주세요. -->
+              <div class="card-container" id="new-release-line">
+                <!-- 여기서부터 반복해야 할 부분 -->
+                <!-- 한 줄만 표시할 때는 최대 9개까지만 불러와주세요. -->
+                <div class="contents-card">
+                  <div class="card-img-box position-relative">
+                    <div class="card-play-btn"></div>
+                    <div class="card-img">
+                      <img src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2" alt="">
+                    </div>
+                  </div>
+                  <div class="card-text">
+                    <p class="card-title">How Sweet</p>
+                    <p class="card-subtitle card-subtitle-artist">NewJeans</p>
+                  </div>
+                </div>
+                <!-- 카드 1장 끝 -->
+              </div>
+              <!-- 카드 그리드 끝 -->
+            </div>
+            <!-- 전체 한 줄 끝 -->
             <div class="contents-line" id="main-popular-artist">
               <div class="contents-header">
                 <a href="#" class="contents-header-title h4 text-white">인기 아티스트</a>
@@ -620,33 +647,6 @@
                   </div>
                 </div>
                 <!-- 카드 1장 끝 -->
-                <div class="contents-card">
-                  <div class="card-img-box position-relative">
-                    <div class="card-play-btn"></div>
-                    <div class="card-img">
-                      <img src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2" alt="">
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <p class="card-title">How Sweet</p>
-                    <p class="card-subtitle card-subtitle-artist">NewJeans</p>
-                  </div>
-                </div>
-                <!-- 카드 1장 끝 -->
-              </div>
-              <!-- 카드 그리드 끝 -->
-            </div>
-            <!-- 전체 한 줄 끝 -->
-            <div class="contents-line">
-              <div class="contents-header">
-                <a href="#" class="contents-header-title h4 text-white" onclick="renderCardFull(this)">새로 나온 앨범</a>
-                <button class="contents-header-show-more" onclick="showTwoLines(this)">더 보기</button>
-              </div>
-              <!-- 카드 그리드 시작 -->
-              <!-- 다음 줄에 id 추가해 주세요. -->
-              <div class="card-container" id="new-release-line">
-                <!-- 여기서부터 반복해야 할 부분 -->
-                <!-- 한 줄만 표시할 때는 최대 9개까지만 불러와주세요. -->
                 <div class="contents-card">
                   <div class="card-img-box position-relative">
                     <div class="card-play-btn"></div>

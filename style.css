@@ -67,6 +67,10 @@ body {
   padding: 0.5rem;
 }
 
+.hover-none-underline:hover {
+  text-decoration: none;
+}
+
 .logo-box {
   padding: 0.5rem 0.75rem;
 }
@@ -348,15 +352,19 @@ body {
 }
 
 .contents-header {
-  padding: 0.5rem 0;
+  padding: 0.5rem 0.75rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .contents-header-title:hover,
 .contents-header-show-more:hover {
   text-decoration: underline;
 }
+
+
+
 .card-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -486,6 +494,8 @@ body {
   color: white;
   text-decoration: underline;
 }
+
+
 
 .f-social {
   display: flex;
