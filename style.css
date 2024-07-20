@@ -135,6 +135,7 @@ body {
 .footer-link-cookie {
   font-size: 11px;
   line-height: 1.5rem;
+  display: inline-block;
   &:hover {
     text-decoration: underline;
   }
@@ -417,6 +418,11 @@ body {
 }
 .card-subtitle {
   font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 .card-subtitle-artist:hover {
   text-decoration: underline;
@@ -464,6 +470,7 @@ body {
 }
 .right-footer-links > li {
   width: 30%;
+  max-width: 12.5rem;
   min-width: fit-content;
 }
 
