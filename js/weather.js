@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let weatherName;
   let url;
   let WEATHER_API_KEY = config.weatherAPI;
+  let cityName;
 
   const showWeatherIcon = (weather) => {
     switch (weather) {
@@ -37,9 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
 
-      // url = `https://api.openweathermap.org/data/3.0/onecall?lat=34.8127&lon=126.3793&appid=d4b800defbe4f3b28364a3642039beed`
-
-      url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}`;
+      url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_API_KEY}`;
 
       const response = await fetch(url);
       if (!response.ok) {
@@ -68,6 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const getWeatherInfo = async () => {
     try {
       spinner.style.display = 'flex';
+      if (spinner) {
+        document.getElementById('section').style.backgroundColor = 'white';
+        document.getElementById('section').style.filter = 'blur(5px)';
+      }
 
       const position = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -76,9 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
       let lat = position.coords.latitude;
       let lon = position.coords.longitude;
 
-      url = './data/weather2.json';
+      // url = './data/weather2.json';
 
-      url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}`;
+      url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_API_KEY}`;
 
       // url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
 
@@ -94,7 +97,20 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error('Invalid weather data');
       }
 
-      renderHTML(data);
+      const cityURL = `
+      http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}
+      `;
+
+      const cityResponse = await fetch(cityURL);
+
+      const cityData = await cityResponse.json();
+      console.log(cityData[0]);
+      console.log(cityData[0].name);
+      console.log(cityData[0].local_names.ko);
+      cityName = cityData[0].local_names.ascii;
+
+      renderHTML(data, cityName);
+
       const weatherDescription = matchWeather(data.current.weather[0].main);
       console.log('weatherDescription', weatherDescription);
 
@@ -104,11 +120,14 @@ document.addEventListener('DOMContentLoaded', () => {
     } finally {
       if (spinner) {
         spinner.style.display = 'none'; // 로딩 스피너 숨김
+        document.getElementById('section').style.backgroundColor =
+          'transparent';
+        document.getElementById('section').style.filter = 'none';
       }
     }
   };
 
-  const renderHTML = (data) => {
+  const renderHTML = (data, city) => {
     const nav = document.querySelector('#nav');
     // 기존 섹션을 지웁니다.
     const existingSection = nav.querySelector('.weather-display');
@@ -124,11 +143,13 @@ document.addEventListener('DOMContentLoaded', () => {
         data.current.weather[0].icon
       }@2x.png" alt="weather_Icon" />
       <div class='weather-current'>${data.current.weather[0].main}</div>
-      <p class='weather-temp'>${data.current.temp.toFixed(1)}°</p>
+      <p class='weather-temp'>${data.current.temp.toFixed(1)}°C</p>
+ <p class='weather-city-name'>${city}</p>
     </div>
     `;
     nav.appendChild(section);
   };
+  //
 
   const createWeatherPlaylistSection = () => {
     const section = document.querySelector('#section');
