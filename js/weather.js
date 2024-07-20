@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let weatherMenuIcon = document.querySelector('.weather-menu-btn');
   let weatherName;
   let weatherurl;
-  let WEATHER_API_KEY = config.weatherAPI;
 
   const showWeatherIcon = (weather) => {
     switch (weather) {
@@ -23,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const getWeatherIcon = async () => {
+    const WEATHER_API_KEY = config.weatherAPI;
     try {
       spinner.style.display = 'flex'; // 로딩 스피너 표시
 
@@ -34,9 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
       let lon = position.coords.longitude;
 
       // weatherurl = './data/weather2.json';
-
-      // weatherurl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
-
       weatherurl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_API_KEY}`;
 
       const response = await fetch(weatherurl);
@@ -64,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const getWeatherInfo = async () => {
+    const WEATHER_API_KEY = config.weatherAPI;
     try {
       spinner.style.display = 'flex';
 
@@ -75,10 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let lon = position.coords.longitude;
 
       // weatherurl = './data/weather2.json';
-
       weatherurl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_API_KEY}`;
-
-      // weatherurl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
 
       const response = await fetch(weatherurl);
       if (!response.ok) {
@@ -109,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const renderWeatherHTML = (data) => {
     const nav = document.querySelector('#nav');
-    // 기존 섹션을 지웁니다.
     const existingSection = nav.querySelector('.weather-display');
     if (existingSection) {
       nav.removeChild(existingSection);
@@ -128,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     nav.appendChild(section);
   };
-  //
 
   const createWeatherPlaylistSection = () => {
     const section = document.querySelector('#section');
@@ -173,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mainWeatherPlaylist.appendChild(contentsLine);
     section.appendChild(mainWeatherPlaylist);
   };
+
   const renderWeatherPlaylists = (playlists) => {
     createWeatherPlaylistSection();
     const mainWeatherPlaylist = document.querySelector(
@@ -214,12 +208,10 @@ document.addEventListener('DOMContentLoaded', () => {
       plItem.innerHTML = `
       <div class="card-img-box position-relative">
         <a href="${
-          playlist.external_weatherurls.spotify
+          playlist.external_urls.spotify
         }" class="weather-playlist-more" target="_blank">  
            <div class="card-img">
-            <img src="${playlist.images[0].weatherurl}" alt="${
-        playlist.name
-      }" />
+            <img src="${playlist.images[0].url}" alt="${playlist.name}" />
           </div>      
           <div class="card-text single-line-text">
             <span>${
@@ -241,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const response = await fetch(`https://accounts.spotify.com/api/token`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-weatherurlencoded',
+        'Content-Type': 'application/x-www-form-urlencoded', // 수정된 부분
         Authorization: `Basic ${encodedCredentials}`,
       },
       body: 'grant_type=client_credentials',
@@ -252,9 +244,9 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const fetchTrackFeaturesWeather = async (trackId, token) => {
-    weatherurl = `https://api.spotify.com/v1/audio-features/${trackId}`;
+    const url = `https://api.spotify.com/v1/audio-features/${trackId}`;
 
-    const response = await fetch(weatherurl, {
+    const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -274,7 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const token = await getAccessTokenWeather(CLIENT_ID, CLIENT_SECRET);
     let query = weatherDescription;
 
-    // 날씨가 'Clear'인 경우 query를 'sunny'로 설정
     if (weatherDescription === 'Clear') {
       query = 'sunny';
     }
@@ -312,8 +303,8 @@ document.addEventListener('DOMContentLoaded', () => {
             songName: track.name,
             artist: track.artists[0].name,
             album: track.album.name,
-            albumCover: track.album.images[2].weatherurl,
-            playMusic: track.preview_weatherurl,
+            albumCover: track.album.images[2].url,
+            playMusic: track.preview_url,
             danceability: features.danceability,
             energy: features.energy,
             tempo: features.tempo,
@@ -448,7 +439,6 @@ document.addEventListener('DOMContentLoaded', () => {
       getWeatherInfo();
       getWeatherIcon();
 
-      // .weather-playlist-row의 overflow 속성을 visible로 설정
       const weatherPlaylistRow = document.querySelector(
         '.weather-playlist-row'
       );
