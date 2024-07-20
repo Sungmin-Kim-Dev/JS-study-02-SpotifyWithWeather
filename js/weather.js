@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(weatherName);
       weatherMenuIcon.innerHTML = showWeatherIcon(weatherName) + ' 날씨 추천곡';
 
-      await callSpotifyAPI(weatherName);
+      await callSpotifyWeatherAPI(weatherName);
     } catch (error) {
       console.log('Error Message >> ', error);
     } finally {
@@ -93,12 +93,12 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error('Invalid weather data');
       }
 
-      renderHTML(data);
+      renderWeatherHTML(data);
 
       const weatherDescription = matchWeather(data.current.weather[0].main);
       console.log('weatherDescription', weatherDescription);
 
-      await callSpotifyAPI(weatherDescription);
+      await callSpotifyWeatherAPI(weatherDescription);
     } catch (error) {
       console.log('Error Message >> ', error);
     } finally {
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const renderHTML = (data) => {
+  const renderWeatherHTML = (data) => {
     const nav = document.querySelector('#nav');
     // 기존 섹션을 지웁니다.
     const existingSection = nav.querySelector('.weather-display');
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mainWeatherPlaylist.appendChild(contentsLine);
     section.appendChild(mainWeatherPlaylist);
   };
-  const renderPlaylists = (playlists) => {
+  const renderWeatherPlaylists = (playlists) => {
     createWeatherPlaylistSection();
     const mainWeatherPlaylist = document.querySelector(
       '.main_weather_playlist'
@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  const getAccessToken = async (CLIENT_ID, CLIENT_SECRET) => {
+  const getAccessTokenWeather = async (CLIENT_ID, CLIENT_SECRET) => {
     const encodedCredentials = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
 
     const response = await fetch(`https://accounts.spotify.com/api/token`, {
@@ -266,11 +266,11 @@ document.addEventListener('DOMContentLoaded', () => {
     return response.json();
   };
 
-  const callSpotifyAPI = async (weatherDescription) => {
+  const callSpotifyWeatherAPI = async (weatherDescription) => {
     const CLIENT_ID = config.clientID;
     const CLIENT_SECRET = config.clientSecret;
 
-    const token = await getAccessToken(CLIENT_ID, CLIENT_SECRET);
+    const token = await getAccessTokenWeather(CLIENT_ID, CLIENT_SECRET);
     let query = weatherDescription;
 
     // 날씨가 'Clear'인 경우 query를 'sunny'로 설정
@@ -297,10 +297,10 @@ document.addEventListener('DOMContentLoaded', () => {
       throw new Error('No playlists found');
     }
 
-    renderPlaylists(spotifyData.playlists.items);
+    renderWeatherPlaylists(spotifyData.playlists.items);
   };
 
-  const loadMusic = async (tracks, token, weatherDescription) => {
+  const loadWeatherMusic = async (tracks, token, weatherDescription) => {
     try {
       const musicInfo = await Promise.all(
         tracks.map(async (track) => {

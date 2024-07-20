@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     searchElement.classList.toggle('search-active');
   });
 
-  const getAccessToken = async (CLIENT_ID, CLIENT_SECRET) => {
+  const getSearchAccessToken = async (CLIENT_ID, CLIENT_SECRET) => {
     const encodedCredentials = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
 
     const response = await fetch(`https://accounts.spotify.com/api/token`, {
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return data.access_token;
   };
 
-  const getSpotifyURLs = (query) => {
+  const getSpotifySearchURLs = (query) => {
     return {
       trackURL: `https://api.spotify.com/v1/search?q=${query}&type=track`,
       playlistURL: `https://api.spotify.com/v1/search?q=${query}&type=playlist`,
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   };
 
-  const fetchSpotifyData = async (url, token) => {
+  const fetchSpotifySearchData = async (url, token) => {
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -88,13 +88,13 @@ document.addEventListener('DOMContentLoaded', () => {
     section.appendChild(mainWeatherPlaylist);
   };
 
-  const fetchAllSpotifyData = async (urls, token) => {
+  const fetchAllSpotifySearchData = async (urls, token) => {
     createSearchPlaylistSection();
     const [trackData, playlistData, albumData, artistData] = await Promise.all([
-      fetchSpotifyData(urls.trackURL, token),
-      fetchSpotifyData(urls.playlistURL, token),
-      fetchSpotifyData(urls.albumURL, token),
-      fetchSpotifyData(urls.artistURL, token),
+      fetchSpotifySearchData(urls.trackURL, token),
+      fetchSpotifySearchData(urls.playlistURL, token),
+      fetchSpotifySearchData(urls.albumURL, token),
+      fetchSpotifySearchData(urls.artistURL, token),
     ]);
 
     const trackItems = trackData.tracks.items;
@@ -115,17 +115,17 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('artistItems\n', artistItems);
   };
 
-  const callSpotifyAPI = async (query) => {
+  const callSpotifySearchAPI = async (query) => {
     const CLIENT_ID = config.clientID;
     const CLIENT_SECRET = config.clientSecret;
 
-    const token = await getAccessToken(CLIENT_ID, CLIENT_SECRET);
-    const urls = getSpotifyURLs(query);
-    await fetchAllSpotifyData(urls, token);
+    const token = await getSearchAccessToken(CLIENT_ID, CLIENT_SECRET);
+    const urls = getSpotifySearchURLs(query);
+    await fetchAllSpotifySearchData(urls, token);
   };
 
   // 밀리초를 분과 초로 변환하는 함수
-  const formatDuration = (durationMs) => {
+  const formatDurationOnSearch = (durationMs) => {
     const minutes = Math.floor(durationMs / 60000);
     const seconds = Math.floor((durationMs % 60000) / 1000);
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const section = document.getElementById('section');
     section.innerHTML = '';
 
-    const createCategorySection = (title, htmlContent) => {
+    const createSearchCategorySection = (title, htmlContent) => {
       const categoryContainer = document.createElement('div');
       categoryContainer.classList.add(
         'contents-container',
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'text-white',
         'search-result-header-text'
       );
-      headerTitle.innerHTML = `<h1>${title}</h1><button class="contents-header-show-more search-row-more" onclick="showTwoLines(this)">더보기</button>`;
+      headerTitle.innerHTML = `<h4>${title}</h4><button class="contents-header-show-more search-row-more" onclick="showTwoLines(this)">더보기</button>`;
 
       playlistHeader.appendChild(headerTitle);
 
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
     searchList.forEach((item) => {
       if (item.type === 'track') {
         if (trackCount >= 5) return;
-        const duration = formatDuration(item.duration_ms);
+        const duration = formatDurationOnSearch(item.duration_ms);
         trackHTML += `
         <div class="contents-card search-playlist-item">
           <div class="card-img-box position-relative">
@@ -191,16 +191,8 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="card-text search-track-list">
-            <p>${
-              item.name.length < 20
-                ? item.name
-                : item.name.substring(0, 20) + '...'
-            }</p>
-            <p>${
-              item.artists[0].name.length < 10
-                ? item.artists[0].name
-                : item.artists[0].name.substring(0, 10) + '...'
-            }</p>
+            <p class="search-track-name-tag">${item.name}</p>
+            <p class="search-track-artist-tag">${item.artists[0].name}</p>
             <p>${duration}</p>
           </div>
         </div>
@@ -215,11 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="card-text search-playlist-list">
-            <p>${
-              item.name.length < 15
-                ? item.name
-                : item.name.substring(0, 15) + '...'
-            }</p>
+            <p class="search-playlist-text-tag">${item.name}</p>
           </div>
         </div>
       `;
@@ -232,12 +220,9 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="card-text search-album-list">
-            <p>${
-              item.name.length < 12
-                ? item.name
-                : item.name.substring(0, 12) + '...'
-            }</p>
-            <p class='search-album-tag'>${item.album_type}</p>
+            <span class="search-album-text-tag">${item.name}</span>
+            <span class='search-album-tag'> - ${item.album_type}</span>
+            <p class='search-album-artist-tag'>${item.artists[0].name}</p>
             <p>${item.release_date}</p>
           </div>
         </div>
@@ -259,7 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="card-text search-artist-list">
             <p>
               <span class="search-artist-rate">${item.name}<span>
-              <span class="search-artist-rating">${item.popularity}</span>
             </p>
             <p class='search-genres-tag'>${
               item.genres[0] !== undefined || item.genres[0 !== null]
@@ -272,10 +256,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    if (trackHTML) createCategorySection('곡', trackHTML);
-    if (albumHTML) createCategorySection('앨범', albumHTML);
-    if (artistHTML) createCategorySection('아티스트', artistHTML);
-    if (playlistHTML) createCategorySection('플레이리스트', playlistHTML);
+    if (trackHTML) createSearchCategorySection('곡', trackHTML);
+    if (albumHTML) createSearchCategorySection('앨범', albumHTML);
+    if (artistHTML) createSearchCategorySection('아티스트', artistHTML);
+    if (playlistHTML) createSearchCategorySection('플레이리스트', playlistHTML);
   };
 
   document.querySelector('form').addEventListener('submit', async (e) => {
@@ -283,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const query = searchInput.value;
     console.log(query);
     if (query) {
-      await callSpotifyAPI(query);
+      await callSpotifySearchAPI(query);
     } else {
       console.error('Search query is empty');
     }

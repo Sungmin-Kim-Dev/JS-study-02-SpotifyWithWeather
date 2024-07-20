@@ -533,7 +533,6 @@ body {
   width: 100%;
   text-align: center;
 }
-
 .weather_playlist_header {
   display: flex;
   justify-content: space-between;
@@ -541,7 +540,6 @@ body {
   margin-bottom: 1rem;
 }
 .weather_playlist_header .contents-header-show-more {
-  font-weight: bold;
   cursor: pointer;
 }
 .playlist-item {
@@ -769,6 +767,14 @@ div:nth-child(1) > div > div.card-container.search-track {
   text-transform: capitalize;
 }
 
+.search-album-tag {
+  font-size: 13px;
+}
+.search-playlist-item {
+  max-height: 340px;
+  height: 100%;
+}
+
 /* 메인화면 날씨 아이콘 색상*/
 h1 > .sun,
 h4 > .sun,
@@ -824,3 +830,5 @@ h4 > .thunder {
   font-weight: 600;
   text-align: center;
 }
+
+/* 메인화면, 검색 결과 말줄임표 */
