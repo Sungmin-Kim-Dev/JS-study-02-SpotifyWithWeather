@@ -67,10 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const getWeatherInfo = async () => {
     try {
       spinner.style.display = 'flex';
-      if (spinner) {
-        document.getElementById('section').style.backgroundColor = 'white';
-        document.getElementById('section').style.filter = 'blur(5px)';
-      }
 
       const position = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -97,19 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error('Invalid weather data');
       }
 
-      const cityURL = `
-      http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}
-      `;
-
-      const cityResponse = await fetch(cityURL);
-
-      const cityData = await cityResponse.json();
-      console.log(cityData[0]);
-      console.log(cityData[0].name);
-      console.log(cityData[0].local_names.ko);
-      cityName = cityData[0].local_names.ascii;
-
-      renderHTML(data, cityName);
+      renderHTML(data);
 
       const weatherDescription = matchWeather(data.current.weather[0].main);
       console.log('weatherDescription', weatherDescription);
@@ -120,14 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
     } finally {
       if (spinner) {
         spinner.style.display = 'none'; // 로딩 스피너 숨김
-        document.getElementById('section').style.backgroundColor =
-          'transparent';
-        document.getElementById('section').style.filter = 'none';
       }
     }
   };
 
-  const renderHTML = (data, city) => {
+  const renderHTML = (data) => {
     const nav = document.querySelector('#nav');
     // 기존 섹션을 지웁니다.
     const existingSection = nav.querySelector('.weather-display');
@@ -144,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }@2x.png" alt="weather_Icon" />
       <div class='weather-current'>${data.current.weather[0].main}</div>
       <p class='weather-temp'>${data.current.temp.toFixed(1)}°C</p>
- <p class='weather-city-name'>${city}</p>
     </div>
     `;
     nav.appendChild(section);

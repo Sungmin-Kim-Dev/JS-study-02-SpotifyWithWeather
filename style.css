@@ -616,7 +616,7 @@ body {
   }
 }
 
-/*search input*/
+/*검색어 입력*/
 .nav-buttons {
   display: flex;
   justify-content: space-between;
@@ -797,4 +797,16 @@ h4 > .thunder {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+@media screen and (max-width: 768px) {
+  .weather-display {
+    display: flex;
+  }
+  .weather-display > img {
+    display: none;
+  }
+  .weather-current {
+    font-weight: 600;
+    color: var(--cloud);
+  }
 }
