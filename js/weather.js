@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
       let lat = position.coords.latitude;
       let lon = position.coords.longitude;
 
-      // weatherurl = './data/weather2.json';
-      weatherurl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_API_KEY}`;
+      weatherurl = './data/weather2.json';
+      // weatherurl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_API_KEY}`;
 
       const response = await fetch(weatherurl);
       if (!response.ok) {
@@ -77,8 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
       let lat = position.coords.latitude;
       let lon = position.coords.longitude;
 
-      // weatherurl = './data/weather2.json';
-      weatherurl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_API_KEY}`;
+      weatherurl = './data/weather2.json';
+      // weatherurl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${WEATHER_API_KEY}`;
 
       const response = await fetch(weatherurl);
       if (!response.ok) {
