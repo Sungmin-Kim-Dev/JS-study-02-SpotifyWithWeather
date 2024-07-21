@@ -1,164 +1,116 @@
-document
-  .querySelector('li:nth-child(1) > button')
-  .addEventListener('click', function () {
-    window.location.href = 'index.html';
-    console.log('index.html');
+const ClientIDSKim = config.clientID;
+const ClientSecretSKim = config.clientSecret;
+
+// const hideRightTopButton = () => {
+//   let rightTopButton = document.querySelector('.header-right');
+//   console.log(rightTopButton);
+//   console.log(rightTopButton.innerWidth());
+//   // if (rightTopButton.innerWidth() < 234.66) {
+//   //   rightTopButton.classList.toggle('d-sm-block');
+//   // }
+// };
+
+// window.addEventListener('resize', hideRightTopButton);
+
+const artistAPI = `https://api.spotify.com/v1/artists/`;
+
+const getTokenSKim = async () => {
+  const encoded_Credentials = btoa(`${ClientIDSKim}:${ClientSecretSKim}`);
+  const response = await fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    body: new URLSearchParams({
+      grant_type: 'client_credentials',
+    }),
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: `Basic ${encoded_Credentials}`,
+    },
+  });
+  // console.log(response);
+  const data = await response.json();
+  // console.log(data.access_token);
+  return data.access_token;
+};
+
+// https://open.spotify.com/section/0JQ5DAnM3wGh0gz1MXnu3C
+let spotifyBasicAPI = `https://api.spotify.com/v1/`;
+let popularArtistsURL = `top/artists`;
+// https://api.spotify.com/v1/browse/new-releases
+let newReleaseURL = `browse/new-releases`;
+
+const fetchDataFromAPI = async (url, token) => {
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
-// 메인 날씨 부분 더보기 클릭
-const showTwoLines = (button) => {
-  // 클릭된 버튼에서 가장 가까운 .contents-line 요소를 찾습니다.
-  const contentsLine = button.closest('.contents-line');
-  // 그 안에서 .card-container 요소를 찾습니다.
-  const cardContainer = contentsLine.querySelector('.card-container');
-  // .card-two-lines 클래스를 추가하거나 제거합니다.
-  cardContainer.classList.toggle('card-two-lines');
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ${url} data`);
+  }
+  const data = await response.json();
+  console.log(data);
+  return data;
 };
 
-// 지도 관련
-let latitude = 37.566535;
-let longitude = 126.9779692;
-
-// 선택된 위치 저장 변수
-let selectedLatLng = null;
-// 저장된 마커 삭제 가능할지 여부
-let deleteMode = false;
-
-let mapContainer = document.getElementById('map'), // 지도를 표시할 div
-  mapOption = {
-    center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
-    level: 3, // 지도의 확대 레벨
-  };
-
-// 지도 생성
-let map = new kakao.maps.Map(mapContainer, mapOption);
-
-// 마커 생성
-let marker = new kakao.maps.Marker({
-  position: new kakao.maps.LatLng(latitude, longitude),
-});
-marker.setMap(map);
-
-const getCurrentLocation = async () => {
-  try {
-    const position = await new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(resolve, reject);
-    });
-    let lat = position.coords.latitude;
-    let lon = position.coords.longitude;
-    console.log(lat, lon);
-
-    // 지도의 중심을 현재 위치로 이동
-    let moveLatLon = new kakao.maps.LatLng(lat, lon);
-    map.setCenter(moveLatLon);
-
-    // 마커 위치를 현재 위치로 변경
-    marker.setPosition(moveLatLon);
-  } catch (error) {
-    console.error('Error getting location:', error);
-  }
+const callContentsLine = async (url, HTML_ID) => {
+  const contentsLine = document.getElementById(HTML_ID).closest('.contents-line');
+  contentsLine.id = url;
+  url = spotifyBasicAPI + url + `?limit=9`;
+  const token = await getTokenSKim();
+  let itemList = await fetchDataFromAPI(url, token);
+  let albumList = itemList.albums.items;
+  let renderHTML = renderCardLine(albumList);
+  document.getElementById(HTML_ID).innerHTML = renderHTML;
 };
 
-const getAnotherLocation = (mouseEvent) => {
-  // 클릭한 위도, 경도 정보를 가져옵니다
-  let latlng = mouseEvent.latLng;
+callContentsLine(newReleaseURL, 'new-release-line');
 
-  // 마커 위치를 클릭한 위치로 옮깁니다
-  marker.setPosition(latlng);
-
-  // 클릭한 위치 저장
-  selectedLatLng = latlng;
-  console.log(latlng.getLat(), latlng.getLng());
+const renderCardLine = (list) => {
+  let cardItemHTML = list.map((album) => {
+    return `<div class="contents-card album-card">
+      <div class="card-img-box position-relative">
+        <div class="card-play-btn"></div>
+        <div class="card-img">
+          <img src="${album.images[0].url}" alt="">
+        </div>
+      </div>
+      <div class="card-text">
+        <p class="card-title">${album.name}</p>
+        <p class="card-subtitle card-subtitle-artist">
+          <a href="artist.html?name=${album.artists[0].name}" class="artist-link">
+          ${album.artists[0].name}
+          </a>
+        </p>
+      </div>
+    </div>`;
+  });
+  return cardItemHTML.join('');
 };
 
-getCurrentLocation();
-kakao.maps.event.addListener(map, 'click', getAnotherLocation);
-let siteButton = document.getElementById('mySiteButton');
-siteButton.addEventListener('click', getCurrentLocation);
+const renderCardFull = async (clickedTitle) => {
+  const contentsTitle = clickedTitle.closest('.contents-header-title').innerText;
+  console.log(contentsTitle);
+  const contentsLine = clickedTitle.closest('.contents-line');
+  const apiURL = contentsLine.id;
+  let url = spotifyBasicAPI + apiURL + `?limit=20`;
+  const token = await getTokenSKim();
+  let itemList = await fetchDataFromAPI(url, token);
+  let albumList = itemList.albums.items;
+  let prevHTML = `
+    <div class="contents-line mt-5">
+      <div class="contents-header">
+        <a href="#" class="contents-header-title h2 text-white hover-none-underline">${contentsTitle}</a>
+      </div>
+      <div class="card-container">`;
+  let renderHTML = renderCardLine(albumList);
+  let closingHTML = `</div></div>`;
+  document.getElementById('section').innerHTML = prevHTML + renderHTML + closingHTML;
 
-// 마커를 표시할 위치와 내용을 저장할 배열
-let positions = [];
-let markers = [];
-let infoWindows = [];
-
-// 인포윈도우를 표시하는 클로저를 만드는 함수입니다
-function makeOverListener(map, marker, infowindow) {
-  return function () {
-    infowindow.open(map, marker);
-  };
-}
-
-// 인포윈도우를 닫는 클로저를 만드는 함수입니다
-function makeOutListener(infowindow) {
-  return function () {
-    infowindow.close();
-  };
-}
-
-// 새로운 위치에 마커 추가
-const addMarkerButton = document.getElementById('addMarkerButton');
-addMarkerButton.addEventListener('click', () => {
-  const content = document.getElementById('locationContent').value;
-  if (selectedLatLng && content) {
-    // 리스트에 저장
-    positions.push({
-      content: content,
-      latlng: selectedLatLng,
-    });
-
-    console.log('Added marker:', positions);
-
-    // 마커를 생성합니다
-    let newMarker = new kakao.maps.Marker({
-      map: map, // 마커를 표시할 지도
-      position: selectedLatLng, // 마커의 위치
-    });
-
-    // 마커에 표시할 인포윈도우를 생성합니다
-    let infowindow = new kakao.maps.InfoWindow({
-      content: `<div style="color:black;">${content}</div>`, // 인포윈도우에 표시할 내용
-    });
-
-    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-    kakao.maps.event.addListener(newMarker, 'mouseover', makeOverListener(map, newMarker, infowindow));
-    kakao.maps.event.addListener(newMarker, 'mouseout', makeOutListener(infowindow));
-
-    // 마커 클릭 이벤트 등록
-    kakao.maps.event.addListener(newMarker, 'click', () => {
-      if (deleteMode) {
-        const confirmDelete = confirm('Do you want to delete this marker?');
-        if (confirmDelete) {
-          infowindow.close();
-          newMarker.setMap(null); // Remove marker from the map
-          // Remove marker from positions array
-          markers = markers.filter((marker) => marker !== newMarker);
-          infoWindows = infoWindows.filter((infoWin) => infoWin !== infowindow);
-          positions = positions.filter((position) => position.latlng !== newMarker.getPosition());
-          console.log('Marker deleted:', positions);
-        }
-      } else {
-        console.log('Marker clicked:', newMarker.getPosition().getLat(), newMarker.getPosition().getLng());
-      }
-    });
-
-    markers.push(newMarker);
-    infoWindows.push(infowindow);
-
-    // 입력창 초기화
-    document.getElementById('locationContent').value = '';
-  } else {
-    alert('Please click on the map to select a location and enter content.');
-  }
-});
-
-const deleteMarkerButton = document.getElementById('deleteMarkerButton');
-deleteMarkerButton.addEventListener('click', () => {
-  deleteMode = !deleteMode; // Toggle delete mode
-  if (deleteMode) {
-    deleteMarkerButton.textContent = 'Exit Delete Mode';
-    alert('Click on a marker to delete it.');
-  } else {
-    deleteMarkerButton.textContent = 'Delete Marker';
-  }
-});
+  // 화면 전환 후 스타일 조정
+  document.querySelector('.card-container').style.gridAutoRows = 'auto';
+  let title = document.querySelector('.contents-header-title');
+  title.style.cursor = 'text';
+};
 

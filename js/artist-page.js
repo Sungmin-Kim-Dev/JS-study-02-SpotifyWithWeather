@@ -57,7 +57,7 @@ const callSpotifyAPI_artist = async () => {
 
 // 메인페이지 아티스트 클릭 이벤트
 document.addEventListener("DOMContentLoaded", () => {
-  const artistNameText = document.querySelectorAll(".card-title .artist-link");
+  const artistNameText = document.querySelectorAll(".artist-link .card-title");
 
   if (artistNameText.length > 0) {
     // index.html에서 실행되는 로직
