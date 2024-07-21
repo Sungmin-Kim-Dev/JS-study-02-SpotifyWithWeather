@@ -1,9 +1,21 @@
+// 메인화면으로 가기
 document
   .querySelector('li:nth-child(1) > button')
   .addEventListener('click', function () {
     window.location.href = 'index.html';
     console.log('index.html');
   });
+// 회원가입 화면 이동
+document.querySelector('.sign-up-btn').addEventListener('click', () => {
+  window.location.href = 'signup.html';
+  console.log('signup');
+});
+
+// 로그인화면 이동
+document.querySelector('.log-in-btn').addEventListener('click', () => {
+  window.location.href = 'signin.html';
+  console.log('signin');
+});
 
 // 메인 날씨 부분 더보기 클릭
 const showTwoLines = (button) => {

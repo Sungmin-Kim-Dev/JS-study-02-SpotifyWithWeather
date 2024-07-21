@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('search.js');
+  // console.log('search.js');
   let searchListSearchJS = [];
   let trackCountSearchJS = 0;
 
@@ -109,10 +109,10 @@ document.addEventListener('DOMContentLoaded', () => {
       ...artistItems,
     ];
     renderSearchResult();
-    console.log('trackItems\n', trackItems);
-    console.log('playlistItems\n', playlistItems);
-    console.log('albumItems\n', albumItems);
-    console.log('artistItems\n', artistItems);
+    // console.log('trackItems\n', trackItems);
+    // console.log('playlistItems\n', playlistItems);
+    // console.log('albumItems\n', albumItems);
+    // console.log('artistItems\n', artistItems);
   };
 
   const callSpotifySearchAPI = async (query) => {
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'text-white',
         'search-result-header-text'
       );
-      headerTitle.innerHTML = `<h4 class="hover-none-underline">${title}</h4><button class="contents-header-show-more hover-none-underline search-row-more" onclick="showTwoLines(this)">더보기</button>`;
+      headerTitle.innerHTML = `<h4 class="hover-none-underline">${title}<button class="contents-header-show-more hover-none-underline search-row-more" onclick="showTwoLines(this)">더보기</button></h4>`;
 
       playlistHeader.appendChild(headerTitle);
 
@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const query = searchInputSearchJS.value;
-    console.log(query);
+    // console.log(query);
     if (query) {
       await callSpotifySearchAPI(query);
     } else {

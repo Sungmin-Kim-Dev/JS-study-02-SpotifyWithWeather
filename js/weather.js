@@ -42,19 +42,24 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
 
       if (!data.current || !data.current.weather || !data.current.weather[0]) {
         throw new Error('Invalid weather data');
       }
 
       weatherName = data.current.weather[0].main;
-      console.log(weatherName);
+      //console.log(weatherName);
       weatherMenuIcon.innerHTML = showWeatherIcon(weatherName) + ' 날씨 추천곡';
 
       await callSpotifyWeatherAPI(weatherName);
     } catch (error) {
-      console.log('Error Message >> ', error);
+      const section = document.getElementById('section');
+      section.innerHTML = `
+      <div class="alert alert-danger" role="alert">
+        ${error}
+      </div>`;
+      // console.log('Error Message >> ', error);
     } finally {
       spinner.style.display = 'none'; // 로딩 스피너 숨김
     }
@@ -81,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const data = await response.json();
-      console.log('88', data);
+      // console.log('88', data);
 
       if (!data.current || !data.current.weather || !data.current.weather[0]) {
         throw new Error('Invalid weather data');
@@ -90,11 +95,16 @@ document.addEventListener('DOMContentLoaded', () => {
       renderWeatherHTML(data);
 
       const weatherDescription = matchWeather(data.current.weather[0].main);
-      console.log('weatherDescription', weatherDescription);
+      // console.log('weatherDescription', weatherDescription);
 
       await callSpotifyWeatherAPI(weatherDescription);
     } catch (error) {
-      console.log('Error Message >> ', error);
+      const section = document.getElementById('section');
+      section.innerHTML = `
+      <div class="alert alert-danger" role="alert">
+        ${error}
+      </div>`;
+      // console.log('Error Message >> ', error);
     } finally {
       if (spinner) {
         spinner.style.display = 'none'; // 로딩 스피너 숨김
@@ -318,7 +328,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       return musicInfo;
     } catch (error) {
-      console.log('Error loading music:', error);
+      const section = document.getElementById('section');
+      section.innerHTML = `
+      <div class="alert alert-danger" role="alert">
+        ${error}
+      </div>`;
+      // console.log('Error loading music:', error);
     }
   };
 
@@ -344,18 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
         70 < eachInfo.tempo &&
         eachInfo.tempo < 130
       ) {
-        eachInfo.mood.push(
-          '화창한 날',
-          'sunny clear',
-          '밝은 날',
-          'bright day',
-          '명랑한 날',
-          'cheerful day',
-          '행복한 햇살',
-          'happy sunshine',
-          '빛나는 날',
-          'radiant day'
-        );
+        eachInfo.mood.push('sunny clear');
       }
     } else if (weather === '비온 후/ 맑게 갠') {
       if (
@@ -367,19 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
           eachInfo.valence < 0.4 &&
           eachInfo.tempo > 160)
       ) {
-        eachInfo.mood.push(
-          '비온 후',
-          '맑게 갠',
-          'clear after rain',
-          '상쾌한',
-          'refreshed',
-          '새로워진',
-          'renewed',
-          '활기찬',
-          'revitalized',
-          '맑은 하늘',
-          'clean sky'
-        );
+        eachInfo.mood.push('after rain');
       }
     } else if (weather === '눈오는 날') {
       if (
@@ -390,18 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
         (parseInt(eachInfo.releaseDate.split('-')[1]) <= 2 ||
           parseInt(eachInfo.releaseDate.split('-')[1]) >= 11)
       ) {
-        eachInfo.mood.push(
-          '눈오는 날',
-          'snowy day',
-          '겨울 원더랜드',
-          'winter wonderland',
-          '하얀 날',
-          'white day',
-          '서리 내리는 날',
-          'frosty day',
-          '쌀쌀한 날',
-          'chilly day'
-        );
+        eachInfo.mood.push('snowy day');
       }
     } else if (weather === '비/ 흐림') {
       if (
@@ -415,18 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
         eachInfo.songName.indexOf('장마') !== -1 ||
         eachInfo.songName.toLowerCase().indexOf('rain') !== -1
       ) {
-        eachInfo.mood.push(
-          '비/ 흐림',
-          'rainy/cloudy',
-          '음울한 날',
-          'dreary day',
-          '우울한 날',
-          'gloomy day',
-          '이슬비 내리는 날',
-          'drizzly day',
-          '젖은 날',
-          'wet day'
-        );
+        eachInfo.mood.push('rainy/cloudy');
       }
     }
     return eachInfo;
