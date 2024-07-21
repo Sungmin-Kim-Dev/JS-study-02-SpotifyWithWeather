@@ -1,18 +1,16 @@
-// exports.handler = async function (event, context) {
-//   const value = process.env.netlifyVariableTest;
+const ClientIDSKim = config.clientID;
+const ClientSecretSKim = config.clientSecret;
 
-//   return {
-//     statusCode: 200,
-//     body: JSON.stringify({message: `Value of MY_IMPORTANT_VARIABLE is ${value}.`}),
-//   };
+// const hideRightTopButton = () => {
+//   let rightTopButton = document.querySelector('.header-right');
+//   console.log(rightTopButton);
+//   console.log(rightTopButton.innerWidth());
+//   // if (rightTopButton.innerWidth() < 234.66) {
+//   //   rightTopButton.classList.toggle('d-sm-block');
+//   // }
 // };
-console.log(netlifyVariableTest);
 
-const ClientIDSKim = clientID;
-const ClientSecretSKim = clientSecret;
-// const ClientIDSKim = config.clientID;
-// const ClientSecretSKim = config.clientSecret;
-
+// window.addEventListener('resize', hideRightTopButton);
 
 const artistAPI = `https://api.spotify.com/v1/artists/`;
 
@@ -71,7 +69,7 @@ callContentsLine(newReleaseURL, 'new-release-line');
 
 const renderCardLine = (list) => {
   let cardItemHTML = list.map((album) => {
-    return `<div class="contents-card">
+    return `<div class="contents-card album-card" onclick="showAlbumPage(this)">
       <div class="card-img-box position-relative">
         <div class="card-play-btn"></div>
         <div class="card-img">
@@ -80,7 +78,11 @@ const renderCardLine = (list) => {
       </div>
       <div class="card-text">
         <p class="card-title">${album.name}</p>
-        <p class="card-subtitle card-subtitle-artist">${album.artists[0].name}</p>
+        <p class="card-subtitle card-subtitle-artist">
+          <a href="artist.html?name=${album.artists[0].name}" class="artist-link">
+          ${album.artists[0].name}
+          </a>
+        </p>
       </div>
     </div>`;
   });
