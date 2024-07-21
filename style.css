@@ -943,3 +943,8 @@ h4 > .thunder {
     color: var(--main-accent-color);
   }
 }
+
+/* 뒤로가기, 앞으로가기 */
+.opacity-100 {
+  opacity: 1;
+}
