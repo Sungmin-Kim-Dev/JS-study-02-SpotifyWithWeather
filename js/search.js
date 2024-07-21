@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'text-white',
         'search-result-header-text'
       );
-      headerTitle.innerHTML = `<h4>${title}</h4><button class="contents-header-show-more search-row-more" onclick="showTwoLines(this)">더보기</button>`;
+      headerTitle.innerHTML = `<h4 class="hover-none-underline">${title}</h4><button class="contents-header-show-more hover-none-underline search-row-more" onclick="showTwoLines(this)">더보기</button>`;
 
       playlistHeader.appendChild(headerTitle);
 
