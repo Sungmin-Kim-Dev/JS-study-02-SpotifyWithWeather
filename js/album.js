@@ -206,25 +206,25 @@ const albumCallSpotifyApi = async () => {
 };
 
 // 아티스트 이름 가져오기 / 클릭 이벤트 설정
-document.addEventListener('DOMContentLoaded', async () => {
-    const albumCards = await document.querySelectorAll('.album-card');
-    albumCards.forEach((card) => {
-        card.addEventListener('click', (event) => {
-            const artistNameElement = card.querySelector('.card-subtitle-artist');
-            if (artistNameElement) {
-                clickedNameAlbum = artistNameElement.innerText.toLocaleLowerCase();
-                console.log('클릭된 아티스트 이름:', clickedNameAlbum);
-                albumCallSpotifyApi();
-            }
-        });
-    });
-});
+// document.addEventListener('DOMContentLoaded', async () => {
+//     const albumCards = await document.querySelectorAll('.album-card');
+//     albumCards.forEach((card) => {
+//         card.addEventListener('click', (event) => {
+//             const artistNameElement = card.querySelector('.card-subtitle-artist');
+//             if (artistNameElement) {
+//                 clickedNameAlbum = artistNameElement.innerText.toLocaleLowerCase();
+//                 console.log('클릭된 아티스트 이름:', clickedNameAlbum);
+//                 albumCallSpotifyApi();
+//             }
+//         });
+//     });
+// });
 
-// const showAlbumPage = (card) => {
-//     const artistNameElement = card.close('.card-subtitle-artist')
-//     if (artistNameElement) {
-//         clickedNameAlbum = artistNameElement.innerText.toLocaleLowerCase();
-//         console.log('클릭된 아티스트 이름:', clickedNameAlbum);
-//         albumCallSpotifyApi();
-//     }
-//   }
+const showAlbumPage = (card) => {
+    const artistNameElement = card.querySelector('.card-subtitle-artist');
+    if (artistNameElement) {
+        clickedNameAlbum = artistNameElement.innerText.toLocaleLowerCase();
+        console.log('클릭된 아티스트 이름:', clickedNameAlbum);
+        albumCallSpotifyApi();
+    }
+  }
