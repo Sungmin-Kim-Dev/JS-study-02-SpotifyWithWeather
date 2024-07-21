@@ -503,6 +503,8 @@ body {
 .card-subtitle {
   font-size: 14px;
   overflow: hidden;
+  width: fit-content;
+  max-width: 100%;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
