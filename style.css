@@ -240,11 +240,18 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  @media screen and (max-width: 576px) {
+    justify-content: space-evenly
+  }
 }
 .artist-popular-img {
   height: 40px;
   width: 40px;
   border-radius: 5px;
+  @media screen and (max-width: 500px) {
+  height: 30px;
+  width: 30px;
+}
 }
 .additional-tracks {
   width: 100%;
@@ -268,6 +275,9 @@ body {
   height: 270px;
   width: 100%;
   overflow: hidden;
+  @media screen and (max-width: 415px) {
+    height: 200px;
+    }
 }
 .overlay-text {
   display: flex;
@@ -276,17 +286,41 @@ body {
   position: absolute;
   top: 40px;
   left: 260px;
+  @media screen and (max-width: 1000px) {
+  left: 240px;
+  }
+  @media (min-width: 768px) and (max-width: 920px) {
+    left:40px;
+    }
+  @media screen and (max-width: 670px) {
+    left: 70px;
+  }
+  @media screen and (max-width: 500px) {
+    left: 40px;
+    }
+    @media screen and (max-width: 415px) {
+     top:30px;
+}
 }
 .artist-artist-name {
   font-size: 80px;
   font-weight: 900;
   color: #fff;
   cursor: pointer;
+  @media screen and (max-width: 1000px) {
+    font-size: 70px;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 50px;
+    }
 }
 .artist-monthly-listener {
   font-size: 20px;
   color: #fff;
   padding: 0.5rem;
+  @media screen and (max-width: 500px) {
+    font-size: 15px;
+    }
 }
 .artist-button-area button {
   display: flex;
@@ -308,6 +342,16 @@ body {
   transition: all 0.2s ease-out;
   width: 210px;
   height: 210px;
+  @media screen and (max-width: 1000px) {
+    width: 180px;
+    height:180px;
+  }
+  @media screen and (max-width: 670px) {
+    display: none;
+  }
+  @media (min-width: 768px) and (max-width: 920px) {
+    display: none;
+    }
 }
 .artist-card-img img {
   border-radius: 50%;
@@ -348,7 +392,12 @@ body {
   cursor: pointer;
   font-weight: 500;
 }
-
+.artist-song-duration,
+.artist-song-name {
+  @media screen and (max-width: 415px) {
+    font-size: 10px;
+    }
+}
 .contents-header {
   padding: 0.5rem 0.75rem;
   display: flex;

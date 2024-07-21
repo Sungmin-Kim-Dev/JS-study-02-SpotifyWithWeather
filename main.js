@@ -1,9 +1,19 @@
-document
-  .querySelector('li:nth-child(1) > button')
-  .addEventListener('click', function () {
-    window.location.href = 'index.html';
-    console.log('index.html');
-  });
+// 메인화면으로 가기
+document.querySelector('li:nth-child(1) > button').addEventListener('click', function () {
+  window.location.href = 'index.html';
+  console.log('index.html');
+});
+// 회원가입 화면 이동
+document.querySelector('.sign-up-btn').addEventListener('click', () => {
+  window.location.href = 'signup.html';
+  console.log('signup');
+});
+
+// 로그인화면 이동
+document.querySelector('.log-in-btn').addEventListener('click', () => {
+  window.location.href = 'signin.html';
+  console.log('signin');
+});
 
 // 메인 날씨 부분 더보기 클릭
 const showTwoLines = (button) => {
@@ -14,6 +24,44 @@ const showTwoLines = (button) => {
   // .card-two-lines 클래스를 추가하거나 제거합니다.
   cardContainer.classList.toggle('card-two-lines');
 };
+
+// 창크기 400px 미만 경고화면 표시
+const checkWindowSize = () => {
+  if (window.innerWidth < 375) {
+    // console.log('resize');
+
+    // 경고 메시지가 이미 존재하지 않는 경우에만 생성
+    if (!document.querySelector('.browser-alert')) {
+      const div = document.createElement('div');
+      const wrap = document.getElementById('wrap');
+      const spinner = document.getElementById('spinner');
+
+      if (wrap && spinner) {
+        document.body.appendChild(div);
+        div.classList.add('browser-alert');
+        // console.log('Hiding wrap and spinner');
+
+        wrap.style.setProperty('display', 'none', 'important');
+        spinner.style.setProperty('display', 'none', 'important');
+        div.innerHTML = `
+          <p class='alert-message'>브라우저 창이 너무 작습니다</p>
+          <p class='alert-message'>화면을 넓혀 사용해주세요</p>
+        `;
+      }
+    }
+  } else {
+    const existingAlert = document.querySelector('.browser-alert');
+    if (existingAlert) {
+      existingAlert.remove();
+      // console.log('Showing wrap and spinner');
+      document.getElementById('wrap').style.display = '';
+      document.getElementById('spinner').style.display = '';
+    }
+  }
+};
+
+window.addEventListener('resize', checkWindowSize);
+document.addEventListener('DOMContentLoaded', checkWindowSize);
 
 // 지도 관련
 let latitude = 37.566535;
@@ -161,4 +209,3 @@ deleteMarkerButton.addEventListener('click', () => {
     deleteMarkerButton.textContent = 'Delete Marker';
   }
 });
-
