@@ -10,7 +10,6 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="album.css">
-  <!-- album.css를 추가했습니다 -->
   <script src="apikey.js"></script>
 </head>
 
@@ -76,19 +75,19 @@
     <main id="main" class="col">
       <header id="header" class="d-flex justify-content-between align-items-center">
         <div class="right-header-bg"></div>
-        <div class="header-left d-flex gap-1">
+        <div class="header-left d-flex gap-1 align-items-center flex-grow-1">
           <button class="header-prev-btn">
             <i class="fa-solid fa-chevron-left"></i>
           </button>
           <button class="header-next-btn opacity-100">
             <i class="fa-solid fa-chevron-right"></i>
           </button>
-        </div>
-        <div class="search">
-          <form class="search-submit">
-            <input id="search-input" class="search-input" type="text" placeholder="검색어를 입력하세요" />
-            <span class="search-span"><i class="fa-solid fa-magnifying-glass"></i></span>
-          </form>
+          <div class="search">
+            <form class="search-submit">
+              <input id="search-input" class="search-input" type="text" placeholder="검색어를 입력하세요" />
+              <span class="search-span"><i class="fa-solid fa-magnifying-glass"></i></span>
+            </form>
+          </div>
         </div>
         <div class="header-right d-none d-sm-block">
           <button class="sign-up-btn">가입하기</button>
@@ -393,129 +392,14 @@
           </div>
           <!-- 날씨 플레이리스트 끝 -->
           <div class="contents-container d-flex flex-column gap-4">
-            <div class="contents-line" id="main-popular-artist">
-              <div class="contents-header">
-                <a href="#" class="contents-header-title h4 text-white">인기 아티스트</a>
-                <button class="contents-header-show-more" onclick="showTwoLines(this)">더 보기</button>
-              </div>
-              <div class="card-container">
-                <div class="contents-card">
-                  <div class="card-img-box position-relative">
-                    <div class="card-play-btn"></div>
-                    <div class="card-img card-artist-img">
-                      <img src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9" alt="">
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <p class="card-title">NewJeans</p>
-                    <p class="card-subtitle">아티스트</p>
-                  </div>
-                </div> <!-- .contents-card -->
-                <div class="contents-card">
-                  <div class="card-img-box">
-                    <div class="card-play-btn"></div>
-                    <div class="card-img card-artist-img">
-                      <img src="https://i.scdn.co/image/ab67616100005174573935eb61a1897aeb43c531" alt="">
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <p class="card-title">aespa</p>
-                    <p class="card-subtitle">아티스트</p>
-                  </div>
-                </div> <!-- .contents-card -->
-                <div class="contents-card">
-                  <div class="card-img-box position-relative">
-                    <div class="card-play-btn"></div>
-                    <div class="card-img card-artist-img">
-                      <img src="https://i.scdn.co/image/ab676161000051748fdf3504948498378df71140" alt="">
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <p class="card-title">이영지</p>
-                    <p class="card-subtitle">아티스트</p>
-                  </div>
-                </div> <!-- .contents-card -->
-                <div class="contents-card">
-                  <div class="card-img-box position-relative">
-                    <div class="card-play-btn"></div>
-                    <div class="card-img card-artist-img">
-                      <img src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9" alt="">
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <p class="card-title">NewJeans</p>
-                    <p class="card-subtitle">아티스트</p>
-                  </div>
-                </div> <!-- .contents-card -->
-                <div class="contents-card">
-                  <div class="card-img-box position-relative">
-                    <div class="card-play-btn"></div>
-                    <div class="card-img card-artist-img">
-                      <img src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9" alt="">
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <p class="card-title">NewJeans</p>
-                    <p class="card-subtitle">아티스트</p>
-                  </div>
-                </div> <!-- .contents-card -->
-                <div class="contents-card">
-                  <div class="card-img-box position-relative">
-                    <div class="card-play-btn"></div>
-                    <div class="card-img card-artist-img">
-                      <img src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9" alt="">
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <p class="card-title">NewJeans</p>
-                    <p class="card-subtitle">아티스트</p>
-                  </div>
-                </div> <!-- .contents-card -->
-                <div class="contents-card">
-                  <div class="card-img-box position-relative">
-                    <div class="card-play-btn"></div>
-                    <div class="card-img card-artist-img">
-                      <img src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9" alt="">
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <p class="card-title">NewJeans</p>
-                    <p class="card-subtitle">아티스트</p>
-                  </div>
-                </div> <!-- .contents-card -->
-                <div class="contents-card">
-                  <div class="card-img-box position-relative">
-                    <div class="card-play-btn"></div>
-                    <div class="card-img card-artist-img">
-                      <img src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9" alt="">
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <p class="card-title">NewJeans</p>
-                    <p class="card-subtitle">아티스트</p>
-                  </div>
-                </div> <!-- .contents-card -->
-                <div class="contents-card">
-                  <div class="card-img-box position-relative">
-                    <div class="card-play-btn"></div>
-                    <div class="card-img card-artist-img">
-                      <img src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9" alt="">
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <p class="card-title">NewJeans</p>
-                    <p class="card-subtitle">아티스트</p>
-                  </div>
-                </div> <!-- .contents-card -->
-              </div> <!-- .card-container -->
-            </div> <!-- .contents-line -->
             <div class="contents-line">
               <div class="contents-header">
-                <a href="#" class="contents-header-title h4 text-white">인기 앨범</a>
-                <button class="contents-header-show-more" onclick="showTwoLines(this)">더 보기</button>
+                <a href="#" class="contents-header-title h4 text-white" onclick="renderCardFull(this)">새로 나온 앨범</a>
+                <button class="contents-header-show-more disabled" onclick="showTwoLines(this)">더 보기</button>
               </div>
               <!-- 카드 그리드 시작 -->
-              <div class="card-container">
+              <!-- 다음 줄에 id 추가해 주세요. -->
+              <div class="card-container" id="new-release-line">
                 <!-- 여기서부터 반복해야 할 부분 -->
                 <!-- 한 줄만 표시할 때는 최대 9개까지만 불러와주세요. -->
                 <div class="contents-card">
@@ -531,7 +415,172 @@
                   </div>
                 </div>
                 <!-- 카드 1장 끝 -->
+              </div>
+              <!-- 카드 그리드 끝 -->
+            </div>
+            <!-- 전체 한 줄 끝 -->
+            <div class="contents-line" id="main-popular-artist">
+              <div class="contents-header">
+                <a href="#" class="contents-header-title h4 text-white">인기 아티스트</a>
+                <button class="contents-header-show-more" onclick="showTwoLines(this)">더 보기</button>
+              </div>
+              <div class="card-container">
                 <div class="contents-card">
+                  <a href="artist.html?name=NewJeans" class="artist-link">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9" alt="">
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">NewJeans</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </a>
+                </div> <!-- .contents-card -->
+                <div class="contents-card">
+                  <a href="artist.html?name=aespa" class="artist-link">
+                    <div class="card-img-box">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img src="https://i.scdn.co/image/ab67616100005174573935eb61a1897aeb43c531" alt="">
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">aespa</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </a>
+                </div> <!-- .contents-card -->
+                <div class="contents-card">
+                  <a href="artist.html?name=이영지" class="artist-link">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img src="https://i.scdn.co/image/ab676161000051748fdf3504948498378df71140" alt="">
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">이영지</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </a>
+                </div> <!-- .contents-card -->
+                <div class="contents-card">
+                  <a href="artist.html?name=아이유" class="artist-link">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img src="https://i.scdn.co/image/ab67616100005174bd0642ff425698afac5caffd" alt="">
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">아이유</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </a>
+                </div> <!-- .contents-card -->
+                <div class="contents-card">
+                  <a href="artist.html?name=KISS OF LIFE" class="artist-link">
+
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img src="https://i.scdn.co/image/ab6761610000517477f6a3aedfcc4eba07fa14b3" alt="">
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">KISS OF LIFE</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </a>
+                </div> <!-- .contents-card -->
+                <div class="contents-card">
+                  <a href="artist.html?name=DAY6" class="artist-link">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img src="https://i.scdn.co/image/ab676161000051743cab1bf9541afc5b38f6c30d" alt="">
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">DAY6</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </a>
+                </div> <!-- .contents-card -->
+                <div class="contents-card">
+                  <a href="artist.html?name=Billie Eilish" class="artist-link">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img src="https://i.scdn.co/image/ab676161000051744a21b4760d2ecb7b0dcdc8da" alt="">
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">Billie Eilish</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </a>
+                </div> <!-- .contents-card -->
+                <div class="contents-card">
+                  <a href="artist.html?name=Red Velvet" class="artist-link">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img src="https://i.scdn.co/image/ab6761610000517402a562ea6b1dc718394010ac" alt="">
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">Red Velvet</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </a>
+                </div> <!-- .contents-card -->
+                <div class="contents-card">
+                  <a href="artist.html?name=Bruno Mars" class="artist-link">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img src="https://i.scdn.co/image/ab67616100005174c36dd9eb55fb0db4911f25dd" alt="">
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">Bruno Mars</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </a>
+                </div> <!-- .contents-card -->
+              </div> <!-- .card-container -->
+            </div> <!-- .contents-line -->
+            <div class="contents-line">
+              <div class="contents-header">
+                <a href="#" class="contents-header-title h4 text-white">인기 앨범</a>
+                <button class="contents-header-show-more" onclick="showTwoLines(this)">더 보기</button>
+              </div>
+              <!-- 카드 그리드 시작 -->
+              <div class="card-container">
+                <!-- 여기서부터 반복해야 할 부분 -->
+                <!-- 한 줄만 표시할 때는 최대 9개까지만 불러와주세요. -->
+                <div class="contents-card album-card">
+                  <div class="card-img-box position-relative">
+                    <div class="card-play-btn"></div>
+                    <div class="card-img">
+                      <img src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2" alt="">
+                    </div>
+                  </div>
+                  <div class="card-text">
+                    <p class="card-title">How Sweet</p>
+                    <p class="card-subtitle card-subtitle-artist">
+                      <a href="artist.html?name=NewJeans" class="artist-link">
+                        NewJeans
+                      </a>
+                    </p>
+                  </div>
+                </div>
+                <!-- 카드 1장 끝 -->
+                <div class="contents-card album-card">
                   <div class="card-img-box position-relative">
                     <div class="card-play-btn"></div>
                     <div class="card-img">
@@ -540,11 +589,28 @@
                   </div>
                   <div class="card-text">
                     <p class="card-title">16 Fantasy</p>
-                    <p class="card-subtitle card-subtitle-artist">이영지</p>
+                    <p class="card-subtitle card-subtitle-artist"><a href="artist.html?name=이영지"
+                        class="artist-link">이영지</a></p>
                   </div>
                 </div>
                 <!-- 카드 1장 끝 -->
-                <div class="contents-card">
+                <div class="contents-card album-card">
+                  <div class="card-img-box position-relative">
+                    <div class="card-play-btn"></div>
+                    <div class="card-img">
+                      <img src="https://i.scdn.co/image/ab67616d00001e0238881a83135ef5b4ace418ba" alt="">
+                    </div>
+                  </div>
+                  <div class="card-text">
+                    <p class="card-title">Smeraldo Garden Marching Band (feat. Loco)</p>
+                    <p class="card-subtitle card-subtitle-artist">
+                      <a href="artist.html?name=지민" class="artist-link">지민</a>,
+                      <a href="artist.html?name=로꼬" class="artist-link">로꼬</a>
+                    </p>
+                  </div>
+                </div>
+                <!-- 카드 1장 끝 -->
+                <div class="contents-card album-card">
                   <div class="card-img-box position-relative">
                     <div class="card-play-btn"></div>
                     <div class="card-img">
@@ -553,85 +619,96 @@
                   </div>
                   <div class="card-text">
                     <p class="card-title">GOLDEN</p>
-                    <p class="card-subtitle card-subtitle-artist">정국</p>
+                    <p class="card-subtitle card-subtitle-artist">
+                      <a href="artist.html?name=정국" class="artist-link">
+                        정국
+                      </a>
+                    </p>
                   </div>
                 </div>
                 <!-- 카드 1장 끝 -->
-                <div class="contents-card">
+                <div class="contents-card album-card">
                   <div class="card-img-box position-relative">
                     <div class="card-play-btn"></div>
                     <div class="card-img">
-                      <img src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2" alt="">
+                      <img src="https://i.scdn.co/image/ab67616d00001e020fc598038040859794c600e2" alt="">
                     </div>
                   </div>
                   <div class="card-text">
-                    <p class="card-title">How Sweet</p>
-                    <p class="card-subtitle card-subtitle-artist">NewJeans</p>
+                    <p class="card-title">Armageddon - The 1st Album</p>
+                    <p class="card-subtitle card-subtitle-artist">
+                      <a href="artist.html?name=aespa" class="artist-link">
+                        aespa
+                      </a>
+                    </p>
                   </div>
                 </div>
                 <!-- 카드 1장 끝 -->
-                <div class="contents-card">
+                <div class="contents-card album-card">
                   <div class="card-img-box position-relative">
                     <div class="card-play-btn"></div>
                     <div class="card-img">
-                      <img src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2" alt="">
+                      <img src="https://i.scdn.co/image/ab67616d00001e0271d62ea7ea8a5be92d3c1f62" alt="">
                     </div>
                   </div>
                   <div class="card-text">
-                    <p class="card-title">How Sweet</p>
-                    <p class="card-subtitle card-subtitle-artist">NewJeans</p>
+                    <p class="card-title">HIT ME HARD AND SOFT</p>
+                    <p class="card-subtitle card-subtitle-artist">
+                      <a href="artist.html?name=Billie Eilish" class="artist-link">
+                        Billie Eilish
+                      </a>
+                    </p>
                   </div>
                 </div>
                 <!-- 카드 1장 끝 -->
-                <div class="contents-card">
+                <div class="contents-card album-card">
                   <div class="card-img-box position-relative">
                     <div class="card-play-btn"></div>
                     <div class="card-img">
-                      <img src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2" alt="">
+                      <img src="https://i.scdn.co/image/ab67616d00001e02f037c5fb9de6c78726cb8e2c" alt="">
                     </div>
                   </div>
                   <div class="card-text">
-                    <p class="card-title">How Sweet</p>
-                    <p class="card-subtitle card-subtitle-artist">NewJeans</p>
+                    <p class="card-title">SUPER REAL ME</p>
+                    <p class="card-subtitle card-subtitle-artist">
+                      <a href="artist.html?name=ILLIT" class="artist-link">
+                        ILLIT
+                      </a>
+                    </p>
                   </div>
                 </div>
                 <!-- 카드 1장 끝 -->
-                <div class="contents-card">
+                <div class="contents-card album-card">
                   <div class="card-img-box position-relative">
                     <div class="card-play-btn"></div>
                     <div class="card-img">
-                      <img src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2" alt="">
+                      <img src="https://i.scdn.co/image/ab67616d00001e027e1eeb0d7cc374a168369c80" alt="">
                     </div>
                   </div>
                   <div class="card-text">
-                    <p class="card-title">How Sweet</p>
-                    <p class="card-subtitle card-subtitle-artist">NewJeans</p>
+                    <p class="card-title">Supernatural</p>
+                    <p class="card-subtitle card-subtitle-artist">
+                      <a href="artist.html?name=NewJeans" class="artist-link">
+                        NewJeans
+                      </a>
+                    </p>
                   </div>
                 </div>
                 <!-- 카드 1장 끝 -->
-                <div class="contents-card">
+                <div class="contents-card album-card">
                   <div class="card-img-box position-relative">
                     <div class="card-play-btn"></div>
                     <div class="card-img">
-                      <img src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2" alt="">
+                      <img src="https://i.scdn.co/image/ab67616d00001e022b46078245d0120690eb560d" alt="">
                     </div>
                   </div>
                   <div class="card-text">
-                    <p class="card-title">How Sweet</p>
-                    <p class="card-subtitle card-subtitle-artist">NewJeans</p>
-                  </div>
-                </div>
-                <!-- 카드 1장 끝 -->
-                <div class="contents-card">
-                  <div class="card-img-box position-relative">
-                    <div class="card-play-btn"></div>
-                    <div class="card-img">
-                      <img src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2" alt="">
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <p class="card-title">How Sweet</p>
-                    <p class="card-subtitle card-subtitle-artist">NewJeans</p>
+                    <p class="card-title">FACE</p>
+                    <p class="card-subtitle card-subtitle-artist">
+                      <a href="artist.html?name=지민" class="artist-link">
+                        지민
+                      </a>
+                    </p>
                   </div>
                 </div>
                 <!-- 카드 1장 끝 -->

@@ -1,5 +1,5 @@
-const albumClientId = 'ace01b2284a04c6c9e4f4f33ba2c1753';
-const albumClientSecret = '02a7ba93648946e199c408d64181eb4c';
+const albumClientId = config.clientID;
+const albumClientSecret = config.clientSecret;
 let clickedNameAlbum;
 
 // 토큰 설정
@@ -206,13 +206,25 @@ const albumCallSpotifyApi = async () => {
 };
 
 // 아티스트 이름 가져오기 / 클릭 이벤트 설정
-document.addEventListener('DOMContentLoaded', () => {
-    const artistText = document.querySelectorAll('.card-subtitle-artist');
-    artistText.forEach((name) => {
-        name.addEventListener('click', (event) => {
-            clickedNameAlbum = event.target.innerText.toLocaleLowerCase();
-            console.log('클릭된 아티스트 이름:', clickedNameAlbum);
-            albumCallSpotifyApi();
+document.addEventListener('DOMContentLoaded', async () => {
+    const albumCards = await document.querySelectorAll('.album-card');
+    albumCards.forEach((card) => {
+        card.addEventListener('click', (event) => {
+            const artistNameElement = card.querySelector('.card-subtitle-artist');
+            if (artistNameElement) {
+                clickedNameAlbum = artistNameElement.innerText.toLocaleLowerCase();
+                console.log('클릭된 아티스트 이름:', clickedNameAlbum);
+                albumCallSpotifyApi();
+            }
         });
     });
 });
+
+// const showAlbumPage = (card) => {
+//     const artistNameElement = card.close('.card-subtitle-artist')
+//     if (artistNameElement) {
+//         clickedNameAlbum = artistNameElement.innerText.toLocaleLowerCase();
+//         console.log('클릭된 아티스트 이름:', clickedNameAlbum);
+//         albumCallSpotifyApi();
+//     }
+//   }
