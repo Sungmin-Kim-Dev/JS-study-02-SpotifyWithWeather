@@ -29,8 +29,8 @@ const showTwoLines = (button) => {
 
 // 창크기 400px 미만 경고화면 표시
 const checkWindowSize = () => {
-  if (window.innerWidth <= 400) {
-    console.log('resize');
+  if (window.innerWidth < 375) {
+    // console.log('resize');
 
     // 경고 메시지가 이미 존재하지 않는 경우에만 생성
     if (!document.querySelector('.browser-alert')) {
@@ -41,7 +41,7 @@ const checkWindowSize = () => {
       if (wrap && spinner) {
         document.body.appendChild(div);
         div.classList.add('browser-alert');
-        console.log('Hiding wrap and spinner');
+        // console.log('Hiding wrap and spinner');
 
         wrap.style.setProperty('display', 'none', 'important');
         spinner.style.setProperty('display', 'none', 'important');
@@ -55,7 +55,7 @@ const checkWindowSize = () => {
     const existingAlert = document.querySelector('.browser-alert');
     if (existingAlert) {
       existingAlert.remove();
-      console.log('Showing wrap and spinner');
+      // console.log('Showing wrap and spinner');
       document.getElementById('wrap').style.display = '';
       document.getElementById('spinner').style.display = '';
     }

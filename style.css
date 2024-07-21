@@ -94,6 +94,17 @@ body {
   @media screen and (min-width: 768px) {
     width: 238px;
     margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+}
+@media screen and (max-width: 768px) {
+  ul.menu,
+  div.weather-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -537,6 +548,9 @@ body {
   grid-template-rows: repeat(1, minmax(0, 1fr));
   grid-auto-rows: 0;
   transition: max-height 0.5s ease;
+  @media screen and (max-width: 378px) {
+    grid-template-columns: repeat(2, 1fr); /* 한 줄에 2개의 아이템 */
+  }
 }
 .weather-playlist-row2 {
   display: grid;
@@ -647,12 +661,14 @@ body {
 }
 .search {
   align-items: center;
-
-  border-radius: 500px;
   z-index: 4;
-  display: flex;
-  @media screen and (min-width: 576px) {
-    display: none;
+  display: none;
+  position: relative;
+}
+@media screen and (max-width: 576px) {
+  .search {
+    right: 7rem;
+    display: flex;
   }
 }
 .search.search-active {
@@ -661,21 +677,22 @@ body {
 .search-submit {
   display: flex;
   align-items: center;
+  max-width: 450px;
+  width: 100%;
+  height: 50px;
+  padding-left: 0.5rem;
 }
 .search-input {
   border: none;
   background-color: transparent;
   max-width: 450px;
   width: 100%;
-
   height: 50px;
-  border-radius: 500px;
   color: var(--white);
-  padding-left: 2.5rem;
+  padding-left: 0.5rem;
   &:focus {
     outline: none;
-    border: 1px solid var(--white);
-    padding-left: 2.5rem;
+    border-bottom: 1px solid var(--main-accent-color);
   }
 
   @media screen and (max-width: 520px) {
@@ -693,9 +710,6 @@ body {
   pointer-events: none;
 }
 @media screen and (max-width: 520px) {
-  .search-span {
-    display: none;
-  }
 }
 .search-glass {
   cursor: pointer;
@@ -717,6 +731,10 @@ body {
   align-items: center;
   position: absolute;
   right: 2rem;
+
+  @media screen and (max-width: 512px) {
+    font-size: 16px;
+  }
 }
 /* 검색 결과 곡 UI */
 #section

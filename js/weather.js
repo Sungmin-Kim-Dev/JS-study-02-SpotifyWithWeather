@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const headerTitle = document.createElement('h4');
     headerTitle.classList.add('contents-header-title', 'h4', 'text-white');
     headerTitle.innerHTML =
-      '<i class="fa-solid fa-sun sun" aria-hidden="true"></i> 오늘 날씨와 어울리는 플레이리스트';
+      '<i class="fa-solid fa-sun sun" aria-hidden="true"></i> 플레이리스트';
 
     weatherPlaylistHeader.appendChild(headerTitle);
 
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     weatherListHeader.innerHTML = `<h4 class="weather-playlist-h1">${showWeatherIcon(
       weatherName
-    )} 오늘 날씨와 어울리는 플레이리스트</h4>`;
+    )} 플레이리스트</h4>`;
 
     let row = document.querySelector('.weather-playlist-row2');
     if (!row) {
