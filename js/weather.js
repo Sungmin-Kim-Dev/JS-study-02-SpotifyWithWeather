@@ -135,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const createWeatherPlaylistSection = () => {
     const section = document.querySelector('#section');
+    section.classList.add('main_weather_playlist-height');
 
     section.innerHTML = '';
 
