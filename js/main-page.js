@@ -1,5 +1,9 @@
-const ClientIDSKim = config.clientID;
-const ClientSecretSKim = config.clientSecret;
+const ClientIDSKim = clientID;
+const ClientSecretSKim = clientSecret;
+// const ClientIDSKim = config.clientID;
+// const ClientSecretSKim = config.clientSecret;
+
+console.log(netlifyVariableTest);
 
 const artistAPI = `https://api.spotify.com/v1/artists/`;
 
@@ -27,7 +31,7 @@ let popularArtistsURL = `top/artists`;
 // https://api.spotify.com/v1/browse/new-releases
 let newReleaseURL = `browse/new-releases`;
 
-const fetchNewReleases = async (url, token) => {
+const fetchDataFromAPI = async (url, token) => {
   const response = await fetch(url, {
     method: 'GET',
     headers: {
@@ -48,7 +52,7 @@ const callContentsLine = async (url, HTML_ID) => {
   contentsLine.id = url;
   url = spotifyBasicAPI + url + `?limit=9`;
   const token = await getTokenSKim();
-  let itemList = await fetchNewReleases(url, token);
+  let itemList = await fetchDataFromAPI(url, token);
   let albumList = itemList.albums.items;
   let renderHTML = renderCardLine(albumList);
   document.getElementById(HTML_ID).innerHTML = renderHTML;
@@ -81,7 +85,7 @@ const renderCardFull = async (clickedTitle) => {
   const apiURL = contentsLine.id;
   let url = spotifyBasicAPI + apiURL + `?limit=20`;
   const token = await getTokenSKim();
-  let itemList = await fetchNewReleases(url, token);
+  let itemList = await fetchDataFromAPI(url, token);
   let albumList = itemList.albums.items;
   let prevHTML = `
     <div class="contents-line mt-5">
