@@ -1,5 +1,3 @@
-import config from './apikey.js';
-
 let artistUrl;
 let getArtistId;
 let getArtistNames = [];
@@ -274,7 +272,7 @@ const renderTopTracks = () => {
                   list.artists[0].name
                 }</div>
                 <div class="col-1 col-sm-1 text-center"><i class="fa-regular fa-heart heart-icon" style="display: none"></i></div>
-                <div class="col-1 col-sm-1 text-center">${duration}</div>
+                <div class="col-1 col-sm-1 text-center artist-song-duration">${duration}</div>
                 <div class="col-1 col-sm-1 text-center"><span class="more-icon" style="display: none">&middot;&middot;&middot;</span></div>
               </div>`;
   });
@@ -306,7 +304,7 @@ const renderTopTracks = () => {
                   list.artists[0].name
                 }</div>
                 <div class="col-1 col-sm-1 text-center"><i class="fa-regular fa-heart heart-icon" style="display: none"></i></div>
-                <div class="col-1 col-sm-1 text-center">${duration}</div>
+                <div class="col-1 col-sm-1 text-center artist-song-duration">${duration}</div>
                 <div class="col-1 col-sm-1 text-center"><span class="more-icon" style="display: none">&middot;&middot;&middot;</span></div>
               </div>`;
     });

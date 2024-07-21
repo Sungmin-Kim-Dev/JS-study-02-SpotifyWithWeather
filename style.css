@@ -272,6 +272,9 @@ body {
   height: 270px;
   width: 100%;
   overflow: hidden;
+  @media screen and (max-width: 415px) {
+    height: 200px;
+    }
 }
 .overlay-text {
   display: flex;
@@ -292,6 +295,9 @@ body {
   @media screen and (max-width: 500px) {
     left: 40px;
     }
+    @media screen and (max-width: 415px) {
+     top:30px;
+}
 }
 .artist-artist-name {
   font-size: 80px;
@@ -383,7 +389,12 @@ body {
   cursor: pointer;
   font-weight: 500;
 }
-
+.artist-song-duration,
+.artist-song-name {
+  @media screen and (max-width: 415px) {
+    font-size: 10px;
+    }
+}
 .contents-header {
   padding: 0.5rem 0;
   display: flex;
