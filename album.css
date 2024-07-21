@@ -240,7 +240,7 @@
     color: transparent;
 }
 
-.album_track_heart_icon:hover i {
+.album_track .album_track_heart_icon:hover i {
     color: #fff;
 }
 
@@ -248,7 +248,7 @@
     color: transparent;
 }
 
-.album_track_option_icon:hover i {
+.album_track .album_track_option_icon:hover i {
     color: #fff;
 }
 
