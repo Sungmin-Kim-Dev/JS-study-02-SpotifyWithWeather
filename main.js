@@ -1,8 +1,10 @@
 // 메인화면으로 가기
-document.querySelector('li:nth-child(1) > button').addEventListener('click', function () {
-  window.location.href = 'index.html';
-  console.log('index.html');
-});
+document
+  .querySelector('li:nth-child(1) > button')
+  .addEventListener('click', function () {
+    window.location.href = 'index.html';
+    console.log('index.html');
+  });
 // 회원가입 화면 이동
 document.querySelector('.sign-up-btn').addEventListener('click', () => {
   window.location.href = 'signup.html';
@@ -168,8 +170,16 @@ addMarkerButton.addEventListener('click', () => {
     });
 
     // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-    kakao.maps.event.addListener(newMarker, 'mouseover', makeOverListener(map, newMarker, infowindow));
-    kakao.maps.event.addListener(newMarker, 'mouseout', makeOutListener(infowindow));
+    kakao.maps.event.addListener(
+      newMarker,
+      'mouseover',
+      makeOverListener(map, newMarker, infowindow)
+    );
+    kakao.maps.event.addListener(
+      newMarker,
+      'mouseout',
+      makeOutListener(infowindow)
+    );
 
     // 마커 클릭 이벤트 등록
     kakao.maps.event.addListener(newMarker, 'click', () => {
@@ -181,11 +191,17 @@ addMarkerButton.addEventListener('click', () => {
           // Remove marker from positions array
           markers = markers.filter((marker) => marker !== newMarker);
           infoWindows = infoWindows.filter((infoWin) => infoWin !== infowindow);
-          positions = positions.filter((position) => position.latlng !== newMarker.getPosition());
+          positions = positions.filter(
+            (position) => position.latlng !== newMarker.getPosition()
+          );
           console.log('Marker deleted:', positions);
         }
       } else {
-        console.log('Marker clicked:', newMarker.getPosition().getLat(), newMarker.getPosition().getLng());
+        console.log(
+          'Marker clicked:',
+          newMarker.getPosition().getLat(),
+          newMarker.getPosition().getLng()
+        );
       }
     });
 

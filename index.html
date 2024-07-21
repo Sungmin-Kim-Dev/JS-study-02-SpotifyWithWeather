@@ -17,7 +17,7 @@
   <div class="spinner" id="spinner"></div>
   <div id="wrap" class="bg-black d-flex flex-md-row flex-column">
     <div class="left-section d-flex flex-column justify-content-between">
-      <nav id="nav" class="d-flex flex-md-column flex-row  justify-content-between">
+      <nav id="nav" class="d-flex flex-md-column flex-row justify-content-between">
         <a href="#" class="logo-box">
           <!-- <img src="img/logo.png" alt="Spotify Logo" class="main-logo" /> -->
           <i class="fa-brands fa-spotify"></i><span> Spotify</span>
@@ -45,14 +45,17 @@
         <div class="weather-window d-md-block d-none">
           <div id="map"></div>
           <input type="text" id="locationContent" placeholder="Enter content here"
-            style="margin: 5px 10px 5px 4px; width:210px;">
+            style="margin: 5px 10px 5px 4px; width: 210px" />
           <div class="locationMarkers">
-            <button type="button" class="btn btn-secondary" id="addMarkerButton" style="width:210px;margin: 4px;">Add
-              Marker</button>
-            <button type="button" class="btn btn-secondary" id="mySiteButton" style="width:210px; margin: 4px;">My
-              Location</button>
-            <button type="button" class="btn btn-secondary" id="deleteMarkerButton"
-              style="width:210px;margin: 4px;">Delete Marker</button>
+            <button type="button" class="btn btn-secondary" id="addMarkerButton" style="width: 210px; margin: 4px">
+              Add Marker
+            </button>
+            <button type="button" class="btn btn-secondary" id="mySiteButton" style="width: 210px; margin: 4px">
+              My Location
+            </button>
+            <button type="button" class="btn btn-secondary" id="deleteMarkerButton" style="width: 210px; margin: 4px">
+              Delete Marker
+            </button>
           </div>
         </div>
       </nav>
@@ -75,21 +78,21 @@
     <main id="main" class="col">
       <header id="header" class="d-flex justify-content-between align-items-center">
         <div class="right-header-bg"></div>
-        <div class="header-left d-flex gap-1 align-items-center flex-grow-1">
+        <div class="header-left d-flex gap-1">
           <button class="header-prev-btn">
             <i class="fa-solid fa-chevron-left"></i>
           </button>
-          <button class="header-next-btn opacity-100">
+          <button class="header-next-btn">
             <i class="fa-solid fa-chevron-right"></i>
           </button>
-          <div class="search">
-            <form class="search-submit">
-              <input id="search-input" class="search-input" type="text" placeholder="검색어를 입력하세요" />
-              <span class="search-span"><i class="fa-solid fa-magnifying-glass"></i></span>
-            </form>
-          </div>
         </div>
-        <div class="header-right d-none d-sm-block">
+        <div class="search">
+          <form class="search-submit">
+            <input id="search-input" class="search-input" type="text" placeholder="검색어를 입력하세요" />
+            <span class="search-span"></span>
+          </form>
+        </div>
+        <div class="header-right d-none d-sm-block login-buttons">
           <button class="sign-up-btn">가입하기</button>
           <button class="log-in-btn">로그인</button>
         </div>
@@ -100,11 +103,11 @@
             <div class="contents-line">
               <div class="contents-header weather_playlist_header">
                 <h1 class="contents-header-title h4 text-white">
-                  <i class="fa-solid fa-sun sun" aria-hidden="true"></i> 오늘
-                  날씨와 어울리는 플레이리스트
+                  날씨 플레이리스트
+                  <i class="fa-solid fa-sun sun" aria-hidden="true"></i>
                 </h1>
                 <button class="contents-header-show-more weather-row-more" onclick="showTwoLines(this)">
-                  더보기
+                  더 보기
                 </button>
               </div>
               <!---->
@@ -248,34 +251,7 @@
                     </a>
                   </div>
                 </div>
-                <div class="contents-card playlist-item">
-                  <div class="card-img-box position-relative">
-                    <div class="card-img">
-                      <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbf65fcf90662748401034e0a"
-                        alt="Beachy Vibes 2024 🌴 Summer Vibes" />
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <a href="https://open.spotify.com/playlist/6D3DlItMlUuqkEHe00JvCL" class="weather-playlist-more"
-                      target="_blank">
-                      Beachy Vibes 2024 🌴 Summer Vibes...
-                    </a>
-                  </div>
-                </div>
-                <div class="contents-card playlist-item">
-                  <div class="card-img-box position-relative">
-                    <div class="card-img">
-                      <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbf2c7ae0427415ebfbb90a781"
-                        alt="Happy Vibes, Sunny Walks☀️" />
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <a href="https://open.spotify.com/playlist/78izi5AvaM28vlsgir6wIu" class="weather-playlist-more"
-                      target="_blank">
-                      Happy Vibes, Sunny Walks☀️...
-                    </a>
-                  </div>
-                </div>
+
                 <div class="contents-card playlist-item">
                   <div class="card-img-box position-relative">
                     <div class="card-img">
@@ -289,20 +265,7 @@
                     </a>
                   </div>
                 </div>
-                <div class="contents-card playlist-item">
-                  <div class="card-img-box position-relative">
-                    <div class="card-img">
-                      <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbf614b8c9277d99d7009c61c"
-                        alt="summer lofi 2024☀️lofi summer" />
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <a href="https://open.spotify.com/playlist/4gRoFV3lCVoNMsDdPmKy0Z" class="weather-playlist-more"
-                      target="_blank">
-                      summer lofi 2024☀️lofi summer...
-                    </a>
-                  </div>
-                </div>
+
                 <div class="contents-card playlist-item">
                   <div class="card-img-box position-relative">
                     <div class="card-img">
@@ -317,62 +280,7 @@
                     </a>
                   </div>
                 </div>
-                <div class="contents-card playlist-item">
-                  <div class="card-img-box position-relative">
-                    <div class="card-img">
-                      <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbf949424cb27fe39717dff909d"
-                        alt="Good Morning Jams 💛☀️" />
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <a href="https://open.spotify.com/playlist/4LiKy6WtiREXCmah3Clk9S" class="weather-playlist-more"
-                      target="_blank">
-                      Good Morning Jams 💛☀️...
-                    </a>
-                  </div>
-                </div>
-                <div class="contents-card playlist-item">
-                  <div class="card-img-box position-relative">
-                    <div class="card-img">
-                      <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbf49d778197eb33a0e35e297"
-                        alt="sunny day vibes - summer 2024 🌞" />
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <a href="https://open.spotify.com/playlist/2YOG98LwM57tBydYmzSp1J" class="weather-playlist-more"
-                      target="_blank">
-                      sunny day vibes - summer 2024 🌞...
-                    </a>
-                  </div>
-                </div>
-                <div class="contents-card playlist-item">
-                  <div class="card-img-box position-relative">
-                    <div class="card-img">
-                      <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbf87927a2b87f389ce3fdb51"
-                        alt="summer party 2024 🎉 best bangers" />
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <a href="https://open.spotify.com/playlist/5omoldq0mMzGquppRHieuh" class="weather-playlist-more"
-                      target="_blank">
-                      summer party 2024 🎉 best bangers...
-                    </a>
-                  </div>
-                </div>
-                <div class="contents-card playlist-item">
-                  <div class="card-img-box position-relative">
-                    <div class="card-img">
-                      <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbf11fe428de17fb1a3dcddd1"
-                        alt="SUNNY DAY COUNTRY" />
-                    </div>
-                  </div>
-                  <div class="card-text">
-                    <a href="https://open.spotify.com/playlist/7oJ7iHW8mfd9jmTPK36Q5F" class="weather-playlist-more"
-                      target="_blank">
-                      SUNNY DAY COUNTRY
-                    </a>
-                  </div>
-                </div>
+
                 <div class="contents-card playlist-item">
                   <div class="card-img-box position-relative">
                     <div class="card-img">

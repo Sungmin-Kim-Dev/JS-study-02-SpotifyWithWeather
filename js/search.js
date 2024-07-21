@@ -1,16 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('search.js');
-  let searchList = [];
+  // console.log('search.js');
+  let searchListSearchJS = [];
+  let trackCountSearchJS = 0;
 
-  const searchBtn = document.querySelector('.weather-search-btn');
-  const searchInput = document.querySelector('.search-input');
+  const searchBtnSearchJS = document.querySelector('.weather-search-btn');
+  const searchInputSearchJS = document.querySelector('.search-input');
 
-  searchBtn.addEventListener('click', () => {
+  searchBtnSearchJS.addEventListener('click', () => {
     const searchElement = document.querySelector('.search');
     searchElement.classList.toggle('search-active');
   });
 
-  const getAccessToken = async (CLIENT_ID, CLIENT_SECRET) => {
+  const getSearchAccessToken = async (CLIENT_ID, CLIENT_SECRET) => {
     const encodedCredentials = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
 
     const response = await fetch(`https://accounts.spotify.com/api/token`, {
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return data.access_token;
   };
 
-  const getSpotifyURLs = (query) => {
+  const getSpotifySearchURLs = (query) => {
     return {
       trackURL: `https://api.spotify.com/v1/search?q=${query}&type=track`,
       playlistURL: `https://api.spotify.com/v1/search?q=${query}&type=playlist`,
@@ -35,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   };
 
-  const fetchSpotifyData = async (url, token) => {
+  const fetchSpotifySearchData = async (url, token) => {
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -87,13 +88,13 @@ document.addEventListener('DOMContentLoaded', () => {
     section.appendChild(mainWeatherPlaylist);
   };
 
-  const fetchAllSpotifyData = async (urls, token) => {
+  const fetchAllSpotifySearchData = async (urls, token) => {
     createSearchPlaylistSection();
     const [trackData, playlistData, albumData, artistData] = await Promise.all([
-      fetchSpotifyData(urls.trackURL, token),
-      fetchSpotifyData(urls.playlistURL, token),
-      fetchSpotifyData(urls.albumURL, token),
-      fetchSpotifyData(urls.artistURL, token),
+      fetchSpotifySearchData(urls.trackURL, token),
+      fetchSpotifySearchData(urls.playlistURL, token),
+      fetchSpotifySearchData(urls.albumURL, token),
+      fetchSpotifySearchData(urls.artistURL, token),
     ]);
 
     const trackItems = trackData.tracks.items;
@@ -101,33 +102,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const albumItems = albumData.albums.items;
     const artistItems = artistData.artists.items;
 
-    searchList = [
+    searchListSearchJS = [
       ...trackItems,
       ...playlistItems,
       ...albumItems,
       ...artistItems,
     ];
     renderSearchResult();
-    console.log('trackItems\n', trackItems);
-    console.log('playlistItems\n', playlistItems);
-    console.log('albumItems\n', albumItems);
-    console.log('artistItems\n', artistItems);
+    // console.log('trackItems\n', trackItems);
+    // console.log('playlistItems\n', playlistItems);
+    // console.log('albumItems\n', albumItems);
+    // console.log('artistItems\n', artistItems);
   };
 
-  const callSpotifyAPI = async (query) => {
+  const callSpotifySearchAPI = async (query) => {
     const CLIENT_ID = config.clientID;
     const CLIENT_SECRET = config.clientSecret;
 
-    const token = await getAccessToken(CLIENT_ID, CLIENT_SECRET);
-    const urls = getSpotifyURLs(query);
-    await fetchAllSpotifyData(urls, token);
+    const token = await getSearchAccessToken(CLIENT_ID, CLIENT_SECRET);
+    const urls = getSpotifySearchURLs(query);
+    await fetchAllSpotifySearchData(urls, token);
   };
 
+  // 밀리초를 분과 초로 변환하는 함수
+  const formatDurationOnSearch = (durationMs) => {
+    const minutes = Math.floor(durationMs / 60000);
+    const seconds = Math.floor((durationMs % 60000) / 1000);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  // 검색 결과 렌더링
   const renderSearchResult = () => {
     const section = document.getElementById('section');
     section.innerHTML = '';
 
-    const createCategorySection = (title, htmlContent) => {
+    const createSearchCategorySection = (title, htmlContent) => {
       const categoryContainer = document.createElement('div');
       categoryContainer.classList.add(
         'contents-container',
@@ -150,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'text-white',
         'search-result-header-text'
       );
-      headerTitle.innerHTML = `<h1>${title}</h1><button class="contents-header-show-more search-row-more" onclick="showTwoLines(this)">더보기</button>`;
+      headerTitle.innerHTML = `<h4 class="hover-none-underline">${title}<button class="contents-header-show-more hover-none-underline search-row-more" onclick="showTwoLines(this)">더보기</button></h4>`;
 
       playlistHeader.appendChild(headerTitle);
 
@@ -170,8 +179,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let albumHTML = '';
     let artistHTML = '';
 
-    searchList.forEach((item) => {
+    searchListSearchJS.forEach((item) => {
       if (item.type === 'track') {
+        if (trackCountSearchJS >= 5) return;
+        const duration = formatDurationOnSearch(item.duration_ms);
         trackHTML += `
         <div class="contents-card search-playlist-item">
           <div class="card-img-box position-relative">
@@ -180,11 +191,13 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="card-text search-track-list">
-            <p>${item.name}</p>
-            <p>${item.artists[0].name}</p>
+            <p class="search-track-name-tag">${item.name}</p>
+            <p class="search-track-artist-tag">${item.artists[0].name}</p>
+            <p>${duration}</p>
           </div>
         </div>
       `;
+        trackCountSearchJS++;
       } else if (item.type === 'playlist') {
         playlistHTML += `
         <div class="contents-card search-playlist-item">
@@ -194,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="card-text search-playlist-list">
-            <p>${item.name}</p>
+            <p class="search-playlist-text-tag">${item.name}</p>
           </div>
         </div>
       `;
@@ -207,13 +220,20 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="card-text search-album-list">
-            <p>${item.name}</p>
-            <p>${item.album_type}</p>
+            <span class="search-album-text-tag">${item.name}</span>
+            <span class='search-album-tag'> - ${item.album_type}</span>
+            <p class='search-album-artist-tag'>${item.artists[0].name}</p>
             <p>${item.release_date}</p>
           </div>
         </div>
       `;
       } else if (item.type === 'artist') {
+        if (item.genres && item.genres[0]) {
+          // 공백이 있는지 확인하고 'k-pop' 뒤의 부분을 제거하는 코드
+          if (item.genres[0].includes(' ')) {
+            item.genres[0] = item.genres[0].split(' ')[0];
+          }
+        }
         artistHTML += `
         <div class="contents-card search-playlist-item">
           <div class="card-img-box position-relative">
@@ -222,30 +242,35 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="card-text search-artist-list">
-            <p>${item.name}</p>
-            <p>${item.popularity}</p>
-            <p>${item.genres[0]}</p>
+            <p>
+              <span class="search-artist-rate">${item.name}<span>
+            </p>
+            <p class='search-genres-tag'>${
+              item.genres[0] !== undefined || item.genres[0 !== null]
+                ? item.genres[0]
+                : '장르 분류 없음'
+            }</p>
           </div>
         </div>
       `;
       }
     });
 
-    if (trackHTML) createCategorySection('곡', trackHTML);
-    if (albumHTML) createCategorySection('앨범', albumHTML);
-    if (artistHTML) createCategorySection('아티스트', artistHTML);
-    if (playlistHTML) createCategorySection('플레이리스트', playlistHTML);
+    if (trackHTML) createSearchCategorySection('곡', trackHTML);
+    if (albumHTML) createSearchCategorySection('앨범', albumHTML);
+    if (artistHTML) createSearchCategorySection('아티스트', artistHTML);
+    if (playlistHTML) createSearchCategorySection('플레이리스트', playlistHTML);
   };
 
   document.querySelector('form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const query = searchInput.value;
-    console.log(query);
+    const query = searchInputSearchJS.value;
+    // console.log(query);
     if (query) {
-      await callSpotifyAPI(query);
+      await callSpotifySearchAPI(query);
     } else {
       console.error('Search query is empty');
     }
-    searchInput.value = '';
+    searchInputSearchJS.value = '';
   });
 });
