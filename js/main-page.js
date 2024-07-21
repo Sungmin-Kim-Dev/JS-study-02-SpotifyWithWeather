@@ -6,13 +6,13 @@
 //     body: JSON.stringify({message: `Value of MY_IMPORTANT_VARIABLE is ${value}.`}),
 //   };
 // };
+console.log(netlifyVariableTest);
 
-const ClientIDSKim = process.env.clientID;
-const ClientSecretSKim = process.env.clientSecret;
+const ClientIDSKim = clientID;
+const ClientSecretSKim = clientSecret;
 // const ClientIDSKim = config.clientID;
 // const ClientSecretSKim = config.clientSecret;
 
-console.log(netlifyVariableTest);
 
 const artistAPI = `https://api.spotify.com/v1/artists/`;
 
