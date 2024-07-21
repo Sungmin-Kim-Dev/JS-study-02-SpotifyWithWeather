@@ -1,11 +1,11 @@
-exports.handler = async function (event, context) {
-  const value = process.env.netlifyVariableTest;
+// exports.handler = async function (event, context) {
+//   const value = process.env.netlifyVariableTest;
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({message: `Value of MY_IMPORTANT_VARIABLE is ${value}.`}),
-  };
-};
+//   return {
+//     statusCode: 200,
+//     body: JSON.stringify({message: `Value of MY_IMPORTANT_VARIABLE is ${value}.`}),
+//   };
+// };
 
 const ClientIDSKim = process.env.clientID;
 const ClientSecretSKim = process.env.clientSecret;
