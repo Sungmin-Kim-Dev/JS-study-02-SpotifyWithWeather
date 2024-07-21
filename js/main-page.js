@@ -69,7 +69,7 @@ callContentsLine(newReleaseURL, 'new-release-line');
 
 const renderCardLine = (list) => {
   let cardItemHTML = list.map((album) => {
-    return `<div class="contents-card album-card">
+    return `<div class="contents-card album-card" onclick="showAlbumPage(this)">
       <div class="card-img-box position-relative">
         <div class="card-play-btn"></div>
         <div class="card-img">

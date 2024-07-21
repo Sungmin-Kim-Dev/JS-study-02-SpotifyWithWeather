@@ -202,6 +202,8 @@ body {
 }
 .header-right {
   z-index: 4;
+  display: flex;
+  flex-wrap: nowrap;
 }
 .header-right .sign-up-btn {
   padding: 0.75rem 2rem;
@@ -348,15 +350,17 @@ body {
 }
 
 .contents-header {
-  padding: 0.5rem 0;
+  padding: 0.5rem 0.75rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .contents-header-title:hover,
 .contents-header-show-more:hover {
   text-decoration: underline;
 }
+
 .card-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -427,6 +431,9 @@ body {
 .card-subtitle-artist:hover {
   text-decoration: underline;
 }
+.card-subtitle .artist-link {
+  display: inline;
+}
 
 .card-play-btn {
   width: 3rem;
@@ -487,6 +494,8 @@ body {
   text-decoration: underline;
 }
 
+
+
 .f-social {
   display: flex;
   gap: 1rem;
@@ -513,10 +522,10 @@ body {
   flex-direction: column;
 }
 .weather-playlist-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  grid-template-rows: repeat(1, minmax(0, 1fr));
-  grid-auto-rows: 0;
+  /* display: grid; */
+  /* grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); */
+  /* grid-template-rows: repeat(1, minmax(0, 1fr)); */
+  /* grid-auto-rows: 0; */
   transition: max-height 0.5s ease;
 }
 .weather-playlist-row2 {
@@ -628,9 +637,11 @@ body {
   font-size: 1.4rem;
 }
 .search {
+  justify-self: flex-start;
   align-items: center;
   background-color: var(--black);
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   height: 50px;
   border-radius: 500px;
   z-index: 4;
@@ -645,11 +656,12 @@ body {
 .search-submit {
   display: flex;
   align-items: center;
+  position: relative;
 }
 .search input {
   border: none;
   background-color: transparent;
-  width: 400px;
+  width: 100%;
   height: 50px;
   border-radius: 500px;
   color: var(--white);
@@ -662,8 +674,8 @@ body {
 }
 .search-span {
   display: flex;
-  position: relative;
-  right: 24rem;
+  position: absolute;
+  left: 1rem;
   align-items: center;
   pointer-events: none;
 }
@@ -721,4 +733,8 @@ h4 > .thunder {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.hover-none-underline:hover {
+  text-decoration: none;
 }
