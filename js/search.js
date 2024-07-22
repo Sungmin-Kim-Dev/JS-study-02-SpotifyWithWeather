@@ -136,6 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const section = document.getElementById('section');
     section.innerHTML = '';
 
+    // trackCountSearchJS 초기화
+    trackCountSearchJS = 0;
+
     const createSearchCategorySection = (title, htmlContent) => {
       const categoryContainer = document.createElement('div');
       categoryContainer.classList.add(
